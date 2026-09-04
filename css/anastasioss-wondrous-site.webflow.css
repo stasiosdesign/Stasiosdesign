@@ -11081,3 +11081,25 @@ figcaption {
 }
 
 
+
+/* Overlapping parallax page transition (Osmo).
+   Named .page-transition rather than Osmo's .transition to avoid colliding
+   with the existing Webflow .transition element, which is still the
+   first-load loader. */
+.page-transition {
+  z-index: 100;
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: clip;
+}
+
+.page-transition__dark {
+  opacity: 0;
+  background-color: #000;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}

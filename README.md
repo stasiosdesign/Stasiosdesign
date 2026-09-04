@@ -5,14 +5,16 @@ dependency on Webflow's hosting or CDN. It is a faithful reproduction of
 <https://www.stasiosdesign.com/> — same markup, same stylesheet, same interactions, same URLs.
 
 ```
-*.html              9 content pages + 401 + 404
-css/                Webflow's three stylesheets
-js/webflow.js       Webflow runtime (interactions, Lottie, forms)
-js/vendor/          third-party libraries, now served locally
-js/site-forms.js    standalone form submission (see "Before you go live")
-images/ documents/  assets
-vercel.json         clean URLs, so /work resolves to work.html
-serve.ps1           local preview server (not deployed)
+*.html                  9 content pages + 401 + 404
+css/                    Webflow's three stylesheets
+js/webflow.js           Webflow runtime (interactions, Lottie, forms)
+js/vendor/              third-party libraries, now served locally
+js/site.js              the site's own behaviours, as re-runnable init functions
+js/site-forms.js        standalone form submission (see "Before you go live")
+js/page-transition.js   Barba + the overlapping parallax page transition
+images/ documents/      assets
+vercel.json             clean URLs, so /work resolves to work.html
+serve.ps1               local preview server (not deployed)
 ```
 
 ## Preview locally
@@ -120,6 +122,39 @@ class by comparing the link's href to the current URL, so serving clean URLs whi
 `.html` made it strip the "current page" highlight from all four nav links on every page.
 Links now use the same root-relative form as the live site, which also means existing inbound
 links and search results for `/work` keep working if the domain moves over.
+
+**Page transitions replaced with Osmo's overlapping parallax transition.** The old
+Webflow transition intercepted link clicks, played a Lottie wipe and then did a full page
+load. The new one needs both pages on screen at once, so navigation is now AJAX-based via
+Barba.js: `<body>` is the Barba wrapper and each page's `.body-container` (or
+`.body-container-contact`) is the container. The incoming page slides up a full `100vh`
+while the outgoing page rises only `25vh` under a dark overlay fading to 80%, both on the
+`parallax` custom ease over 1.2s.
+
+Because the document no longer reloads between pages, the per-page inline scripts that used
+to sit at the bottom of every page moved into `js/site.js` as init functions that Barba
+re-runs, scoped to the incoming container. Four things also have to be re-synced by hand on
+each swap, in `syncShellFromNextPage()`:
+
+* `<html data-wf-page>` - Webflow's IX2 scopes element selectors by page id, so without this
+  the new page's interactions never bind. IX2 is then re-initialised with the raw data kept
+  from its own store, since Barba never re-runs `webflow.js`.
+* the `<body>` class, which carries page-level styling (`body-2`, `body-8`, `body-9` ...).
+* the `.cover` overlay, which only exists on the home page. IX2 resets it to opaque black at
+  maximum z-index, so a leftover one blanks every other page.
+* the two magnetic-cursor labels, which differ per page ("[View Project]", "[View Next
+  Project]", "[Start Your Project]" ...).
+
+Two adaptations were needed beyond the reference boilerplate. Its `afterLeave` hook kills
+every ScrollTrigger, but this transition is `sync`, so `afterLeave` runs *after*
+`beforeEnter` has already built the incoming page's triggers - killing them there left every
+page with no scroll animations, so the cleanup moved into `beforeEnter` ahead of the rebuild.
+And the container is only pinned to `position: fixed` when there is an outgoing page to
+overlap; doing it on first load collapses the document height and strands the home page hero
+mid-zoom.
+
+The first-load Webflow intro (the Lottie wipe) is deliberately kept - it is the site's
+loader rather than a page-to-page transition - and now runs once from `initOnceFunctions()`.
 
 Nothing else in the markup, styles, content or interactions was touched.
 

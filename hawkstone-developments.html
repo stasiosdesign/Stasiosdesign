@@ -54,7 +54,7 @@ body .transition {display: block}
 .no-scroll-transition {overflow: hidden; position: relative;}
 </style>
 </head>
-<body class="body-2">
+<body class="body-2" data-barba="wrapper">
   <div scroll="both" class="tablet-nav-black">
     <div class="tablet-nav-left">
       <a href="/" class="div-block-226 w-inline-block"></a>
@@ -176,7 +176,7 @@ a {
       <p>[View Projects]<br></p>
     </div>
   </div>
-  <div class="body-container">
+  <div data-transition-wrap class="page-transition"><div data-transition-dark class="page-transition__dark"></div></div><div class="body-container" data-barba="container">
     <section class="w1-section-hero">
       <div class="w1-container-hero">
         <div class="nav-black">
@@ -436,261 +436,17 @@ width: 100%;
     </section>
   </div>
   <script src="js/vendor/jquery-3.5.1.min.js" type="text/javascript"></script>
-  <script src="js/webflow.js" type="text/javascript"></script><!-- ------------------------------------------------LENIS SMOOTH SCROLL SCRIPT -------------------------------------------- -->
+  <script src="js/webflow.js" type="text/javascript"></script>
+  <!-- Smooth scroll, animation and routing libraries -->
   <script src="js/vendor/lenis-1.0.33.min.js"></script>
-  <!-- -----------------------------------------------LENIS SMOOTH SCROLL INITIALIZATION -------------------------------------------- -->
-  <script>
-const lenis = new Lenis({
-  // Valeur entre 0 et 1
-  // Valeur par défaut : 0,1
-  // Plus la valeur est faible, plus le scroll sera fluide
-  lerp: 0.1, 
-  // Valeur par défaut : 1
-  // Plus la valeur est haute, plus le défilement sera rapide 
-  wheelMultiplier: 0.9, 
-});
-function raf(time) {
-  lenis.raf(time);
-  requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-</script>
-  <!-- -----------------------------------------------TEXT SCROLL ANIMATION SCRIPT -------------------------------------------- -->
-  <script src="js/vendor/split-type.js" defer=""></script>
-  <script src="js/vendor/gsap-3.11.3.min.js" defer=""></script>
-  <script src="js/vendor/ScrollTrigger-3.11.3.min.js" defer=""></script>
-  <script>
-window.addEventListener("DOMContentLoaded", (event) => {
-  // Split text into spans
-  let typeSplit = new SplitType("[text-split]", {
-    types: "words, chars",
-    tagName: "span"
-  });
-  // Link timelines to scroll position
-  function createScrollTrigger(triggerElement, timeline) {
-    // Reset tl when scroll out of view past bottom of screen
-    ScrollTrigger.create({
-      trigger: triggerElement,
-      start: "top bottom",
-      onLeaveBack: () => {
-        timeline.progress(0);
-        timeline.pause();
-      }
-    });
-    // Play tl when scrolled into view (60% from top of screen)
-    ScrollTrigger.create({
-      trigger: triggerElement,
-      start: "top 80%",
-      onEnter: () => timeline.play()
-    });
-  }
-  $("[words-slide-up]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".char"), { opacity: 0, yPercent: 100, duration: 0.4, ease: "back.out(2)", stagger: { amount: 0.35 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[sentence-slide-up]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".word"), { opacity: 0, yPercent: 100, duration: 0.6, ease: "back.out(2)", stagger: { amount: 0 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[words-rotate-in]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.set($(this).find(".word"), { transformPerspective: 1000 });
-    tl.from($(this).find(".word"), { rotationX: -90, duration: 0.6, ease: "power2.out", stagger: { amount: 0.6 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[words-slide-from-right]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".word"), { opacity: 0, x: "1em", duration: 0.8, ease: "power2.out", stagger: { amount: 0.2 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[letters-slide-up]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".char"), { yPercent: 100, duration: 0.2, ease: "power1.out", stagger: { amount: 0.6 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[letters-slide-down]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".char"), { yPercent: -120, duration: 0.3, ease: "power1.out", stagger: { amount: 0.7 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[letters-fade-in]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".char"), { opacity: 0, duration: 0.2, ease: "power1.out", stagger: { amount: 0.8 } });
-    createScrollTrigger($(this), tl);
-  });
-  $("[letters-fade-in-random]").each(function (index) {
-    let tl = gsap.timeline({ paused: true });
-    tl.from($(this).find(".char"), { opacity: 0, duration: 0.05, ease: "power1.out", stagger: { amount: 0.4, from: "random" } });
-    createScrollTrigger($(this), tl);
-  });
-   $("[scrub-each-word]").each(function (index) {
-    let tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: $(this),
-        start: "top 76%",
-        end: "top center",
-        scrub: true
-      }
-    });
-    tl.from($(this).find(".char"), { opacity: 0.1, duration: 4, ease: "power1.out", stagger: { each: 1.5 } });
-  });
-$("[scrub-each-word-slower]").each(function (index) {
-  let tl = gsap.timeline({
-    scrollTrigger: {
-      trigger: $(this),
-      start: "top 80%",
-      end: "top 30%",
-      scrub: 1.5  // Slows down animation with scrolling
-    }
-  });
-  tl.from($(this).find(".char"), { 
-    opacity: 0.1, 
-    duration: 15,  // Makes each letter fade in more slowly
-    ease: "power2.out",  // Makes easing feel smoother
-    stagger: { each: 1.2 }  // Increases delay between each letter
-  });
-});
-  // Avoid flash of unstyled content
-  gsap.set("[text-split]", { opacity: 1 });
-});
-</script>
-  <!-- ---------------------------------------------------------MAGNET CURSER HOVER ---------------------------------------------- -->
-  <script>
-document.addEventListener("DOMContentLoaded", ()=>{
-  gsap.set(".cursor-viewproject", {xPercent: 10, yPercent: 50});
-  gsap.set(".cursor-startproject", {xPercent: 10, yPercent: 50});
-  let xToView = gsap.quickTo(".cursor-viewproject", "x", {duration: 1, ease: "power3"});
-  let yToView = gsap.quickTo(".cursor-viewproject", "y", {duration: 1, ease: "power3"});
-  let xToStart = gsap.quickTo(".cursor-startproject", "x", {duration: 1, ease: "power3"});
-  let yToStart = gsap.quickTo(".cursor-startproject", "y", {duration: 1, ease: "power3"});
-  window.addEventListener("mousemove", e => {
-    xToView(e.clientX);
-    yToView(e.clientY);
-    xToStart(e.clientX);
-    yToStart(e.clientY);
-  });
-})
-</script>
-  <style>
-  body:has([cursor-viewproject]:hover) .cursor-viewproject,
-  body:has([cursor-startproject]:hover) .cursor-startproject,
-  body:has(.button:hover) .cursor-viewproject,
-  body:has(.button:hover) .cursor-startproject {
-    opacity: 1;
-  }
-</style>
-  <!-- -------------------------------------------------------PAGE TRANSITION ---------------------------------------------- -->
-  <script>
-let transitionTrigger = $(".transition-trigger");
-let introDurationMS = 1600;
-let exitDurationMS = 1000;
-let excludedClass = "no-transition";
-// On Page Load
-window.addEventListener("DOMContentLoaded", (event) => {
-if (transitionTrigger.length > 0) {
-  Webflow.push(function () {
-    transitionTrigger.click();
-  });
-  $("body").addClass("no-scroll-transition");
-  setTimeout(() => {$("body").removeClass("no-scroll-transition");}, introDurationMS);
-}
-});
-// On Link Click
-$("a").on("click", function (e) {
-  if ($(this).prop("hostname") == window.location.hostname && $(this).attr("href").indexOf("#") === -1 &&
-      !$(this).hasClass(excludedClass) && $(this).attr("target") !== "_blank" && transitionTrigger.length > 0) {
-    e.preventDefault();
-		$("body").addClass("no-scroll-transition");
-    let transitionURL = $(this).attr("href");
-    transitionTrigger.click();
-    setTimeout(function () {window.location = transitionURL;}, exitDurationMS);
-  }
-});
-// On Back Button Tap
-window.onpageshow = function(event) {if (event.persisted) {window.location.reload()}};
-// Hide Transition on Window Width Resize
-setTimeout(() => {$(window).on("resize", function () {
-setTimeout(() => {$(".transition").css("display", "none");}, 50);});
-}, introDurationMS);
-</script>
-  <!-- SCROLL DISABLE TOGGLE ON CLICK ---------------------------------------- -->
-  <script>
-var Webflow = Webflow || [];
-Webflow.push(function () {
-    var $body = $(document.body);
-    var scrollPosition = 0;
-    $('[scroll="both"]').on('click', function () {
-        if ($body.css('overflow') !== 'hidden') {
-            var oldWidth = $body.innerWidth();
-            scrollPosition = window.pageYOffset;
-            $body.css('overflow', 'hidden');
-            $body.css('position', 'fixed');
-            $body.css('top', `-${scrollPosition}px`);
-            $body.width(oldWidth);
-        } else {
-            $body.css('overflow', '');
-            $body.css('position', '');
-            $body.css('top', '');
-            $body.width('');
-            $(window).scrollTop(scrollPosition);
-        }
-    });
-});
-</script>
-  <!--  RETAIN SCROLLBAR WHEN DISABLING SCROLL ---------------------------------------- -->
-  <style>
-html {
-    overflow-y: scroll;
-</style>
-  <!--  SHOW/HIDE HAMBURGER MENU AFTER SCROLLING -------------------------------------------------- -->
-  <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const hamburgerMenu = document.querySelector("#hamburger-menu");
-    const body = document.body;
-    // Initial state: hide the menu
-    hamburgerMenu.style.opacity = "0";
-    hamburgerMenu.style.transform = "scale(0)";
-    hamburgerMenu.style.transition = "transform 0.3s ease, opacity 0.3s ease";
-    let isMenuVisible = false;
-    // Function to show the hamburger menu
-    function showMenu() {
-      hamburgerMenu.style.opacity = "1";
-      hamburgerMenu.style.transform = "scale(1)";
-      isMenuVisible = true;
-    }
-    // Function to hide the hamburger menu
-    function hideMenu() {
-      hamburgerMenu.style.opacity = "0";
-      hamburgerMenu.style.transform = "scale(0)";
-      isMenuVisible = false;
-    }
-    // Function to check if scrolling is disabled
-    function isScrollDisabled() {
-      return body.style.overflow === "hidden";
-    }
-    // Scroll event listener to toggle menu visibility
-    window.addEventListener("scroll", function() {
-      // Delay execution to ensure scroll-control script finishes
-      setTimeout(() => {
-        const scrollY = window.scrollY || window.pageYOffset;
-        const triggerPoint = window.innerHeight * 2.5;
-        // Check scroll position and scrolling state
-        if (scrollY >= triggerPoint && !isMenuVisible && !isScrollDisabled()) {
-          showMenu();
-        } else if (scrollY < triggerPoint && isMenuVisible && !isScrollDisabled()) {
-          hideMenu();
-        }
-      }, 50); // Delay of 50ms to allow the scroll-control script to apply changes
-    });
-    // Ensure the menu stays visible when toggling scroll
-    hamburgerMenu.addEventListener("click", function() {
-      if (isMenuVisible && isScrollDisabled()) {
-        showMenu(); // Ensure menu stays visible when clicking
-      }
-    });
-  });
-</script>
+  <script src="js/vendor/gsap-3.12.2.min.js"></script>
+  <script src="js/vendor/ScrollTrigger-3.12.2.min.js"></script>
+  <script src="js/vendor/CustomEase-3.12.2.min.js"></script>
+  <script src="js/vendor/split-type.js"></script>
+  <script src="js/vendor/barba-2.10.3.umd.min.js"></script>
+  <!-- Site behaviours, standalone form handling, and the page transition -->
+  <script src="js/site.js"></script>
+  <script src="js/site-forms.js"></script>
+  <script src="js/page-transition.js"></script>
 </body>
 </html>

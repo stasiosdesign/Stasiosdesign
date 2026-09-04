@@ -91,6 +91,9 @@
   function wire(form) {
     var wrap = form.closest('.w-form');
     if (!wrap) return;
+    // Barba re-runs init after every page swap; never double-bind a form.
+    if (form.dataset.siteFormsWired === 'true') return;
+    form.dataset.siteFormsWired = 'true';
 
     var done = wrap.querySelector('.w-form-done');
     var fail = wrap.querySelector('.w-form-fail');
@@ -146,6 +149,10 @@
     var forms = document.querySelectorAll('.w-form form:not(.w-password-page)');
     for (var i = 0; i < forms.length; i++) wire(forms[i]);
   }
+
+  // Exposed so the page-transition code can rebind after Barba swaps the
+  // container the form lives in.
+  window.SiteForms = { init: init };
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
