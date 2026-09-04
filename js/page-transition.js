@@ -214,6 +214,8 @@ barba.hooks.beforeEnter(data => {
     // bind from <html data-wf-page>.
     syncShellFromNextPage(data);
     reinitWebflow();
+    // After IX2, which re-applies its own initial state to the overlay.
+    settleCover();
   }
 
   // Retire the outgoing page's ScrollTriggers here rather than in afterLeave.
@@ -330,6 +332,17 @@ function reinitWebflow() {
   }
 }
 
+// The menu overlay's resting state on a settled page. IX2 re-applies its own
+// initial state (opaque, max z-index) whenever it is re-initialised, and the
+// page-load interaction that would normally fade it back out never fires on an
+// AJAX navigation - so this has to run after reinitWebflow(), not before.
+function settleCover() {
+  const el = document.querySelector('body > .cover');
+  if (!el) return;
+  el.style.display = 'none';
+  el.style.opacity = '0';
+}
+
 // Parts of the persistent shell that differ per page.
 function syncShellFromNextPage(data) {
   const html = data && data.next && data.next.html;
@@ -344,16 +357,22 @@ function syncShellFromNextPage(data) {
   // Page-level styling hangs off the body class (body-2, body-8, body-9 ...).
   document.body.className = doc.body.className;
 
-  // .cover only exists on the home page. IX2 resets it to opaque black at
-  // full z-index, so a leftover one blanks every other page.
+  // .cover only exists on the home page. IX2 resets it to opaque black at full
+  // z-index, so a leftover one blanks every other page - and a freshly added
+  // one blanks the home page, because the page-load interaction that would
+  // normally fade it out never fires on an AJAX navigation. Add or remove it to
+  // match the incoming page, and park it in its resting state; the menu
+  // interaction sets display/opacity itself when it opens.
   const nextCover = doc.querySelector('body > .cover');
   const currentCover = document.querySelector('body > .cover');
   if (nextCover && !currentCover) {
-    document.body.insertBefore(document.importNode(nextCover, true), document.body.firstChild);
+    const added = document.importNode(nextCover, true);
+    document.body.insertBefore(added, document.body.firstChild);
+    // resting state applied by settleCover() after IX2 re-init
   } else if (!nextCover && currentCover) {
     currentCover.remove();
   } else if (nextCover && currentCover) {
-    currentCover.replaceWith(document.importNode(nextCover, true));
+    // resting state applied by settleCover() after IX2 re-init
   }
 
   // The magnetic-cursor labels are per page ("[View Project]", "[View Next
