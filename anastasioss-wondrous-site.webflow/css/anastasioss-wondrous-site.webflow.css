@@ -867,7 +867,7 @@ figcaption {
 .project-container.structure {
   background-color: var(--clear);
   filter: saturate(75%);
-  background-image: url('../images/');
+  background-image: url('../images/TOD-Structure-mid_res_1.avif');
   background-size: cover;
   border-radius: 7px;
 }
@@ -3948,7 +3948,7 @@ figcaption {
 }
 
 .b_card-icon.behance {
-  background-image: url('../images/');
+  background-image: url('../images/Behance-logo-circularblack.svg');
 }
 
 .b_card-container-text {
@@ -4021,7 +4021,7 @@ figcaption {
 
 .b_card-icon-spin {
   aspect-ratio: 1;
-  background-image: url('../images/');
+  background-image: url('../images/Plus-Symbol-Black-very-Thick.svg');
   background-position: 50%;
   background-size: cover;
   width: 50%;
@@ -5350,7 +5350,7 @@ figcaption {
 
 .div-block-225 {
   aspect-ratio: 1;
-  background-image: url('../images/');
+  background-image: url('../images/Plus-Symbol-Black-very-Thick.svg');
   background-position: 50%;
   background-size: cover;
   width: auto;
@@ -8424,7 +8424,7 @@ figcaption {
   }
 
   .image-2.architecture-tablet {
-    background-image: url('https://d3e54v103j8qbb.cloudfront.net/img/background-image.svg');
+    background-image: url('../images/background-image.svg');
     background-position: 0 0;
     background-size: auto;
     display: block;
