@@ -22,6 +22,26 @@
   // -------------------------------------------------------------------------
   // TEXT SCROLL ANIMATIONS  (SplitType + GSAP ScrollTrigger)
   // -------------------------------------------------------------------------
+  // Scroll-triggered reveals, keyed by the attribute Webflow put on the element.
+  // Each entry animates .char or .word from the given state once the element
+  // scrolls into view, and rewinds when it leaves past the bottom.
+  var REVEALS = [
+    ['words-slide-up',          '.char', { opacity: 0, yPercent: 100,  duration: 0.4,  ease: 'back.out(2)', stagger: { amount: 0.35 } }],
+    ['sentence-slide-up',       '.word', { opacity: 0, yPercent: 100,  duration: 0.6,  ease: 'back.out(2)', stagger: { amount: 0 } }],
+    ['words-rotate-in',         '.word', { rotationX: -90,             duration: 0.6,  ease: 'power2.out',  stagger: { amount: 0.6 } }, { transformPerspective: 1000 }],
+    ['words-slide-from-right',  '.word', { opacity: 0, x: '1em',       duration: 0.8,  ease: 'power2.out',  stagger: { amount: 0.2 } }],
+    ['letters-slide-up',        '.char', { yPercent: 100,              duration: 0.2,  ease: 'power1.out',  stagger: { amount: 0.6 } }],
+    ['letters-slide-down',      '.char', { yPercent: -120,             duration: 0.3,  ease: 'power1.out',  stagger: { amount: 0.7 } }],
+    ['letters-fade-in',         '.char', { opacity: 0,                 duration: 0.2,  ease: 'power1.out',  stagger: { amount: 0.8 } }],
+    ['letters-fade-in-random',  '.char', { opacity: 0,                 duration: 0.05, ease: 'power1.out',  stagger: { amount: 0.4, from: 'random' } }]
+  ];
+
+  // Reveals tied directly to scroll position rather than played on entry.
+  var SCRUBS = [
+    ['scrub-each-word',        '.char', { opacity: 0.1, duration: 4,  ease: 'power1.out', stagger: { each: 1.5 } }, { start: 'top 76%', end: 'top center', scrub: true }],
+    ['scrub-each-word-slower', '.char', { opacity: 0.1, duration: 15, ease: 'power2.out', stagger: { each: 1.2 } }, { start: 'top 80%', end: 'top 30%',   scrub: 1.5 }]
+  ];
+
   site.initTextAnimations = function (root) {
     root = root || document;
     if (typeof SplitType === 'undefined' || typeof gsap === 'undefined') return;
@@ -31,76 +51,48 @@
       new SplitType(splitTargets, { types: 'words, chars', tagName: 'span' });
     }
 
-    // Scope every selector to the incoming container: during a transition the
-    // outgoing page is still in the DOM and would otherwise match too.
-    var $root = window.jQuery(root);
-    var find = function (sel) { return $root.find(sel); };
-
-    function createScrollTrigger(triggerElement, timeline) {
+    // Play on enter, rewind once scrolled back past the bottom of the screen.
+    function playOnEnter(el, timeline) {
       ScrollTrigger.create({
-        trigger: triggerElement,
+        trigger: el,
         start: 'top bottom',
         onLeaveBack: function () { timeline.progress(0); timeline.pause(); }
       });
       ScrollTrigger.create({
-        trigger: triggerElement,
+        trigger: el,
         start: 'top 80%',
         onEnter: function () { timeline.play(); }
       });
     }
 
-    find('[words-slide-up]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.char'), { opacity: 0, yPercent: 100, duration: 0.4, ease: 'back.out(2)', stagger: { amount: 0.35 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[sentence-slide-up]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.word'), { opacity: 0, yPercent: 100, duration: 0.6, ease: 'back.out(2)', stagger: { amount: 0 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[words-rotate-in]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.set(window.jQuery(this).find('.word'), { transformPerspective: 1000 });
-      tl.from(window.jQuery(this).find('.word'), { rotationX: -90, duration: 0.6, ease: 'power2.out', stagger: { amount: 0.6 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[words-slide-from-right]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.word'), { opacity: 0, x: '1em', duration: 0.8, ease: 'power2.out', stagger: { amount: 0.2 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[letters-slide-up]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.char'), { yPercent: 100, duration: 0.2, ease: 'power1.out', stagger: { amount: 0.6 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[letters-slide-down]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.char'), { yPercent: -120, duration: 0.3, ease: 'power1.out', stagger: { amount: 0.7 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[letters-fade-in]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.char'), { opacity: 0, duration: 0.2, ease: 'power1.out', stagger: { amount: 0.8 } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[letters-fade-in-random]').each(function () {
-      var tl = gsap.timeline({ paused: true });
-      tl.from(window.jQuery(this).find('.char'), { opacity: 0, duration: 0.05, ease: 'power1.out', stagger: { amount: 0.4, from: 'random' } });
-      createScrollTrigger(window.jQuery(this), tl);
-    });
-    find('[scrub-each-word]').each(function () {
-      var tl = gsap.timeline({
-        scrollTrigger: { trigger: window.jQuery(this), start: 'top 76%', end: 'top center', scrub: true }
+    // Selectors are scoped to the incoming container: during a transition the
+    // outgoing page is still in the DOM and would otherwise match too.
+    REVEALS.forEach(function (cfg) {
+      var attr = cfg[0], target = cfg[1], vars = cfg[2], preset = cfg[3];
+      root.querySelectorAll('[' + attr + ']').forEach(function (el) {
+        var parts = el.querySelectorAll(target);
+        if (!parts.length) return;
+        var tl = gsap.timeline({ paused: true });
+        if (preset) tl.set(parts, preset);
+        tl.from(parts, vars);
+        playOnEnter(el, tl);
       });
-      tl.from(window.jQuery(this).find('.char'), { opacity: 0.1, duration: 4, ease: 'power1.out', stagger: { each: 1.5 } });
     });
-    find('[scrub-each-word-slower]').each(function () {
-      var tl = gsap.timeline({
-        scrollTrigger: { trigger: window.jQuery(this), start: 'top 80%', end: 'top 30%', scrub: 1.5 }
+
+    SCRUBS.forEach(function (cfg) {
+      var attr = cfg[0], target = cfg[1], vars = cfg[2], trigger = cfg[3];
+      root.querySelectorAll('[' + attr + ']').forEach(function (el) {
+        var parts = el.querySelectorAll(target);
+        if (!parts.length) return;
+        gsap.timeline({
+          scrollTrigger: {
+            trigger: el,
+            start: trigger.start,
+            end: trigger.end,
+            scrub: trigger.scrub
+          }
+        }).from(parts, vars);
       });
-      tl.from(window.jQuery(this).find('.char'), { opacity: 0.1, duration: 15, ease: 'power2.out', stagger: { each: 1.2 } });
     });
 
     // Avoid flash of unstyled content
@@ -157,7 +149,7 @@
     window.addEventListener('mousemove', function (e) {
       xToView(e.clientX); yToView(e.clientY);
       xToStart(e.clientX); yToStart(e.clientY);
-    });
+    }, { passive: true });
   };
 
   // -------------------------------------------------------------------------
@@ -227,17 +219,24 @@
     }
     function isScrollDisabled() { return body.style.overflow === 'hidden'; }
 
+    function update() {
+      pending = 0;
+      var scrollY = window.scrollY || window.pageYOffset;
+      var triggerPoint = window.innerHeight * 2.2;
+      if (scrollY >= triggerPoint && !isMenuVisible && !isScrollDisabled()) {
+        showMenu();
+      } else if (scrollY < triggerPoint && isMenuVisible && !isScrollDisabled()) {
+        hideMenu();
+      }
+    }
+
+    // The original scheduled a fresh 50ms timer on every scroll event, so a
+    // single flick queued hundreds of them. Lenis emits scroll continuously,
+    // so keep at most one pending check - same settled result, far less work.
+    var pending = 0;
     window.addEventListener('scroll', function () {
-      setTimeout(function () {
-        var scrollY = window.scrollY || window.pageYOffset;
-        var triggerPoint = window.innerHeight * 2.2;
-        if (scrollY >= triggerPoint && !isMenuVisible && !isScrollDisabled()) {
-          showMenu();
-        } else if (scrollY < triggerPoint && isMenuVisible && !isScrollDisabled()) {
-          hideMenu();
-        }
-      }, 50);
-    });
+      if (!pending) pending = setTimeout(update, 50);
+    }, { passive: true });
 
     hamburgerMenu.addEventListener('click', function () {
       if (isMenuVisible && isScrollDisabled()) showMenu();

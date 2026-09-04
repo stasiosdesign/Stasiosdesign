@@ -158,6 +158,77 @@ loader rather than a page-to-page transition - and now runs once from `initOnceF
 
 Nothing else in the markup, styles, content or interactions was touched.
 
+## Cleanup and performance pass
+
+A later pass removed the remaining Webflow dead weight. Every removal was
+measured first, and verified afterwards by comparing computed styles, element
+counts and document heights against the previous commit.
+
+| | Before | After |
+| --- | --- | --- |
+| CSS (3 files) | 244.5 KB | 191.3 KB (−22%) |
+| `webflow.css` alone | 39.2 KB | 3.6 KB (−91%) |
+| HTML across 11 pages | 366.3 KB | 239.3 KB (−35%) |
+| `images/` on disk | 10.4 MB | 8.1 MB (−2.3 MB) |
+| Home page load | 2654 KB / 65 requests | 2097 KB / 61 requests |
+| CSS selector utilisation | 62% | 92% |
+| Inline `<style>` blocks | 85 | 6 |
+
+What changed:
+
+* **`webflow.css` was 91% dead.** 279 of its 306 selectors matched nothing on
+  any page - sliders, tabs, dropdowns, navbars, lightboxes, commerce, CMS
+  collections, file uploads, popovers and rich text, none of which this site
+  contains - plus the base64 icon webfont and the lightbox spinner keyframes
+  only those components referenced. It is now a readable 3.6 KB of the rules
+  actually in use.
+* **108 dead rule blocks** in the site stylesheet, all leftovers from abandoned
+  Webflow sections (`.ticket-*`, `.footer1_grid`, `.btn-animate-chars*`,
+  `.flowappz-cookie-consent-*`, orphaned `.div-block-2xx`). Runtime state
+  selectors that never match a static probe - `w--redirected-checked`,
+  `w--current`, the Lenis classes - were explicitly protected.
+* **79 duplicated inline `<style>` blocks** collapsed into the stylesheet. The
+  same eight rule sets were repeated on every page; the `.menu-text` underline
+  alone appeared 17 times. The six that remain are the per-page Webflow
+  interaction pre-states, which have to stay inline.
+* **2.3 MB of unreferenced images** deleted - Webflow's unused `-p-500/800/1080`
+  renditions and duplicate `_1<Original Name>` copies. Each was checked against
+  every `src`, `srcset`, `data-src` and CSS `url()` first.
+* **Montserrat went from 18 requested variants to 3.** Only 400, 500 and 300
+  are ever rendered, and no italic at all. This matters more than it looks:
+  `Groteskly Yours Okta Neue` has no `@font-face` and no fallback of its own, so
+  those 38 declarations actually render in Montserrat. Since the page is hidden
+  behind `.wf-loading * { opacity: 0 }` until the loader resolves, cutting the
+  variants shortens how long the site stays blank.
+* **Eight below-the-fold images switched from `loading="eager"` to `lazy`**,
+  chosen by measuring each one's document position - they sat 1.5 to 2 viewports
+  down, and one was 944 KB. The seven genuinely above the fold stay eager and
+  now carry `fetchpriority="high"`. This is most of the 557 KB saved on first
+  load.
+* **62 redundant `srcset` candidates** removed. Webflow listed the same file at
+  several widths because it only shipped two renditions; each URL now appears
+  once at its largest width, which cannot change the browser's choice.
+* **`initTextAnimations` was ten near-identical blocks** re-wrapping `jQuery(this)`
+  three times per element. It is now two config tables and a loop, using plain
+  DOM.
+* **The hamburger scroll handler queued a fresh 50 ms timer on every scroll
+  event** - and Lenis emits those continuously, so one flick scheduled hundreds.
+  It now keeps at most one pending check, and the scroll and mousemove listeners
+  are passive.
+* Invalid `width="Auto"`/`height="Auto"` attributes and the Webflow generator
+  comments dropped.
+
+Deliberately left alone: `webflow.js`. It is already a targeted build - only
+seven modules, and all but the inert badge are in use - and it carries the IX2
+engine that drives every animation on the site. Replacing it would be rewriting
+the interaction layer, not refactoring it. `normalize.css` also stays whole; it
+is 7.7 KB of base resets and trimming unused element rules would be a
+speculative risk for almost no gain.
+
+One thing worth your attention, left unchanged because it is a content decision:
+every page still carries `<meta property="og:title" content="Business - Webflow
+HTML website template">`, a leftover from the original Webflow template.
+
 ## Verified against the live site
 
 Every page was compared against <https://www.stasiosdesign.com/> by fingerprinting each
