@@ -1,18 +1,18 @@
 # Stasiosdesign — standalone site
 
-The Webflow export in `anastasioss-wondrous-site.webflow/`, adapted to run as an ordinary
-static site with no dependency on Webflow's hosting or CDN. It is a faithful reproduction of
-<https://www.stasiosdesign.com/> — same markup, same stylesheet, same interactions.
+The Webflow export for stasiosdesign.com, adapted to run as an ordinary static site with no
+dependency on Webflow's hosting or CDN. It is a faithful reproduction of
+<https://www.stasiosdesign.com/> — same markup, same stylesheet, same interactions, same URLs.
 
 ```
-anastasioss-wondrous-site.webflow/   <- the site; upload this folder as-is
-  *.html                             9 content pages + 401 + 404
-  css/                               Webflow's three stylesheets
-  js/webflow.js                      Webflow runtime (interactions, Lottie, forms)
-  js/vendor/                         third-party libraries, now served locally
-  js/site-forms.js                   standalone form submission (see "Before you go live")
-  images/  documents/                assets
-serve.ps1                            local preview server
+*.html              9 content pages + 401 + 404
+css/                Webflow's three stylesheets
+js/webflow.js       Webflow runtime (interactions, Lottie, forms)
+js/vendor/          third-party libraries, now served locally
+js/site-forms.js    standalone form submission (see "Before you go live")
+images/ documents/  assets
+vercel.json         clean URLs, so /work resolves to work.html
+serve.ps1           local preview server (not deployed)
 ```
 
 ## Preview locally
@@ -24,21 +24,25 @@ transition, whose Lottie animation is fetched with XHR.
 powershell -ExecutionPolicy Bypass -File .\serve.ps1
 ```
 
-Then open <http://localhost:5173>. Any static server works equally well; `serve.ps1` exists
-only because this machine has no Node or Python. It mirrors normal static-host behaviour:
-`/` → `index.html`, `/work` → `work.html`, unknown paths → `404.html` with a 404 status.
+Then open <http://localhost:5173>. `serve.ps1` exists only because this machine has no Node
+or Python; it deliberately mirrors the Vercel config, resolving `/work` → `work.html` and
+serving `404.html` for unknown paths, so local and production behave the same.
 
 ## Deploy
 
-Upload `anastasioss-wondrous-site.webflow/` to any static host (Netlify, Cloudflare Pages,
-GitHub Pages, S3, nginx). Nothing needs building, and internal links are plain relative
-`.html` paths, so no rewrite rules are required. Two optional touches:
+**Vercel** — import the repo and deploy. There is nothing to configure: no build step, no
+framework, and `vercel.json` sets up the clean URLs. `README.md` and `serve.ps1` are excluded
+from the deployment by `.vercelignore`.
 
-- **Clean URLs.** The live Webflow site serves `/work` rather than `/work.html`. Most hosts
-  can strip the extension (Netlify does it by default). The `.html` links work either way.
-- **`sitemap.xml` / `robots.txt`.** Webflow generated these; they are not part of the export.
-  Add them by hand if the site is going back on a public domain — the live sitemap lists all
-  nine content pages.
+Pages link to each other as `/work`, `/lets-talk` and so on — the same root-relative form the
+live Webflow site uses — so the host has to resolve extensionless paths to `.html`. Vercel
+does this via `cleanUrls` in `vercel.json`; Netlify and Cloudflare Pages do it by default.
+On a host that does not (GitHub Pages, plain S3, bare nginx), those links would 404 and you
+would need an equivalent rewrite rule.
+
+One thing Webflow generated that the export does not include: **`sitemap.xml` and
+`robots.txt`**. Add them by hand if the site goes back on a public domain — the live sitemap
+lists all nine content pages.
 
 ## Before you go live
 
@@ -109,6 +113,14 @@ page, left as the site had it.
 previews and staging. Comparing `hostname` to `hostname` fixes that and is identical in
 behaviour on the live domain.
 
+**Internal links restored to the live site's clean URLs.** The export rewrote every link to
+`work.html`, `lets-talk.html` and so on; the live site uses `/work`, `/lets-talk`, `/`. This
+matters for more than tidiness: `webflow.js` decides which nav link gets the `w--current`
+class by comparing the link's href to the current URL, so serving clean URLs while linking to
+`.html` made it strip the "current page" highlight from all four nav links on every page.
+Links now use the same root-relative form as the live site, which also means existing inbound
+links and search results for `/work` keep working if the domain moves over.
+
 Nothing else in the markup, styles, content or interactions was touched.
 
 ## Verified against the live site
@@ -119,16 +131,22 @@ background colour, display and position:
 
 | Page | Result |
 | --- | --- |
-| `index.html` @ 1440 | 615 of 625 elements identical; the other 10 differ by 1px of sub-pixel rounding |
-| `index.html` @ 768 and @ 375 | identical — same hash, same document height |
+| home @ 1440 | 615 of 625 elements identical; the other 10 differ by 1px of sub-pixel rounding |
+| home @ 768 and @ 375 | identical — same hash, same document height |
 | `work`, `about`, `work-csj-architects`, `work-architectural-works`, `mikhail-riches`, `hawkstone-developments` | identical |
 | `lets-talk` | identical except the live form carries Turnstile's `w-form-loading` state |
 
+The total page height varies by up to 5px between runs — but it does so on the live site as
+well (13072–13077 observed on both), so it is animation-settling noise rather than a
+difference between the two.
+
 Also checked: every `<img>` and CSS background resolves on every page; the Lottie page
 transition renders and plays; the desktop side menu and the mobile menu open, lock scrolling
-and navigate; internal links work across all pages; the form shows its real success and
-failure states; and the Adobe and Google fonts all load. The browser console output matches
-the live site's, minus the Turnstile errors.
+and navigate; internal links work across all pages, with `w--current` landing on the right
+nav item; the form shows its real success and failure states; and the Adobe and Google fonts
+all load. Every one of the 130 asset references is case-exact, which matters because Vercel
+serves from a case-sensitive filesystem and Windows does not. The browser console output
+matches the live site's, minus the Turnstile errors.
 
 ## Known quirks, carried over unchanged
 
@@ -140,7 +158,7 @@ These exist on the live site too and were deliberately left alone:
   this site is password-protected, so it is unreachable in normal use.
 - `about.html`, `hawkstone-developments.html` and `mikhail-riches-copy.html` are published but
   unlinked, exactly as on the live site. `about.html` is a "Page coming soon" placeholder,
-  which is why the menu's "About" item points at `work.html`; `hawkstone-developments.html` is
+  which is why the menu's "About" item points at `/work`; `hawkstone-developments.html` is
   a duplicate of the CSJ Architects page and `mikhail-riches-copy.html` a duplicate of the
   Mikhail Riches page.
 - The console logs `One or both checkboxes not found` (leftover custom code referencing

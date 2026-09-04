@@ -8,11 +8,12 @@
     things to work: the page-transition Lottie JSON is loaded with XHR, and AVIF /
     WebP / SVG assets need correct MIME types.
 
-    Behaviour matches a typical static host:
-      /            -> site/index.html
-      /work        -> site/work.html      (extensionless URLs resolve to .html)
-      /work.html   -> site/work.html
-      missing path -> site/404.html with a 404 status
+    Behaviour matches the Vercel deployment (see vercel.json), so the clean URLs
+    the pages link to resolve the same way locally:
+      /            -> index.html
+      /work        -> work.html      (extensionless URLs resolve to .html)
+      /work.html   -> work.html
+      missing path -> 404.html with a 404 status
 
 .EXAMPLE
     powershell -ExecutionPolicy Bypass -File .\serve.ps1
@@ -30,7 +31,7 @@ if (-not $Root) {
     $here = $PSScriptRoot
     if (-not $here) { $here = Split-Path -Parent $MyInvocation.MyCommand.Definition }
     if (-not $here) { $here = (Get-Location).ProviderPath }
-    $Root = Join-Path $here 'anastasioss-wondrous-site.webflow'
+    $Root = $here
 }
 
 if (-not (Test-Path -LiteralPath $Root)) { throw "Site root not found: $Root" }
