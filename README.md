@@ -5,16 +5,21 @@ dependency on Webflow's hosting or CDN. It is a faithful reproduction of
 <https://www.stasiosdesign.com/> — same markup, same stylesheet, same interactions, same URLs.
 
 ```
-*.html                  9 content pages + 401 + 404
-css/                    Webflow's three stylesheets
-js/webflow.js           Webflow runtime (interactions, Lottie, forms)
-js/vendor/              third-party libraries, now served locally
-js/site.js              the site's own behaviours, as re-runnable init functions
-js/site-forms.js        standalone form submission (see "Before you go live")
-js/page-transition.js   Barba + the overlapping parallax page transition
-images/ documents/      assets
-vercel.json             clean URLs, so /work resolves to work.html
-serve.ps1               local preview server (not deployed)
+*.html                      9 content pages + 401 + 404
+css/                        Webflow's three stylesheets
+js/vendor/                  third-party libraries, served locally - including the Webflow
+                            runtime (webflow-runtime.js: IX2 interaction engine, Lottie,
+                            forms, links)
+js/webflow-interactions.js  the site's Webflow interaction (IX2) data, as exported
+js/app.js                   the page lifecycle: boot once, mount / ready / unmount per
+                            page, and the Barba wiring (see "How a page comes to life")
+js/site.js                  the site's own behaviours, as features the lifecycle mounts
+js/site-forms.js            standalone form submission (see "Before you go live")
+js/page-transition.js       the overlapping parallax transition and the first-load
+                            loader - visuals only
+images/ documents/          assets
+vercel.json                 clean URLs, so /work resolves to work.html
+serve.ps1                   local preview server (not deployed)
 ```
 
 ## Preview locally
@@ -125,36 +130,71 @@ links and search results for `/work` keep working if the domain moves over.
 
 **Page transitions replaced with Osmo's overlapping parallax transition.** The old
 Webflow transition intercepted link clicks, played a Lottie wipe and then did a full page
-load. The new one needs both pages on screen at once, so navigation is now AJAX-based via
+load. The new one needs both pages on screen at once, so navigation is AJAX-based via
 Barba.js: `<body>` is the Barba wrapper and each page's `.body-container` (or
 `.body-container-contact`) is the container. The incoming page slides up a full `100vh`
 while the outgoing page rises only `25vh` under a dark overlay fading to 80%, both on the
-`parallax` custom ease over 1.2s.
+`parallax` custom ease over 1.2s. The first-load Webflow intro (the Lottie wipe) is kept -
+it is the site's loader rather than a page-to-page transition.
 
-Because the document no longer reloads between pages, the per-page inline scripts that used
-to sit at the bottom of every page moved into `js/site.js` as init functions that Barba
-re-runs, scoped to the incoming container. Four things also have to be re-synced by hand on
-each swap, in `syncShellFromNextPage()`:
+Because the document no longer reloads between pages, everything that used to rely on a
+fresh page load had to be given an explicit lifecycle. That is described in the next section.
 
-* `<html data-wf-page>` - Webflow's IX2 scopes element selectors by page id, so without this
-  the new page's interactions never bind. IX2 is then re-initialised with the raw data kept
-  from its own store, since Barba never re-runs `webflow.js`.
-* the `<body>` class, which carries page-level styling (`body-2`, `body-8`, `body-9` ...).
-* the `.cover` overlay, which only exists on the home page. IX2 resets it to opaque black at
-  maximum z-index, so a leftover one blanks every other page.
-* the two magnetic-cursor labels, which differ per page ("[View Project]", "[View Next
-  Project]", "[Start Your Project]" ...).
+## How a page comes to life
 
-Two adaptations were needed beyond the reference boilerplate. Its `afterLeave` hook kills
-every ScrollTrigger, but this transition is `sync`, so `afterLeave` runs *after*
-`beforeEnter` has already built the incoming page's triggers - killing them there left every
-page with no scroll animations, so the cleanup moved into `beforeEnter` ahead of the rebuild.
-And the container is only pinned to `position: fixed` when there is an outgoing page to
-overlap; doing it on first load collapses the document height and strands the home page hero
-mid-zoom.
+Since the site no longer runs inside Webflow, there is nothing left to work around: the
+lifecycle is owned by `js/app.js`, and every page goes through the same phases whether it
+was loaded directly, reached through a link, or reached with the browser's back/forward
+buttons.
 
-The first-load Webflow intro (the Lottie wipe) is deliberately kept - it is the site's
-loader rather than a page-to-page transition - and now runs once from `initOnceFunctions()`.
+| Phase | When | What happens |
+| --- | --- | --- |
+| **boot** | once per document | GSAP plugins, Lenis, the shell features (side menu, scroll lock, magnetic cursor), Barba. |
+| **mount** | the container is in the DOM, possibly still off-screen | the page's shell state is applied (body class, cursor labels, `w--current` / `aria-current` links), Webflow's interactions are started for this page, and every feature's `mount()` runs inside a GSAP context. |
+| **ready** | the container is in normal flow at the top of the viewport | work that needs real layout runs (ScrollTriggers), then Webflow's page-load interactions fire. |
+| **unmount** | the container has left the document | feature cleanups run and the GSAP context is killed, which takes every tween and ScrollTrigger the page created with it. |
+
+On a direct load, `mount` and `ready` run back to back and the loader plays. On a Barba
+navigation the incoming container is pinned over the page, mounted, and animated in; when
+the transition completes the outgoing container is removed and unmounted and the new page
+is settled at the top - through Lenis as well as natively, since Lenis owns the scroll
+position - and made ready. Barba's own hover prefetch is on, so the next page's HTML is
+usually already cached when a link is clicked.
+
+The site's behaviours are **features** (`js/site.js`, `js/site-forms.js`) with a
+`mount(container, page)` contract: they only ever look inside the container they are given,
+register layout-dependent work with `page.onReady()`, and return a cleanup function for
+anything that is not GSAP. Text reveals, for example, split the text and build their
+paused timelines at mount - so the copy sits in its pre-animation state from the moment the
+page is visible - and only create their ScrollTriggers at ready, once the container is in
+flow and positions can be measured. Shell features mount once and expose
+`pageWillChange()` to put the persistent shell back to rest (menu closed, scroll lock
+released) before a swap.
+
+**Webflow is treated as a component with two halves.** Its runtime, `js/vendor/webflow-runtime.js`,
+is vendor code that binds delegated handlers once at DOM ready (links, forms, Lottie,
+touch, focus) and is never re-run. Its interaction engine, IX2, is page-scoped: element
+targets are `<pageId>|<elementId>`, resolved against `<html data-wf-page>`. So `mount` sets
+that attribute and re-initialises IX2 from the raw export in `js/webflow-interactions.js` -
+exactly what Webflow's own runtime did at the end of every full page load, and the reason
+the data was split out of the runtime file. (Re-feeding the engine its own normalised store,
+as an earlier version did, silently dropped the breakpoint table: "IX2 missing mediaQueries
+in site data".) IX2 evaluates its page-load and scroll-driven events on `readystatechange`
+and on a `IX2_PAGE_UPDATE` event; a page mounted after the document has finished loading
+gets the latter when it settles, so page-load animations play on arrival just as they do
+on a direct load.
+
+Two shell details follow from that. The home page's black `.cover` is its first-load intro:
+IX2's initial state shows it and the page-load interaction fades it out. The cover is now
+part of the shell on every page (inert everywhere but home, since only the home page's
+interactions target it), and on a swap it is parked in its resting state once IX2 has applied
+its initial styles, because the parallax transition is the intro then. And because the
+outgoing container is still on screen while the incoming page's IX2 binds, a few of its
+elements pick up bindings too; they hold only detached nodes and are dropped at the next
+mount.
+
+`js/page-transition.js` knows nothing about any of this. It pins, swaps and unpins
+containers and plays the loader, and `app.js` calls it at the right moments.
 
 Nothing else in the markup, styles, content or interactions was touched.
 
@@ -218,12 +258,15 @@ What changed:
 * Invalid `width="Auto"`/`height="Auto"` attributes and the Webflow generator
   comments dropped.
 
-Deliberately left alone: `webflow.js`. It is already a targeted build - only
-seven modules, and all but the inert badge are in use - and it carries the IX2
-engine that drives every animation on the site. Replacing it would be rewriting
-the interaction layer, not refactoring it. `normalize.css` also stays whole; it
-is 7.7 KB of base resets and trimming unused element rules would be a
-speculative risk for almost no gain.
+Deliberately left alone: the Webflow runtime itself. It is already a targeted
+build - only seven modules, and all but the inert badge are in use - and it
+carries the IX2 engine that drives every animation on the site. Replacing it
+would be rewriting the interaction layer, not refactoring it. The one change
+made to it is the split described above: the runtime is vendor code in
+`js/vendor/webflow-runtime.js`, unmodified apart from the removal of its
+trailing `init()` call, and the site's interaction data is its own file.
+`normalize.css` also stays whole; it is 7.7 KB of base resets and trimming
+unused element rules would be a speculative risk for almost no gain.
 
 One thing worth your attention, left unchanged because it is a content decision:
 every page still carries `<meta property="og:title" content="Business - Webflow
@@ -267,6 +310,3 @@ These exist on the live site too and were deliberately left alone:
   which is why the menu's "About" item points at `/work`; `hawkstone-developments.html` is
   a duplicate of the CSJ Architects page and `mikhail-riches-copy.html` a duplicate of the
   Mikhail Riches page.
-- The console logs `One or both checkboxes not found` (leftover custom code referencing
-  `checkbox-design` / `checkbox-dev`, which the form no longer has) and a few GSAP
-  "target not found" warnings. Both appear on the live site; neither affects anything.

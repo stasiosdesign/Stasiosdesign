@@ -1,16 +1,19 @@
 /* ---------------------------------------------------------------------------
-   STANDALONE FORM SUBMISSION
+   STANDALONE FORM SUBMISSION  (page feature)
 
-   On Webflow's own hosting, webflow.js posts every `.w-form` submission to
+   On Webflow's own hosting, its runtime posts every `.w-form` submission to
    Webflow's form API (https://webflow.com/api/v1/form/<site-id>). That API only
-   accepts requests from the Webflow-hosted domain, so in a static export the
-   submit handler shipped in webflow.js can never succeed - it just falls
-   straight through to the "Hmm... something's missing" error block.
+   accepts requests from the Webflow-hosted domain, so in a static export that
+   code path can never succeed - it just falls straight through to the
+   "Hmm... something's missing" error block.
 
-   This file takes over submission for those forms and reproduces the exact same
-   UI states Webflow used: the submit button's `data-wait` label while sending,
-   then either the `.w-form-done` success block or the `.w-form-fail` error
-   block, plus `data-redirect` support.
+   This feature takes over submission for those forms and reproduces the exact
+   same UI states Webflow used: the submit button's `data-wait` label while
+   sending, then either the `.w-form-done` success block or the `.w-form-fail`
+   error block, plus `data-redirect` support.
+
+   It is mounted by app.js on every page, scoped to that page's container, and
+   unbinds its listeners when the page is unmounted.
 
    CONFIGURE ME
    ------------
@@ -23,7 +26,7 @@
    visitor's email client with their answers prefilled and addressed to
    FALLBACK_EMAIL, which needs no server at all.
 --------------------------------------------------------------------------- */
-(function () {
+(function (window, document) {
   'use strict';
 
   var ENDPOINT = '';
@@ -88,12 +91,10 @@
     });
   }
 
+  // Takes over one form. Returns the function that gives it back.
   function wire(form) {
     var wrap = form.closest('.w-form');
-    if (!wrap) return;
-    // Barba re-runs init after every page swap; never double-bind a form.
-    if (form.dataset.siteFormsWired === 'true') return;
-    form.dataset.siteFormsWired = 'true';
+    if (!wrap) return null;
 
     var done = wrap.querySelector('.w-form-done');
     var fail = wrap.querySelector('.w-form-fail');
@@ -115,9 +116,9 @@
       else { show(fail); hide(done); if (fail) fail.focus(); }
     }
 
-    form.addEventListener('submit', function (event) {
+    function onSubmit(event) {
       event.preventDefault();
-      // webflow.js listens for submit on `document`; keep it out of this form.
+      // Webflow's runtime listens for submit on `document`; keep it out of this form.
       event.stopPropagation();
 
       var fields = readFields(form);
@@ -140,23 +141,26 @@
         console.error('[site-forms] submission failed:', err);
         finish(false);
       });
-    });
+    }
+
+    form.addEventListener('submit', onSubmit);
+    return function () { form.removeEventListener('submit', onSubmit); };
   }
 
-  function init() {
+  function mount(root) {
     // The Webflow password-protection form posts to Webflow's own /.wf_auth
     // endpoint and has no meaning outside Webflow, so leave it alone.
-    var forms = document.querySelectorAll('.w-form form:not(.w-password-page)');
-    for (var i = 0; i < forms.length; i++) wire(forms[i]);
+    var forms = root.querySelectorAll('.w-form form:not(.w-password-page)');
+    var unbinders = [];
+    for (var i = 0; i < forms.length; i++) {
+      var unbind = wire(forms[i]);
+      if (unbind) unbinders.push(unbind);
+    }
+    if (!unbinders.length) return;
+    return function () {
+      unbinders.forEach(function (fn) { fn(); });
+    };
   }
 
-  // Exposed so the page-transition code can rebind after Barba swaps the
-  // container the form lives in.
-  window.SiteForms = { init: init };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
-  }
-})();
+  window.SiteForms = { name: 'forms', mount: mount };
+})(window, document);

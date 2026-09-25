@@ -126,24 +126,33 @@ try {
                 $response.ContentType   = $type
                 $response.ContentLength64 = $bytes.Length
                 $response.Headers.Add('Cache-Control', 'no-cache')
-                $response.OutputStream.Write($bytes, 0, $bytes.Length)
+                # A HEAD request gets the headers only; writing a body to it throws.
+                if ($request.HttpMethod -ne 'HEAD') {
+                    $response.OutputStream.Write($bytes, 0, $bytes.Length)
+                }
             } else {
                 $bytes = [System.Text.Encoding]::UTF8.GetBytes('404 Not Found')
                 $response.StatusCode  = 404
                 $response.ContentType = 'text/plain; charset=utf-8'
                 $response.ContentLength64 = $bytes.Length
-                $response.OutputStream.Write($bytes, 0, $bytes.Length)
+                if ($request.HttpMethod -ne 'HEAD') {
+                    $response.OutputStream.Write($bytes, 0, $bytes.Length)
+                }
             }
         } catch {
-            $msg = [System.Text.Encoding]::UTF8.GetBytes("500 Internal Server Error`n$($_.Exception.Message)")
-            $response.StatusCode  = 500
-            $response.ContentType = 'text/plain; charset=utf-8'
-            $response.ContentLength64 = $msg.Length
-            $response.OutputStream.Write($msg, 0, $msg.Length)
             $status = 500
+            # The response may already be half-written or closed by the client;
+            # never let the error path itself take the server down.
+            try {
+                $msg = [System.Text.Encoding]::UTF8.GetBytes("500 Internal Server Error`n$($_.Exception.Message)")
+                $response.StatusCode  = 500
+                $response.ContentType = 'text/plain; charset=utf-8'
+                $response.ContentLength64 = $msg.Length
+                $response.OutputStream.Write($msg, 0, $msg.Length)
+            } catch {}
         } finally {
             Write-Host ("  {0,-3} {1}" -f $status, $request.Url.AbsolutePath)
-            $response.OutputStream.Close()
+            try { $response.OutputStream.Close() } catch {}
         }
     }
 } finally {
