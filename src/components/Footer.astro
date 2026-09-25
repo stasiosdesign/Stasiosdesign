@@ -1,0 +1,131 @@
+---
+/**
+ * The "contact me" footer that closes every page except Let's Talk. Three
+ * small variants exist on the site, expressed as props rather than copies.
+ */
+interface Props {
+  /** Where the "Get a free quote" button goes. The case studies use a mailto. */
+  quoteHref?: string;
+  /** Put the "Get in contact" heading before the "Book a call" block (all pages but Home and About). */
+  contactFirst?: boolean;
+  /** The Work page's SOCIALS heading carries an extra class. */
+  socialsClass?: string;
+}
+
+const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.props;
+---
+
+<section class="section-vh footer">
+      <div class="footer-container">
+        <div class="w-layout-blockcontainer footer-title-desktop w-container">
+          <div class="inner-desktop">
+            <div class="text-block-52">contact me</div>
+            <div class="text-block-52">contact me</div>
+          </div>
+        </div>
+        <div class="footer-buttons-container">
+          <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c77022d" href="/lets-talk" class="footer-button w-inline-block">
+            <div class="footer-button-text">Contact Page</div>
+            <div class="footer-button-hover"></div>
+          </a>
+          <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770231" href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="footer-button w-inline-block">
+            <div class="footer-button-text">Schedule a Call</div>
+            <div class="footer-button-hover"></div>
+          </a>
+        </div>
+        <div class="div-block-137">
+          <div class="footer-socials">
+            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770237" href="https://www.instagram.com/stasiosdesign/" target="_blank" class="footer-social-button w-inline-block">
+              <div class="footer-social">
+                <div class="social-text">
+                  <div class="social-name">Instagram</div>
+                  <div class="account-name">@stasiosdesign</div>
+                </div>
+                <div class="social-graphic">
+                  <div class="social-logo"></div>
+                </div>
+              </div>
+              <div class="social-hover"></div>
+            </a>
+            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770241" href="https://www.linkedin.com/in/anastasios-anastasiou-32a1a5195/" target="_blank" class="footer-social-button w-inline-block">
+              <div class="footer-social">
+                <div class="social-text">
+                  <div class="social-name">Linkedin</div>
+                  <div class="account-name">Anastasios</div>
+                </div>
+                <div class="social-graphic">
+                  <div class="social-logo linkedin"></div>
+                </div>
+              </div>
+              <div class="social-hover"></div>
+            </a>
+          </div>
+          <div class="footer-socials">
+            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c77024c" href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20Website" class="footer-social-button w-inline-block">
+              <div class="footer-social">
+                <div class="social-text">
+                  <div class="social-name">Email</div>
+                  <div class="account-name">stas@stasiosdesign.com<br></div>
+                </div>
+                <div class="social-graphic">
+                  <div class="social-logo email"></div>
+                </div>
+              </div>
+              <div class="social-hover"></div>
+            </a>
+            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770257" href="tel:07468493102" class="footer-social-button w-inline-block">
+              <div class="footer-social">
+                <div class="social-text">
+                  <div class="social-name">Phone</div>
+                  <div class="account-name phone">07468493102</div>
+                </div>
+                <div class="social-graphic">
+                  <div class="social-logo phone"></div>
+                </div>
+              </div>
+              <div class="social-hover"></div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="tablet-footer">
+        {contactFirst && (
+        <div class="div-block-203">
+          <div class="text-block-81">Get in contact</div>
+        </div>
+        )}
+        <div class="_1-container">
+          <div class="profile"></div>
+          <div class="letstalk-arrow"></div>
+          <a href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="letstalk-bookcall w-inline-block">
+            <div class="text-block-78">Book a call</div>
+          </a>
+        </div>
+        {!contactFirst && (
+        <div class="div-block-203">
+          <div class="text-block-81">Get in contact</div>
+        </div>
+        )}
+        <div class="div-block-206">
+          <a href="tel:07468493102" class="_2-container w-inline-block">
+            <div class="text-block-79">07468493102</div>
+          </a>
+          <a href={quoteHref} class="free-quote-button-footer-lets-talk w-inline-block">
+            <div class="free-quote-button-footer-text">Get a free quote</div>
+          </a>
+        </div>
+        <div class="div-block-187 footer">
+          <div class:list={['text-block-69', socialsClass]}>SOCIALS</div>
+          <div class="div-block-186">
+            <a href="https://www.instagram.com/stasiosdesign/" target="_blank" class="menu-text">Instagram<br></a>
+            <a href="https://www.linkedin.com/in/anastasios-anastasiou-32a1a5195/" target="_blank" class="menu-text">Linkedin<br></a>
+            <a href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20Website" class="menu-text">Email<br></a>
+            <a href="https://www.behance.net/anastaianastas" class="menu-text">Behance</a>
+            <div class="code-embed-menu w-embed">
+
+            </div>
+          </div>
+        </div>
+        <div class="div-block-205"></div>
+      </div>
+    </section>

@@ -1,0 +1,58 @@
+---
+/**
+ * The full-screen menu and the floating hamburger button that opens it.
+ * Opening and closing is a Webflow interaction on the `data-w-id` elements;
+ * the scroll lock is the site's own delegated `[scroll="both"]` handler.
+ * Part of the persistent shell.
+ */
+import { currentPage } from '../lib/current-page';
+
+const here = currentPage(Astro.url);
+const current = (href: string) => href === here;
+
+const items = [
+  { href: '/', label: 'Home', id: 'd06fb79b-24e9-62ce-75e7-368a124a90ce', className: 'menu-buttons home' },
+  { href: '/work', label: 'Work', id: 'd06fb79b-24e9-62ce-75e7-368a124a90d1', className: 'menu-buttons' },
+  // The About page is a placeholder, so its menu item points at Work.
+  { href: '/work', label: 'About', id: 'd06fb79b-24e9-62ce-75e7-368a124a90d4', className: 'menu-buttons' },
+  { href: '/lets-talk', label: 'Lets Talk', id: 'd06fb79b-24e9-62ce-75e7-368a124a90d7', className: 'menu-buttons letstalk' },
+];
+---
+
+<div class="side-menu">
+    <a id="hamburger-menu" scroll="both" data-w-id="d06fb79b-24e9-62ce-75e7-368a124a90c3" href="#" class="hamburger-menu w-inline-block">
+      <div class="hamburger-menu-lines">
+        <div class="hamburger-menu-line-top"></div>
+        <div class="hamburger-menu-line-bottom"></div>
+      </div>
+    </a>
+    <div class="menu-container">
+      <div class="menu-border">
+        <div class="div-block-146">
+          <div>
+            <div class="text-block-69">MENU</div>
+          </div>
+          <div class="menu-text-container">
+            {items.map((item) => (
+            <a data-w-id={item.id} href={item.href} aria-current={current(item.href) ? 'page' : undefined} class:list={['menu-link w-inline-block', { 'w--current': current(item.href) }]}>
+              <div class={item.className}>{item.label}</div>
+            </a>
+            ))}
+          </div>
+        </div>
+        <div class="div-block-187">
+          <div class="text-block-69">SOCIALS</div>
+          <div class="div-block-186">
+            <a href="https://www.instagram.com/stasiosdesign/" target="_blank" class="menu-text">Instagram<br></a>
+            <a href="https://www.linkedin.com/in/anastasios-anastasiou-32a1a5195/" target="_blank" class="menu-text">Linkedin<br></a>
+            <a href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20Website" class="menu-text">Email<br></a>
+            <a href="https://www.behance.net/anastaianastas" target="_blank" class="menu-text">Behance</a>
+            <div class="code-embed-menu w-embed">
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dim-background"></div>
+  </div>

@@ -1,0 +1,29 @@
+---
+/**
+ * The black top bar shown on tablet and phone widths, with the "Menu" button
+ * that opens the side menu. Part of the persistent shell.
+ */
+import { currentPage } from '../lib/current-page';
+
+const here = currentPage(Astro.url);
+const current = (href: string) => href === here;
+---
+
+<div scroll="both" class="tablet-nav-black">
+    <div class="tablet-nav-left">
+      <a href="/" aria-current={current('/') ? 'page' : undefined} class:list={['div-block-226 w-inline-block', { 'w--current': current('/') }]}></a>
+      <a href="/" aria-current={current('/') ? 'page' : undefined} class:list={['tablet-nav-text', { 'w--current': current('/') }]}>stasios<span class="text-span-56">design</span></a>
+    </div>
+    <div class="div-block-227">
+      <a href="/lets-talk" aria-current={current('/lets-talk') ? 'page' : undefined} class:list={['tablet-nav--cta-right w-inline-block', { 'w--current': current('/lets-talk') }]}>
+        <div class="tablet-nav-cta-text">Contact Me</div>
+      </a>
+      <div data-w-id="f3757ca6-21a1-9803-d563-24f80721db24" class="tablet-nav-right">
+        <div class="tablet-hamburger-menu">
+          <div class="tablet-hamburger-menu-line-top"></div>
+          <div class="tablet-hamburger-menu-line-bottom"></div>
+        </div>
+        <div class="tablet-nav-text">Menu</div>
+      </div>
+    </div>
+  </div>

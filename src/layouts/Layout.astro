@@ -1,0 +1,92 @@
+---
+/**
+ * The document every page shares: <head>, fonts, global CSS, the persistent
+ * shell (tablet nav, side menu, loader, cursor labels), the Barba container
+ * that the page's content renders into, and the one client script.
+ *
+ * Barba swaps only the container between pages, so everything else here is
+ * created once per visit and kept alive across navigations.
+ */
+import '../styles/normalize.css';
+import '../styles/webflow.css';
+import '../styles/site.css';
+import webfontLoaderUrl from 'webfontloader/webfontloader.js?url';
+import TabletNav from '../components/TabletNav.astro';
+import SideMenu from '../components/SideMenu.astro';
+import GlobalElements from '../components/GlobalElements.astro';
+
+interface Props {
+  /** <title> */
+  title: string;
+  /** og:title and twitter:title; defaults to the title. */
+  ogTitle?: string;
+  /** Webflow page id. The IX2 interaction engine scopes its element targets to it. */
+  pageId: string;
+  /** Page-level styling hangs off the body class (body-2, body-8, body-9 ...). */
+  bodyClass?: string;
+  /** The Barba container's class; the contact page uses a different one. */
+  containerClass?: string;
+  /** Render the persistent shell. Only the 404 page goes without it. */
+  shell?: boolean;
+  /** Magnetic-cursor labels, see GlobalElements. */
+  viewLabel?: string;
+  startLabel?: string;
+  viewLabelClass?: string;
+  lottieId?: string;
+}
+
+const {
+  title,
+  ogTitle = title,
+  pageId,
+  bodyClass,
+  containerClass,
+  shell = true,
+  viewLabel,
+  startLabel,
+  viewLabelClass,
+  lottieId,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html data-wf-page={pageId} data-wf-site="65df193093f48b20c5d503c7" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>{title}</title>
+  <meta content={ogTitle} property="og:title">
+  <meta content={ogTitle} name="twitter:title">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta content="NLpKZPffNHpax_EZYGjJWls2rFaEWDug4M7Ip3ZYEdI" name="google-site-verification">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  {/* Fonts load synchronously in the head: the WebFont loader marks <html> as
+      `wf-loading`, which the stylesheet uses to hide the page until the faces
+      are ready. Montserrat comes from Google Fonts, urbane and mixta-pro from
+      the Adobe Fonts kit. */}
+  <script is:inline src={webfontLoaderUrl}></script>
+  <script is:inline>WebFont.load({  google: {    families: ["Montserrat:300,400,500"]  }});</script>
+  <script is:inline src="https://use.typekit.net/vhm2hbv.js"></script>
+  <script is:inline>try{Typekit.load();}catch(e){}</script>
+  {/* Marks <html> as `w-mod-js` (and `w-mod-touch`) before first paint; the
+      interaction pre-states in the stylesheet key off it. */}
+  <script is:inline>!function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);</script>
+  <link href="/images/favicon.png" rel="shortcut icon" type="image/x-icon">
+  <link href="/images/webclip.png" rel="apple-touch-icon">
+</head>
+<body class={bodyClass} data-barba="wrapper">
+  {shell && (
+    <Fragment>
+      {/* The home page's first-load intro: IX2 shows it and fades it out. Inert elsewhere. */}
+      <div data-w-id="e3c5ff61-7250-9699-0310-b36b2f157cfa" class="cover"></div>
+      <TabletNav />
+      <SideMenu />
+      <GlobalElements viewLabel={viewLabel} startLabel={startLabel} viewLabelClass={viewLabelClass} lottieId={lottieId} />
+    </Fragment>
+  )}
+  <div data-transition-wrap class="page-transition"><div data-transition-dark class="page-transition__dark"></div></div><div class={containerClass} data-barba="container">
+<slot />
+  </div>
+  <script src="../scripts/main.js"></script>
+</body>
+</html>

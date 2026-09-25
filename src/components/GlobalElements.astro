@@ -1,0 +1,50 @@
+---
+/**
+ * The first-load loader (Webflow's Lottie wipe, played by clicking
+ * `.transition-trigger`) and the two magnetic cursor labels. Part of the
+ * persistent shell; the labels' text is per page, and app.js copies the next
+ * page's labels into the shell on every Barba navigation.
+ */
+interface Props {
+  /** Label that follows the pointer over project links, e.g. "[View Project]". */
+  viewLabel?: string;
+  /** Label over "start a project" links, e.g. "[Start Your Project]". */
+  startLabel?: string;
+  /** The Work page styles its view label with an extra class. */
+  viewLabelClass?: string;
+  /** The Lottie element's Webflow id; only the home page has its own. */
+  lottieId?: string;
+}
+
+const {
+  viewLabel = '[View Projects]',
+  startLabel = '[View Projects]',
+  viewLabelClass,
+  lottieId = 'ee8dc74a-74cf-d16c-175f-146e55779441',
+} = Astro.props;
+---
+
+<div class="other-global-elements">
+    <div class="global">
+      <div class="transition">
+        <div class="transition-trigger"></div>
+        <div class="transition-content">
+          <div class="transition-bg">
+            <div class="transition-color">
+              <div class="transition-color-border"></div>
+            </div>
+            <div data-is-ix2-target="1" class="transition-lottie" data-w-id={lottieId} data-animation-type="lottie" data-src="/documents/Black-Wave-.json" data-loop="0" data-direction="1" data-autoplay="0" data-renderer="svg" data-default-duration="0" data-duration="0.7333333333333333" data-loading="eager"></div>
+          </div><img loading="lazy" src="/images/Logo-σ-white-σ-SVG.svg" alt="" class="transition-logo-img">
+        </div>
+      </div>
+      <div class="html w-embed">
+
+      </div>
+    </div>
+    <div class="cursor-viewproject">
+      <p class={viewLabelClass}>{viewLabel}<br></p>
+    </div>
+    <div class="cursor-startproject">
+      <p>{startLabel}<br></p>
+    </div>
+  </div>

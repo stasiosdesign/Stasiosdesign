@@ -1,0 +1,26 @@
+{
+  "name": "stasiosdesign",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "stasiosdesign.com - Astro site",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.6.0",
+    "@barba/core": "2.10.3",
+    "@studio-freight/lenis": "1.0.33",
+    "astro": "^7.3.5",
+    "gsap": "3.12.2",
+    "jquery": "3.5.1",
+    "split-type": "0.3.4",
+    "webfontloader": "1.6.26"
+  }
+}
