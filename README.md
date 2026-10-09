@@ -131,11 +131,11 @@ site's pages (Home, Work, Let's Talk, About) and its case studies.
   *Protection Bypass for Automation* secret saved in its Vercel Protection
   Bypass tool (`/vercel-protection-bypass`).
 - **Publishing.** The Studio's publishing control calls `api/publish.ts`, a
-  Vercel Function on the production deployment. **Publish to Staging**
-  publishes the document in `staging` and calls the `staging` branch's deploy
-  hook, so the static staging site is rebuilt; **Publish Live…** (after a
-  confirmation) also copies it to `production` and calls the `main` deploy
-  hook. The Studio watches `/build.json` (the build stamp) to tell when the
+  Vercel Function on the production deployment. **Publish** (the button;
+  **Publish Site** on the static pages) publishes the document in `staging`,
+  copies it to `production` and calls both deploy hooks, so both sites are
+  rebuilt; **Publish to Staging** (in the button's menu) publishes it in
+  `staging` only and calls the `staging` branch's deploy hook. The Studio watches `/build.json` (the build stamp) to tell when the
   live rebuild is done. The route needs three Production environment
   variables in Vercel: `SANITY_API_WRITE_TOKEN` (a Sanity token with the
   Editor role), `VERCEL_DEPLOY_HOOK_URL` (the `main` hook) and
