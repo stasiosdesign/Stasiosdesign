@@ -15,7 +15,7 @@ src/
   vendor/webflow-runtime.js        Webflow's runtime (IX2 engine, Lottie, links, forms)
   lib/current-page.ts   the route helper the nav components use to mark the current page
 public/
-  images/ documents/    assets, served as-is at /images/... and /documents/...
+  assets/ documents/    assets/{images,logos,icons,graphics}, served as-is at /assets/...; documents/ holds the loader animation
   robots.txt
 astro.config.mjs    file-based output (/work -> work.html), no trailing slashes, sitemap
 vercel.json         clean URLs and the two /index redirects
