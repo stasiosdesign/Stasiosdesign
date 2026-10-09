@@ -108,7 +108,7 @@ site's pages don't read it yet.
 
 It is also where the shared CMS is developed: `npm run dev` in `studio/`
 (http://localhost:3334) runs the package's local source from
-`../sanity-cms`, so CMS changes show immediately; `npm run dev:released`
+`../shared-sanity-cms`, so CMS changes show immediately; `npm run dev:released`
 runs the installed release. See CLAUDE.md, "The CMS".
 
 First time on a machine: give npm read access to GitHub Packages (see the

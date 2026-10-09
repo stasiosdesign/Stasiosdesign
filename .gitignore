@@ -16,3 +16,9 @@ Desktop.ini
 # Unpublished source material and new files to add: stays on this computer, never in Git.
 # The repositories are public and this may hold confidential originals.
 source-assets/
+
+# The Studio: its public settings are committed (no secrets in them)
+!studio/.env.development
+!studio/.env.production
+*.tsbuildinfo
+studio/.sanity/
