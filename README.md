@@ -97,3 +97,19 @@ plays the first-load loader (the Lottie wipe).
 - The home page's `og:title` is still the Webflow template's ("Business - Webflow HTML website
   template"). It is content, so it was left for you to change in `src/pages/index.astro`.
 - The 404 page renders blank, as the live one does.
+
+## The Studio (`studio/`)
+
+A Sanity Studio for the site's content (project `9k36yeeg`, dataset
+`staging`), built on the shared CMS package `@stasiosdesign/sanity-cms`
+(private, GitHub Packages; the `sanity-cms` repository). It models the
+site's pages (Home, Work, Let's Talk, About) and its case studies; the
+site's pages don't read it yet.
+
+It is also where the shared CMS is developed: `npm run dev` in `studio/`
+(http://localhost:3334) runs the package's local source from
+`../sanity-cms`, so CMS changes show immediately; `npm run dev:released`
+runs the installed release. See CLAUDE.md, "The CMS".
+
+First time on a machine: give npm read access to GitHub Packages (see the
+sanity-cms README, "Access"), then `npm install` in `studio/`.

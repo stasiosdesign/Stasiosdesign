@@ -1,0 +1,19 @@
+# Updates of the shared CMS package (@stasiosdesign/sanity-cms) only: when a
+# new version is released, Dependabot opens a pull request that bumps
+# studio/package.json and package-lock.json; the Studio workflow checks it.
+# Merging it is the approval; deploying the Studio is a separate step
+# (CLAUDE.md, "The CMS"). Dependabot reads the private package with this
+# repository's own token, once the repository has Read access in the
+# package's settings. Other dependencies (Sanity itself included) are
+# updated deliberately.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /studio
+    schedule:
+      interval: daily
+    allow:
+      - dependency-name: '@stasiosdesign/*'
+    commit-message:
+      prefix: 'Studio:'
+    open-pull-requests-limit: 3

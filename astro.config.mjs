@@ -18,4 +18,8 @@ export default defineConfig({
   integrations: [
     sitemap({ filter: (page) => !page.endsWith('/404') }),
   ],
+
+  // The Sanity Studio in studio/ is its own app: its rebuilds while it runs
+  // beside the site must not reload the site's dev server (development only).
+  vite: { server: { watch: { ignored: ['**/studio/**'] } } },
 });

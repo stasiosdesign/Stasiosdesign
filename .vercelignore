@@ -1,3 +1,6 @@
 # Local tooling and docs - not part of the deployed site.
 README.md
 .claude
+CLAUDE.md
+# The Sanity Studio: deployed by hand to sanity.studio, never by Vercel
+studio

@@ -12,3 +12,9 @@ dist/
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# The Studio's public settings are committed (no secrets in them)
+!studio/.env.development
+!studio/.env.production
+*.tsbuildinfo
+studio/.sanity/

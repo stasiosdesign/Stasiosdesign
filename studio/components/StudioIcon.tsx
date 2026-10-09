@@ -1,0 +1,8 @@
+/* The Studio's icon: the website's favicon, served from studio/static. The
+   top bar shows it beside "CMS" and in the project menu (project.ts,
+   brand.icon). */
+const SITE_FAVICON = '/static/site-favicon.png'
+
+export function StudioIcon() {
+  return <img src={SITE_FAVICON} alt="" style={{display: 'block', width: '100%', height: '100%', objectFit: 'cover', borderRadius: '50%'}} />
+}

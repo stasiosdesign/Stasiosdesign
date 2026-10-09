@@ -12,6 +12,26 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "preview", "--", "--port", "4322"],
       "port": 4322
+    },
+    {
+      "name": "site",
+      "runtimeExecutable": "C:/Users/Anast/AppData/Local/OpenAI/Codex/runtimes/cua_node/6f12e0ef1c6e5061/bin/node.exe",
+      "runtimeArgs": ["node_modules/astro/bin/astro.mjs", "dev", "--port", "4321"],
+      "port": 4321
+    },
+    {
+      "name": "studio",
+      "runtimeExecutable": "C:/Users/Anast/AppData/Local/OpenAI/Codex/runtimes/cua_node/6f12e0ef1c6e5061/bin/node.exe",
+      "runtimeArgs": ["C:/Users/Anast/AppData/Local/OpenAI/Codex/runtimes/cua_node/6f12e0ef1c6e5061/bin/node_modules/npm/bin/npm-cli.js", "run", "dev"],
+      "cwd": "studio",
+      "port": 3334
+    },
+    {
+      "name": "studio-released",
+      "runtimeExecutable": "C:/Users/Anast/AppData/Local/OpenAI/Codex/runtimes/cua_node/6f12e0ef1c6e5061/bin/node.exe",
+      "runtimeArgs": ["C:/Users/Anast/AppData/Local/OpenAI/Codex/runtimes/cua_node/6f12e0ef1c6e5061/bin/node_modules/npm/bin/npm-cli.js", "run", "dev:released"],
+      "cwd": "studio",
+      "port": 3334
     }
   ]
 }
