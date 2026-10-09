@@ -7,7 +7,7 @@ on:
   pull_request:
     paths: ['studio/**', '.github/workflows/studio.yml']
   push:
-    branches: [main]
+    branches: [main, staging]
     paths: ['studio/**', '.github/workflows/studio.yml']
 permissions:
   contents: read

@@ -52,6 +52,9 @@ const {
   doc,
 } = Astro.props;
 const docAttrs = doc ? pageDoc(doc.id, doc.type) : {};
+// Staging (every Vercel deployment but main's) is never indexed: it is built
+// from the staging dataset, for review only (astro.config.mjs)
+const staging = __DEPLOYMENT__ !== 'production';
 ---
 
 <!DOCTYPE html>
@@ -62,6 +65,7 @@ const docAttrs = doc ? pageDoc(doc.id, doc.type) : {};
   <meta content={ogTitle} property="og:title">
   <meta content={ogTitle} name="twitter:title">
   <meta content="width=device-width, initial-scale=1" name="viewport">
+  {staging && <meta name="robots" content="noindex, nofollow">}
   <meta content="NLpKZPffNHpax_EZYGjJWls2rFaEWDug4M7Ip3ZYEdI" name="google-site-verification">
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">

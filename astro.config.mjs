@@ -2,6 +2,23 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+/* One codebase, built two ways, both fully static. Which one comes from
+   Vercel (VERCEL_ENV), never from a hostname, so a custom domain changes
+   nothing here:
+
+   production   `main` on Vercel, and `npm run build` on your machine: built
+                from the production dataset, the one only Publish Live writes.
+   staging      every other Vercel deployment, the `staging` branch above all:
+                built from the staging dataset, the one the Studio edits and
+                Publish Staging writes; never indexed (Layout.astro).
+   (`npm run dev` is staging's behaviour, on your machine.) */
+const { VERCEL_ENV, NODE_ENV } = process.env;
+const deployment =
+  VERCEL_ENV === 'production' ? 'production'
+  : VERCEL_ENV === 'preview' ? 'staging'
+  : VERCEL_ENV === 'development' || NODE_ENV === 'development' ? 'development'
+  : 'production';
+
 // A build stamp, dist/build.json, saying when the site was built. The Studio's
 // publishing progress reads it (vercel.json lets it, across origins) to tell
 // when a live publish has reached the site: the rebuild api/publish.ts asks for.
@@ -11,7 +28,7 @@ const buildStamp = () => ({
   hooks: {
     'astro:build:done': async ({ dir }) => {
       const { writeFile } = await import('node:fs/promises');
-      const stamp = { builtAt: new Date().toISOString(), deployment: process.env.VERCEL_ENV ?? 'local' };
+      const stamp = { builtAt: new Date().toISOString(), deployment };
       await writeFile(new URL('build.json', dir), JSON.stringify(stamp));
     },
   },
@@ -35,7 +52,12 @@ export default defineConfig({
     buildStamp(),
   ],
 
-  // The Sanity Studio in studio/ is its own app: its rebuilds while it runs
-  // beside the site must not reload the site's dev server (development only).
-  vite: { server: { watch: { ignored: ['**/studio/**'] } } },
+  vite: {
+    // The deployment, fixed at build time (src/cms/env.d.ts): which dataset
+    // the build reads (src/cms/client.ts), and staging's noindex (Layout.astro)
+    define: { __DEPLOYMENT__: JSON.stringify(deployment) },
+    // The Sanity Studio in studio/ is its own app: its rebuilds while it runs
+    // beside the site must not reload the site's dev server (development only).
+    server: { watch: { ignored: ['**/studio/**'] } },
+  },
 });

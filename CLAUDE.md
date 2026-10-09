@@ -1,7 +1,7 @@
 # Stasios Design Website: instructions for Claude
 
 stasiosdesign.com, the user's own company site. Astro 7, migrated from a Webflow export. Universal rules (naming, assets, git, safety): the workspace `CLAUDE.md`.
-GitHub: `stasiosdesign/Stasiosdesign` (`main` deploys via Vercel; do not push unless asked). The README documents the architecture (Barba page lifecycle, Webflow runtime, features): read it before touching scripts.
+GitHub: `stasiosdesign/Stasiosdesign`. Two branches: `main` is **production** (every push deploys https://stasiosdesign.vercel.app) and `staging` is the permanent **staging** branch (every push deploys https://stasiosdesign-git-staging-stasiosdesign.vercel.app, built from the staging dataset, never indexed). Work locally, push to `staging` for an online preview, and merge `staging` into `main` only when the user approves a production deployment; never delete `staging`, never force-push. The README documents the architecture (Barba page lifecycle, Webflow runtime, features): read it before touching scripts.
 
 This repository is also **the development environment for the shared CMS**: its Studio (`studio/`) runs the shared package's local source, so CMS changes are made and previewed from here (see "The CMS" below).
 
@@ -73,12 +73,13 @@ Shared code never names a site or its types; if it needs to know something new a
 
 - The Studio is not part of the Vercel deployment (`.vercelignore`).
 - The site reads Sanity (README, "How the site reads it"):
-  - `src/cms/content.ts` reads `production` at build time.
+  - `src/cms/content.ts` reads the dataset the deployment is for at build time: `production` on `main`, `staging` on every other branch (`__DEPLOYMENT__`, from Vercel's `VERCEL_ENV` in `astro.config.mjs`).
   - Every bound element falls back to its own words in `src/cms/defaults.ts`. Keep those exactly as the page text, typos included. They are also what `npm run seed` writes.
   - `src/cms/live-preview.ts` drives the Visual editor.
   - `api/publish.ts` publishes and triggers the rebuild.
 - Binding a new element: give it `data-page-field` (plus `data-page-format` when it holds markup) inside a `data-page-doc` container. Add the field to the schema and its current text to `defaults.ts`. Then rebuild and confirm the page is unchanged.
-- The publish route needs `SANITY_API_WRITE_TOKEN` and `VERCEL_DEPLOY_HOOK_URL` in Vercel. Its allowed origins are the hosted Studio and `localhost:3334`. The route is self-contained (Vercel runs it as plain Node ESM, so no imports from `src/`). Its publish-log keys (`contentKey`, `logId`) must match the package's; `npm test` in `studio/` checks that.
+- The publish route needs `SANITY_API_WRITE_TOKEN`, `VERCEL_DEPLOY_HOOK_URL` (the `main` deploy hook) and `VERCEL_STAGING_DEPLOY_HOOK_URL` (the `staging` deploy hook) in Vercel's Production environment: both sites are static, so a staging publish rebuilds staging and a live publish rebuilds production. Its allowed origins are the hosted Studio and `localhost:3334`. The route is self-contained (Vercel runs it as plain Node ESM, so no imports from `src/`). Its publish-log keys (`contentKey`, `logId`) must match the package's; `npm test` in `studio/` checks that.
 - Never commit tokens. The package is private; `studio/.npmrc` names its registry only. Access: `../shared-sanity-cms/README.md`, "Access".
-- Sanity project `9k36yeeg`: `staging` (the Studio edits it), `production` (what the site builds from; only publishing writes it). `npm run seed` in `studio/` writes the site's current words to `staging`, never over a document edited in the Studio. The user's Sanity login is GitHub.
+- The hosted Studio's Visual editor shows the staging site (`studio/.env.production`), which sits behind Vercel Authentication: the bypass secret is saved once in the Studio's Vercel Protection Bypass tool (`/vercel-protection-bypass`).
+- Sanity project `9k36yeeg`: `staging` (the Studio edits it; the staging site builds from it), `production` (what the live site builds from; only publishing writes it). `npm run seed` in `studio/` writes the site's current words to `staging`, never over a document edited in the Studio. The user's Sanity login is GitHub.
 - Sanity upgrades are deliberate and start here: `autoUpdates` is off.

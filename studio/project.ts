@@ -1,5 +1,6 @@
 import {ProjectsIcon} from '@sanity/icons/Projects'
 import {defineLocations} from 'sanity/presentation'
+import {vercelProtectionBypassTool} from '@sanity/vercel-protection-bypass'
 import type {CmsProjectConfig} from '@stasiosdesign/sanity-cms'
 import {StudioIcon} from './components/StudioIcon'
 import {PAGES, schemaTypes} from './schemaTypes'
@@ -91,4 +92,13 @@ export const project: CmsProjectConfig = {
     route: PUBLISH_ROUTE,
     rebuildHelp: 'check VERCEL_DEPLOY_HOOK_URL in the Vercel project’s environment variables',
   },
+
+  plugins: [
+    // The staging site (the Visual editor's preview) sits behind Vercel
+    // Authentication. This tool stores Vercel's "Protection Bypass for
+    // Automation" secret in the dataset (a private document); the Visual
+    // editor then adds it to the staging URLs it opens. Hidden from the top
+    // bar, reached by its URL alone: /vercel-protection-bypass.
+    vercelProtectionBypassTool(),
+  ],
 }

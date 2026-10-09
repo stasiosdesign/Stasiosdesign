@@ -32,9 +32,19 @@ npm run build      # production build into dist/
 npm run preview    # serve dist/ locally
 ```
 
-Deployment is unchanged: push to GitHub and Vercel builds it. Vercel detects Astro from
-`package.json` (build command `astro build`, output `dist`), and `vercel.json` keeps the clean
-URLs the site has always used.
+Push to GitHub and Vercel builds it. Vercel detects Astro from `package.json` (build command
+`astro build`, output `dist`), and `vercel.json` keeps the clean URLs the site has always used.
+Two branches, two deployments, both fully static:
+
+|            | URL                                                          | From      | Built from the dataset |
+| ---------- | ------------------------------------------------------------ | --------- | ---------------------- |
+| Production | https://stasiosdesign.vercel.app                             | `main`    | `production`           |
+| Staging    | https://stasiosdesign-git-staging-stasiosdesign.vercel.app   | `staging` | `staging`              |
+
+Which is which comes from Vercel itself (`VERCEL_ENV`, read in `astro.config.mjs`), never
+from a hostname. Staging is never indexed (`noindex` on every page) and sits behind Vercel
+Authentication. Work locally, push to `staging` for an online preview, and promote to
+production with `git switch main`, `git merge --ff-only staging`, `git push`.
 
 ### The contact form
 
@@ -107,21 +117,29 @@ site's pages (Home, Work, Let's Talk, About) and its case studies.
 
 ### How the site reads it (`src/cms/`)
 
-- **Build time.** Each page reads its document from the `production` dataset
-  (`src/cms/content.ts`). Every bound element keeps its own words as a fallback
+- **Build time.** Each page reads its document from the deployment's dataset
+  (`src/cms/content.ts`): `production` on `main`, `staging` on the `staging`
+  branch. Every bound element keeps its own words as a fallback
   (`src/cms/defaults.ts`, the exact text the pages had), so an empty or missing
   field changes nothing. The site stays fully static.
 - **Visual editor.** In the Studio's iframe only, `Layout.astro` loads
-  `src/cms/live-preview.ts`. It reads the `staging` drafts through the Studio's
-  own login (live mode, no token in the browser) and writes them into the
-  elements marked `data-page-doc` / `data-page-field`, with click-to-edit
-  overlays.
-- **Publishing.** The Studio's Publish button calls `api/publish.ts`, a Vercel
-  Function on this site. It copies the staging documents to `production` and
-  then calls the Vercel deploy hook to rebuild. The Studio watches
-  `/build.json` (the build stamp) to tell when the rebuild is live. It needs two
-  Production environment variables in Vercel: `SANITY_API_WRITE_TOKEN` (a
-  Sanity token with the Editor role) and `VERCEL_DEPLOY_HOOK_URL`.
+  `src/cms/live-preview.ts`. The hosted Studio shows the staging site; the
+  script reads the `staging` drafts through the Studio's own login (live
+  mode, no token in the browser) and writes them into the elements marked
+  `data-page-doc` / `data-page-field`, with click-to-edit overlays. Staging
+  sits behind Vercel Authentication: the Studio gets through with the
+  *Protection Bypass for Automation* secret saved in its Vercel Protection
+  Bypass tool (`/vercel-protection-bypass`).
+- **Publishing.** The Studio's publishing control calls `api/publish.ts`, a
+  Vercel Function on the production deployment. **Publish to Staging**
+  publishes the document in `staging` and calls the `staging` branch's deploy
+  hook, so the static staging site is rebuilt; **Publish Live…** (after a
+  confirmation) also copies it to `production` and calls the `main` deploy
+  hook. The Studio watches `/build.json` (the build stamp) to tell when the
+  live rebuild is done. The route needs three Production environment
+  variables in Vercel: `SANITY_API_WRITE_TOKEN` (a Sanity token with the
+  Editor role), `VERCEL_DEPLOY_HOOK_URL` (the `main` hook) and
+  `VERCEL_STAGING_DEPLOY_HOOK_URL` (the `staging` hook).
 - `npm run check` type-checks `src/cms/` and `api/`.
 
 It is also where the shared CMS is developed: `npm run dev` in `studio/`

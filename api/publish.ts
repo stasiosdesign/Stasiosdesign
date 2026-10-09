@@ -39,7 +39,10 @@
    is rebuilt once per action, not once per document: after every production
    transaction this route calls the site's Vercel deploy hook itself
    (VERCEL_DEPLOY_HOOK_URL), and it still writes the marker
-   publish-log.site-build, which a Sanity webhook could watch instead.
+   publish-log.site-build, which a Sanity webhook could watch instead. The
+   staging site is static as well, built from the staging dataset by the
+   `staging` branch, so after every staging write the route calls that
+   branch's deploy hook too (VERCEL_STAGING_DEPLOY_HOOK_URL).
 
    Progress: a caller that accepts application/x-ndjson gets the answer as a
    stream of lines, one per stage as it completes ({"phase":"staging"} when
@@ -102,20 +105,25 @@ export const logId = (id: string) => `publish-log.${id}`;
 /* Secrets, from the Vercel project's environment variables (Production);
    never in the repository, never sent to a browser:
    - SANITY_API_WRITE_TOKEN: a Sanity token with the Editor role, for project 9k36yeeg
-   - VERCEL_DEPLOY_HOOK_URL: this project's deploy hook, for rebuilding the static site */
+   - VERCEL_DEPLOY_HOOK_URL: the deploy hook for `main`, for rebuilding the live site
+   - VERCEL_STAGING_DEPLOY_HOOK_URL: the deploy hook for `staging`, for rebuilding
+     the staging site (static too, built from the staging dataset) */
 const SANITY_API_WRITE_TOKEN = process.env.SANITY_API_WRITE_TOKEN;
 const DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK_URL;
+const STAGING_DEPLOY_HOOK = process.env.VERCEL_STAGING_DEPLOY_HOOK_URL;
 
-/** Asks Vercel for a fresh production build, so the static pages show what was just written live. A failure is logged, never the action's. */
-async function rebuild(): Promise<void> {
-  if (!DEPLOY_HOOK) return console.warn('[publish] VERCEL_DEPLOY_HOOK_URL is not set: the live site is not rebuilt');
+/** Asks Vercel for a fresh build of a site, so its static pages show what was just written to its dataset. A failure is logged, never the action's. */
+async function rebuildWith(hook: string | undefined, site: string, variable: string): Promise<void> {
+  if (!hook) return console.warn(`[publish] ${variable} is not set: the ${site} site is not rebuilt`);
   try {
-    const response = await fetch(DEPLOY_HOOK, { method: 'POST' });
-    if (!response.ok) console.error('[publish] the deploy hook answered', response.status);
+    const response = await fetch(hook, { method: 'POST' });
+    if (!response.ok) console.error(`[publish] the ${site} deploy hook answered`, response.status);
   } catch (error) {
-    console.error('[publish] the deploy hook could not be reached', error);
+    console.error(`[publish] the ${site} deploy hook could not be reached`, error);
   }
 }
+const rebuild = () => rebuildWith(DEPLOY_HOOK, 'live', 'VERCEL_DEPLOY_HOOK_URL');
+const rebuildStaging = () => rebuildWith(STAGING_DEPLOY_HOOK, 'staging', 'VERCEL_STAGING_DEPLOY_HOOK_URL');
 
 const API_VERSION = '2025-02-19';
 const STAGING = 'staging';
@@ -385,6 +393,9 @@ async function writeAll(staging: SanityClient, production: SanityClient, prepare
     if ((error as { statusCode?: number }).statusCode === 409) return toStaging(false);
     throw error;
   });
+  // Staging is static too: it is rebuilt from the staging dataset after every
+  // staging write (the Visual editor shows drafts live without it)
+  await rebuildStaging();
   timings.staging = Math.round(performance.now() - stagingStarted);
   send({ phase: 'staging' });
   if (!live) return { done: ids };
@@ -538,6 +549,7 @@ async function takeDownAll(staging: SanityClient, production: SanityClient, item
     }
     if (any) await notes.commit({ returnDocuments: false });
   }
+  await rebuildStaging();
   timings.staging = Math.round(performance.now() - stagingStarted);
   send({ phase: 'staging' });
   return { done: ids };
