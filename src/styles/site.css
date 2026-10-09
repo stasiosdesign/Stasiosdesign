@@ -508,7 +508,7 @@ figcaption {
 .divblockforspin {
   filter: saturate(0%);
   background-color: #fff;
-  background-image: url('/images/Card-Background-Texture-Low-Res_1.avif');
+  background-image: url('/assets/images/Card-Background-Texture-Low-Res_1.avif');
   background-position: 50%;
   background-size: cover;
   border: 1px #000;
@@ -528,7 +528,7 @@ figcaption {
 
 .divblockforspin._2 {
   filter: saturate(0%);
-  background-image: url('/images/Profile-Pic-Budapest-Landscape-Low-Res.webp');
+  background-image: url('/assets/images/Profile-Pic-Budapest-Landscape-Low-Res.webp');
   background-position: 50% 0;
   background-size: cover;
   border-radius: 300px;
@@ -563,7 +563,7 @@ figcaption {
 
 .logomove {
   aspect-ratio: 1;
-  background-image: url('/images/Logo-σ-black-σ-SVG.svg');
+  background-image: url('/assets/logos/Logo-σ-black-σ-SVG.svg');
   background-position: 50%;
   background-size: cover;
   height: 100%;
@@ -665,7 +665,7 @@ figcaption {
 
 .arrow {
   aspect-ratio: 1;
-  background-image: url('/images/Arrow-Down--Streamline-Heroicons-Outline.svg');
+  background-image: url('/assets/icons/Arrow-Down--Streamline-Heroicons-Outline.svg');
   background-position: 50%;
   background-size: cover;
   width: auto;
@@ -837,7 +837,7 @@ figcaption {
 .project-container.structure {
   background-color: var(--clear);
   filter: saturate(75%);
-  background-image: url('/images/TOD-Structure-mid_res_1.avif');
+  background-image: url('/assets/images/TOD-Structure-mid_res_1.avif');
   background-size: cover;
   border-radius: 7px;
 }
@@ -847,7 +847,7 @@ figcaption {
   background-color: var(--clear);
   filter: contrast(110%) saturate(61%);
   mix-blend-mode: normal;
-  background-image: url('/images/TOD-Oculus-detial_1.avif');
+  background-image: url('/assets/images/TOD-Oculus-detial_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 7px;
@@ -857,7 +857,7 @@ figcaption {
   aspect-ratio: 3150 / 1050;
   background-color: var(--clear);
   mix-blend-mode: multiply;
-  background-image: url('/images/TOD-VLong-section-mid_res_1.avif');
+  background-image: url('/assets/images/TOD-VLong-section-mid_res_1.avif');
   background-position: 0 0;
   background-size: cover;
   border-radius: 0;
@@ -867,14 +867,14 @@ figcaption {
   aspect-ratio: 1;
   opacity: 1;
   filter: saturate(63%);
-  background-image: url('/images/TOD-Visual-high_res_1.avif');
+  background-image: url('/assets/images/TOD-Visual-high_res_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 7px;
 }
 
 .project-container.gound-floor-axo {
-  background-image: url('/images/TOD-Groudn-floor-plan_1.avif');
+  background-image: url('/assets/images/TOD-Groudn-floor-plan_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 7px;
@@ -904,7 +904,7 @@ figcaption {
 .architecture_square_work {
   aspect-ratio: 1;
   background-color: var(--light-grey);
-  background-image: url('/images/SKETCH-Initial-Sketches-Low-Res.webp');
+  background-image: url('/assets/images/SKETCH-Initial-Sketches-Low-Res.webp');
   background-position: 50%;
   background-size: cover;
   border-radius: 4px;
@@ -913,66 +913,66 @@ figcaption {
 
 .architecture_square_work._2 {
   filter: saturate(0%);
-  background-image: url('/images/TOD-Model-2-Low-Res.webp');
+  background-image: url('/assets/images/TOD-Model-2-Low-Res.webp');
 }
 
 .architecture_square_work._3 {
-  background-image: url('/images/SKETCH-Teatro-Side-Low-Res.webp');
+  background-image: url('/assets/images/SKETCH-Teatro-Side-Low-Res.webp');
 }
 
 .architecture_square_work._4 {
   filter: saturate(0%);
-  background-image: url('/images/Garden-House-2-Low-Res.webp');
+  background-image: url('/assets/images/Garden-House-2-Low-Res.webp');
 }
 
 .architecture_square_work._5 {
-  background-image: url('/images/SKETCH-Teatro-Olympico-Facade-Low-Res.webp');
+  background-image: url('/assets/images/SKETCH-Teatro-Olympico-Facade-Low-Res.webp');
 }
 
 .architecture_square_work._6 {
   filter: saturate(0%);
-  background-image: url('/images/AMIR-Bathroom-ISO-1-Low-Res.webp');
+  background-image: url('/assets/images/AMIR-Bathroom-ISO-1-Low-Res.webp');
 }
 
 .architecture_square_work._7 {
-  background-image: url('/images/SKETCH-Ampitheatre-Geometry-Low-Res.webp');
+  background-image: url('/assets/images/SKETCH-Ampitheatre-Geometry-Low-Res.webp');
 }
 
 .architecture_square_work.text-span-28 {
   filter: saturate(0%);
-  background-image: url('/images/AMIR-Bathroom-Plan-1-Low-Res.webp');
+  background-image: url('/assets/images/AMIR-Bathroom-Plan-1-Low-Res.webp');
 }
 
 .architecture_square_work._9 {
-  background-image: url('/images/SKETCH-Columns-Low-Res.webp');
+  background-image: url('/assets/images/SKETCH-Columns-Low-Res.webp');
 }
 
 .architecture_square_work._10 {
   filter: saturate(0%);
-  background-image: url('/images/AMIR-Bathroom-ISO-2-Low-Res.webp');
+  background-image: url('/assets/images/AMIR-Bathroom-ISO-2-Low-Res.webp');
 }
 
 .architecture_square_work._11 {
   background-color: var(--light-grey);
   filter: saturate(0%);
-  background-image: url('/images/DIS-Casa-Del-Fascio-Facade-Disolocation-Low-Res.webp');
+  background-image: url('/assets/images/DIS-Casa-Del-Fascio-Facade-Disolocation-Low-Res.webp');
 }
 
 .architecture_square_work._12 {
-  background-image: url('/images/TOD-Outdoor-Visual-Low-Res.webp');
+  background-image: url('/assets/images/TOD-Outdoor-Visual-Low-Res.webp');
 }
 
 .architecture_square_work._13 {
-  background-image: url('/images/SKETCH-Teatro-Olympico-Facade-Low-Res.webp');
+  background-image: url('/assets/images/SKETCH-Teatro-Olympico-Facade-Low-Res.webp');
 }
 
 .architecture_square_work._14 {
-  background-image: url('/images/TOD-Concept-model-2_1.avif');
+  background-image: url('/assets/images/TOD-Concept-model-2_1.avif');
 }
 
 .architecture_square_work._15 {
   filter: saturate(0%);
-  background-image: url('/images/DIS-Casa-Del-Fascio-Roatation-Low-Res.webp');
+  background-image: url('/assets/images/DIS-Casa-Del-Fascio-Roatation-Low-Res.webp');
 }
 
 .w1-section-grid {
@@ -1189,22 +1189,22 @@ figcaption {
 
 .social-logo {
   aspect-ratio: 1;
-  background-image: url('/images/Instgram-Logo.svg');
+  background-image: url('/assets/icons/Instgram-Logo.svg');
   background-position: 50%;
   background-size: cover;
   height: 48%;
 }
 
 .social-logo.linkedin {
-  background-image: url('/images/Linkedin-Logo-Round.svg');
+  background-image: url('/assets/icons/Linkedin-Logo-Round.svg');
 }
 
 .social-logo.email {
-  background-image: url('/images/Email-Icon.svg');
+  background-image: url('/assets/icons/Email-Icon.svg');
 }
 
 .social-logo.phone {
-  background-image: url('/images/Phone-Icon.svg');
+  background-image: url('/assets/icons/Phone-Icon.svg');
 }
 
 .section-vh {
@@ -1377,7 +1377,7 @@ figcaption {
 .profile-fcae {
   aspect-ratio: 1;
   mix-blend-mode: luminosity;
-  background-image: url('/images/Profile-Pic-Budapest-Square-Low-Res_1.avif');
+  background-image: url('/assets/images/Profile-Pic-Budapest-Square-Low-Res_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 15px;
@@ -1733,7 +1733,7 @@ figcaption {
 .ps-graphic {
   aspect-ratio: 1;
   background-color: #0000;
-  background-image: url('/images/3-Section-Triangle-White.svg');
+  background-image: url('/assets/graphics/3-Section-Triangle-White.svg');
   background-position: 50%;
   background-size: cover;
   height: 90%;
@@ -1744,12 +1744,12 @@ figcaption {
 }
 
 .ps-graphic._2 {
-  background-image: url('/images/Pyramid-White.svg');
+  background-image: url('/assets/graphics/Pyramid-White.svg');
   height: 90%;
 }
 
 .ps-graphic._1 {
-  background-image: url('/images/Artboard-22.svg');
+  background-image: url('/assets/graphics/Artboard-22.svg');
   height: 90%;
   position: absolute;
 }
@@ -1764,7 +1764,7 @@ figcaption {
 .ps-graphic-green {
   aspect-ratio: 1;
   background-color: #0000;
-  background-image: url('/images/3-Section-Triangle-Green.svg');
+  background-image: url('/assets/graphics/3-Section-Triangle-Green.svg');
   background-position: 50%;
   background-size: cover;
   height: 90%;
@@ -1776,12 +1776,12 @@ figcaption {
 }
 
 .ps-graphic-green._2 {
-  background-image: url('/images/Pyramid-green.svg');
+  background-image: url('/assets/graphics/Pyramid-green.svg');
   height: 90%;
 }
 
 .ps-graphic-green._1 {
-  background-image: url('/images/Plain-Triangle-green.svg');
+  background-image: url('/assets/graphics/Plain-Triangle-green.svg');
 }
 
 .ps-graphic-green._1.inner-2 {
@@ -1799,7 +1799,7 @@ figcaption {
 }
 
 .ps-graphic-green._1.inner-4 {
-  background-image: url('/images/Plain-Triangle-green.svg');
+  background-image: url('/assets/graphics/Plain-Triangle-green.svg');
   height: 18%;
 }
 
@@ -1923,7 +1923,7 @@ figcaption {
 
 .div-block-172 {
   aspect-ratio: 1;
-  background-image: url('/images/Curved-Arrow-Even-Thicker.avif');
+  background-image: url('/assets/icons/Curved-Arrow-Even-Thicker.avif');
   background-position: 50%;
   background-size: cover;
   height: 30px;
@@ -1935,7 +1935,7 @@ figcaption {
   z-index: 100;
   background-color: var(--white);
   filter: saturate(46%);
-  background-image: url('/images/Clean-Copy-Mockup_1.avif');
+  background-image: url('/assets/images/Clean-Copy-Mockup_1.avif');
   background-position: 50% 0;
   background-size: cover;
   justify-content: center;
@@ -1951,7 +1951,7 @@ figcaption {
 
 .div-block-175 {
   aspect-ratio: 680 / 454;
-  background-image: url('/images/Clean-Code-Webflow-Dropdown.svg');
+  background-image: url('/assets/graphics/Clean-Code-Webflow-Dropdown.svg');
   background-position: 50%;
   background-size: cover;
   height: 220px;
@@ -2058,7 +2058,7 @@ figcaption {
   border: 1.5px solid var(--black);
   background-color: var(--clear);
   opacity: 1;
-  background-image: url('/images/Diaganol-Lines_1.svg');
+  background-image: url('/assets/graphics/Diaganol-Lines_1.svg');
   background-size: cover;
   border-radius: 500px;
   justify-content: center;
@@ -2417,7 +2417,7 @@ figcaption {
 
 .workflow-graphic {
   aspect-ratio: 1;
-  background-image: url('/images/Intersecting-Circles-Black.svg');
+  background-image: url('/assets/graphics/Intersecting-Circles-Black.svg');
   background-position: 50%;
   background-size: cover;
   width: auto;
@@ -2425,13 +2425,13 @@ figcaption {
 }
 
 .workflow-graphic.develop {
-  background-image: url('/images/Rubix-Cube-Black.svg');
+  background-image: url('/assets/graphics/Rubix-Cube-Black.svg');
   background-position: 0%;
   background-size: cover;
 }
 
 .workflow-graphic.deploy {
-  background-image: url('/images/Paper-Plane-Black.svg');
+  background-image: url('/assets/icons/Paper-Plane-Black.svg');
   height: 183px;
 }
 
@@ -2492,7 +2492,7 @@ figcaption {
   aspect-ratio: 2953 / 2684;
   background-color: var(--clear);
   filter: saturate(90%);
-  background-image: url('/images/Untitled-1_1.avif');
+  background-image: url('/assets/images/Untitled-1_1.avif');
   background-position: 50%;
   background-size: cover;
   height: auto;
@@ -2505,7 +2505,7 @@ figcaption {
   aspect-ratio: 2953 / 2684;
   background-color: var(--clear);
   filter: saturate(90%);
-  background-image: url('/images/desktop-oic_1.avif');
+  background-image: url('/assets/images/desktop-oic_1.avif');
   background-position: 50%;
   background-size: cover;
   border: 1px #bebebe;
@@ -2518,39 +2518,39 @@ figcaption {
 
 
 .work-project.atn {
-  background-image: url('/images/Frame-2.avif');
+  background-image: url('/assets/images/Frame-2.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 5px;
 }
 
 .work-project.atn0summit {
-  background-image: url('/images/Frame-4.avif');
+  background-image: url('/assets/images/Frame-4.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 5px;
 }
 
 .work-project.the-atn-summit {
-  background-image: url('/images/Frame-5.avif');
+  background-image: url('/assets/images/Frame-5.avif');
   background-position: 50%;
   background-size: cover;
 }
 
 .work-project.epitessera {
-  background-image: url('/images/Frameepp-3.avif');
+  background-image: url('/assets/images/Frameepp-3.avif');
   background-position: 50%;
   background-size: cover;
 }
 
 .work-project.mk {
-  background-image: url('/images/Frameaaaa-7.avif');
+  background-image: url('/assets/images/Frameaaaa-7.avif');
   background-position: 50%;
   background-size: cover;
 }
 
 .work-project.csj {
-  background-image: url('/images/Frcsjame-6.avif');
+  background-image: url('/assets/images/Frcsjame-6.avif');
   background-position: 50%;
   background-size: cover;
 }
@@ -2723,7 +2723,7 @@ figcaption {
 
 .work-case-study._1 {
   filter: contrast(105%) saturate(0%);
-  background-image: url('/images/desktop-oic_1.avif');
+  background-image: url('/assets/images/desktop-oic_1.avif');
   background-size: cover;
   justify-content: center;
   align-items: center;
@@ -2733,7 +2733,7 @@ figcaption {
 
 .work-case-study._2 {
   filter: contrast(88%) saturate(0%);
-  background-image: url('/images/Untitled-1_1.avif');
+  background-image: url('/assets/images/Untitled-1_1.avif');
   background-position: 50%;
   background-size: cover;
   justify-content: space-between;
@@ -2743,7 +2743,7 @@ figcaption {
 
 .work-case-study._3 {
   filter: saturate(0%) contrast(135%);
-  background-image: url('/images/book22_1.avif');
+  background-image: url('/assets/images/book22_1.avif');
   background-position: 0 55%;
   background-size: cover;
   justify-content: space-between;
@@ -2755,7 +2755,7 @@ figcaption {
 
 .work-case-study._4 {
   background-color: #bbb;
-  background-image: url('/images/Just-lines_1.avif');
+  background-image: url('/assets/graphics/Just-lines_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 5px;
@@ -3043,7 +3043,7 @@ figcaption {
   aspect-ratio: 12543 / 25725;
   background-color: var(--clear);
   opacity: 1;
-  background-image: url('/images/Single-Phone-Transparent-Screen_1.avif');
+  background-image: url('/assets/images/Single-Phone-Transparent-Screen_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 0;
@@ -3064,7 +3064,7 @@ figcaption {
   aspect-ratio: 12543 / 25725;
   background-color: var(--clear);
   opacity: 1;
-  background-image: url('/images/Single-Phone-Transparent-Screen_1.avif');
+  background-image: url('/assets/images/Single-Phone-Transparent-Screen_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 0;
@@ -3442,7 +3442,7 @@ figcaption {
 
 .div-block-193 {
   aspect-ratio: 2016 / 1209;
-  background-image: url('/images/TOD-Concept-Model_1.avif');
+  background-image: url('/assets/images/TOD-Concept-Model_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 7px;
@@ -3546,7 +3546,7 @@ figcaption {
 .left {
   aspect-ratio: 1;
   background-color: var(--dark-card-line);
-  background-image: url('/images/TOD-Concept-model-2_1.avif');
+  background-image: url('/assets/images/TOD-Concept-model-2_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 7px;
@@ -3557,7 +3557,7 @@ figcaption {
   aspect-ratio: 1;
   background-color: var(--dark-card-line);
   filter: contrast(133%) saturate(0%);
-  background-image: url('/images/TOD-Concept-model-3_1.avif');
+  background-image: url('/assets/images/TOD-Concept-model-3_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 7px;
@@ -3592,7 +3592,7 @@ figcaption {
 
 .div-block-196 {
   mix-blend-mode: multiply;
-  background-image: url('/images/TOD-Long-section-Textt-mid_res_1.avif');
+  background-image: url('/assets/images/TOD-Long-section-Textt-mid_res_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 0;
@@ -3691,7 +3691,7 @@ figcaption {
 
 .c-left {
   background-color: var(--dark-card-line);
-  background-image: url('/images/Business-Card_1.avif');
+  background-image: url('/assets/images/Business-Card_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 10px 0 0;
@@ -3757,7 +3757,7 @@ figcaption {
   aspect-ratio: 1;
   filter: brightness(103%) saturate(0%);
   mix-blend-mode: multiply;
-  background-image: url('/images/Profile-Pic-Budapest-Square-Low-Res_1.avif');
+  background-image: url('/assets/images/Profile-Pic-Budapest-Square-Low-Res_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 10px;
@@ -3853,7 +3853,7 @@ figcaption {
 
 .b_card-icon {
   aspect-ratio: 1;
-  background-image: url('/images/Phone-Icon.svg');
+  background-image: url('/assets/icons/Phone-Icon.svg');
   background-position: 50%;
   background-size: cover;
   width: 50%;
@@ -3861,19 +3861,19 @@ figcaption {
 }
 
 .b_card-icon.insta {
-  background-image: url('/images/Instgram-Logo.svg');
+  background-image: url('/assets/icons/Instgram-Logo.svg');
 }
 
 .b_card-icon.linkedin {
-  background-image: url('/images/Linkedin-Logo-Round.svg');
+  background-image: url('/assets/icons/Linkedin-Logo-Round.svg');
 }
 
 .b_card-icon.video-call {
-  background-image: url('/images/Video-call-icon-balck.svg');
+  background-image: url('/assets/icons/Video-call-icon-balck.svg');
 }
 
 .b_card-icon.behance {
-  background-image: url('/images/Behance-logo-circularblack.svg');
+  background-image: url('/assets/icons/Behance-logo-circularblack.svg');
 }
 
 .b_card-container-text {
@@ -3946,7 +3946,7 @@ figcaption {
 
 .b_card-icon-spin {
   aspect-ratio: 1;
-  background-image: url('/images/Plus-Symbol-Black-very-Thick.svg');
+  background-image: url('/assets/icons/Plus-Symbol-Black-very-Thick.svg');
   background-position: 50%;
   background-size: cover;
   width: 50%;
@@ -4513,7 +4513,7 @@ figcaption {
 
 
 .div-block-200 {
-  background-image: url('/images/Logo-σ-white-σ-SVG.svg');
+  background-image: url('/assets/logos/Logo-σ-white-σ-SVG.svg');
   background-position: 50%;
   background-size: cover;
   width: 18px;
@@ -4538,7 +4538,7 @@ figcaption {
 
 .div-block-210 {
   aspect-ratio: 1;
-  background-image: url('/images/Service-Id--Streamline-Carbon.svg');
+  background-image: url('/assets/icons/Service-Id--Streamline-Carbon.svg');
   background-position: 50%;
   background-size: cover;
   height: 98px;
@@ -4556,7 +4556,7 @@ figcaption {
   grid-row-gap: 0px;
   background-color: var(--white);
   filter: saturate(0%);
-  background-image: url('/images/TOD-Isometric-mid_res_1.avif');
+  background-image: url('/assets/images/TOD-Isometric-mid_res_1.avif');
   background-position: 50%;
   background-size: cover;
   flex-flow: column;
@@ -4670,7 +4670,7 @@ figcaption {
   aspect-ratio: 12543 / 25725;
   background-color: var(--clear);
   opacity: 1;
-  background-image: url('/images/Single-Phone-Transparent-Screen_1.avif');
+  background-image: url('/assets/images/Single-Phone-Transparent-Screen_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 0;
@@ -4704,7 +4704,7 @@ figcaption {
 .left-image_1 {
   z-index: 30;
   mix-blend-mode: normal;
-  background-image: url('/images/CSJ-Publications-Mobile.avif');
+  background-image: url('/assets/images/CSJ-Publications-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 1vw;
@@ -4717,7 +4717,7 @@ figcaption {
 .middle-image_1 {
   z-index: 30;
   mix-blend-mode: normal;
-  background-image: url('/images/CSJ-Hero-Mobile.avif');
+  background-image: url('/assets/images/CSJ-Hero-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 1vw;
@@ -4731,7 +4731,7 @@ figcaption {
 .right-image_1 {
   z-index: 30;
   mix-blend-mode: normal;
-  background-image: url('/images/CSJ-Expertise-Mobile.avif');
+  background-image: url('/assets/images/CSJ-Expertise-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 1vw;
@@ -4765,7 +4765,7 @@ figcaption {
   z-index: 29;
   opacity: 0;
   mix-blend-mode: normal;
-  background-image: url('/images/Mikhail_Riches-Hero-Mobile.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Hero-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 1vw;
@@ -4779,7 +4779,7 @@ figcaption {
   z-index: 29;
   opacity: 0;
   mix-blend-mode: normal;
-  background-image: url('/images/Mikhail_Riches-Projects-Mobile.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Projects-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 1vw;
@@ -4793,7 +4793,7 @@ figcaption {
   z-index: 29;
   opacity: 0;
   mix-blend-mode: normal;
-  background-image: url('/images/Mikhail_Riches-Testimonials-Mobile.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Testimonials-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 1vw;
@@ -4823,7 +4823,7 @@ figcaption {
 
 .csj-desktop {
   aspect-ratio: 2480 / 1400;
-  background-image: url('/images/CSJ-Expertise-Desktop_1.avif');
+  background-image: url('/assets/images/CSJ-Expertise-Desktop_1.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 5px;
@@ -4831,38 +4831,38 @@ figcaption {
 }
 
 .csj-desktop._2 {
-  background-image: url('/images/CSJ-Publications-Desktop_1.avif');
+  background-image: url('/assets/images/CSJ-Publications-Desktop_1.avif');
   max-width: none;
   height: auto;
 }
 
 .csj-desktop._2.mk {
-  background-image: url('/images/Mikhail_Riches-Projects-Desktop_1.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Projects-Desktop_1.avif');
 }
 
 .csj-desktop.mk {
-  background-image: url('/images/Mikhail_Riches-Awards-Desktop_1.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Awards-Desktop_1.avif');
 }
 
 .csj-desktop._3 {
-  background-image: url('/images/CSJ-Hero-Desktop_1.avif');
+  background-image: url('/assets/images/CSJ-Hero-Desktop_1.avif');
   max-width: none;
   height: auto;
   display: none;
 }
 
 .csj-desktop._3.mk {
-  background-image: url('/images/Mikhail_Riches-Projects-Desktop_1.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Projects-Desktop_1.avif');
 }
 
 .csj-desktop._3 {
-  background-image: url('/images/CSJ-Publications-Desktop_1.avif');
+  background-image: url('/assets/images/CSJ-Publications-Desktop_1.avif');
   max-width: none;
   height: auto;
 }
 
 .csj-desktop._3.mk {
-  background-image: url('/images/Mikhail_Riches-Projects-Desktop_1.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Projects-Desktop_1.avif');
   display: none;
 }
 
@@ -4880,7 +4880,7 @@ figcaption {
 
 .csj-mobile {
   aspect-ratio: 12543 / 25725;
-  background-image: url('/images/Single-Phone-Transparent-Screen_1.avif');
+  background-image: url('/assets/images/Single-Phone-Transparent-Screen_1.avif');
   background-position: 50%;
   background-size: cover;
   justify-content: center;
@@ -4908,7 +4908,7 @@ figcaption {
   aspect-ratio: 2259 / 4872;
   background-color: var(--clear);
   mix-blend-mode: darken;
-  background-image: url('/images/CSJ-Hero-Mobile.avif');
+  background-image: url('/assets/images/CSJ-Hero-Mobile.avif');
   background-position: 50%;
   background-size: cover;
   border-radius: 25px;
@@ -4922,24 +4922,24 @@ figcaption {
 }
 
 .mobile-window.l {
-  background-image: url('/images/CSJ-Expertise-Mobile.avif');
+  background-image: url('/assets/images/CSJ-Expertise-Mobile.avif');
 }
 
 .mobile-window.l.mk-architects {
-  background-image: url('/images/Mikhail_Riches-Projects-Mobile.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Projects-Mobile.avif');
 }
 
 .mobile-window.r {
-  background-image: url('/images/CSJ-Publications-Mobile.avif');
+  background-image: url('/assets/images/CSJ-Publications-Mobile.avif');
 }
 
 .mobile-window.r.mk-architects {
-  background-image: url('/images/Mikhail_Riches-Testimonials-Mobile.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Testimonials-Mobile.avif');
   border-radius: 2vw;
 }
 
 .mobile-window.mk-architects {
-  background-image: url('/images/Mikhail_Riches-Hero-Mobile.avif');
+  background-image: url('/assets/images/Mikhail_Riches-Hero-Mobile.avif');
   border-radius: 2vw;
 }
 
@@ -5152,7 +5152,7 @@ figcaption {
 
 .div-block-225 {
   aspect-ratio: 1;
-  background-image: url('/images/Plus-Symbol-Black-very-Thick.svg');
+  background-image: url('/assets/icons/Plus-Symbol-Black-very-Thick.svg');
   background-position: 50%;
   background-size: cover;
   width: auto;
@@ -5533,7 +5533,7 @@ figcaption {
 
 .strike-line-title {
   background-color: var(--clear);
-  background-image: url('/images/Long-Arrow.svg');
+  background-image: url('/assets/icons/Long-Arrow.svg');
   background-position: 50%;
   background-size: cover;
   width: 100%;
@@ -5672,7 +5672,7 @@ figcaption {
 
 .div-block-243 {
   aspect-ratio: 1;
-  background-image: url('/images/Arrow-Drop-Up-Line--Streamline-Remix.svg');
+  background-image: url('/assets/icons/Arrow-Drop-Up-Line--Streamline-Remix.svg');
   background-position: 50%;
   background-size: cover;
   height: 28px;
@@ -5727,7 +5727,7 @@ figcaption {
 .div-block-246 {
   aspect-ratio: 1;
   mix-blend-mode: normal;
-  background-image: url('/images/Artboard-1.svg');
+  background-image: url('/assets/graphics/Artboard-1.svg');
   background-position: 100%;
   background-size: cover;
   width: 42px;
@@ -5737,7 +5737,7 @@ figcaption {
 }
 
 .div-block-246.f-s {
-  background-image: url('/images/defs-line-polygon-style-svg-fixed-white.svg');
+  background-image: url('/assets/graphics/defs-line-polygon-style-svg-fixed-white.svg');
 }
 
 
@@ -5842,7 +5842,7 @@ figcaption {
   }
 
   .divblockforspin._2 {
-    background-image: url('/images/Profile-Pic-Budapest-Landscape-Low-Res.webp');
+    background-image: url('/assets/images/Profile-Pic-Budapest-Landscape-Low-Res.webp');
     background-position: 50% 0;
     background-size: cover;
     width: 100%;
@@ -6355,7 +6355,7 @@ figcaption {
 
 
   .w1-section-2nd_floor_axo {
-    background-image: url('/images/TOD-Isometric-mid_res_1.avif');
+    background-image: url('/assets/images/TOD-Isometric-mid_res_1.avif');
     background-position: 50%;
     background-size: cover;
     overflow: visible;
@@ -6686,7 +6686,7 @@ figcaption {
   }
 
   .div-block-196 {
-    background-image: url('/images/TOD-Long-section-Text-large-screen2_1.avif');
+    background-image: url('/assets/images/TOD-Long-section-Text-large-screen2_1.avif');
     background-position: 50%;
     background-size: cover;
   }
@@ -6838,7 +6838,7 @@ figcaption {
   .button-1.circular {
     aspect-ratio: 1;
     filter: saturate(0%);
-    background-image: url('/images/Profile-Pic-Budapest-Square-Low-Res_1.avif');
+    background-image: url('/assets/images/Profile-Pic-Budapest-Square-Low-Res_1.avif');
     background-position: 50%;
     background-size: cover;
     border-style: none;
@@ -7127,7 +7127,7 @@ figcaption {
   }
 
   .section-vh.hero {
-    background-image: url('/images/Work-Showcase--Frame_1.avif');
+    background-image: url('/assets/images/Work-Showcase--Frame_1.avif');
     background-position: 50%;
     background-size: cover;
     height: 135vh;
@@ -7608,7 +7608,7 @@ figcaption {
   }
 
   .image-2.architecture-tablet {
-    background-image: url('/images/background-image.svg');
+    background-image: url('/assets/graphics/background-image.svg');
     background-position: 0 0;
     background-size: auto;
     display: block;
@@ -7859,7 +7859,7 @@ figcaption {
     aspect-ratio: auto;
     filter: saturate(0%);
     mix-blend-mode: normal;
-    background-image: url('/images/Profile-Pic-Budapest-Landscape-Low-Res.webp');
+    background-image: url('/assets/images/Profile-Pic-Budapest-Landscape-Low-Res.webp');
     border: 1px #000;
     border-radius: 10px;
     width: 40vw;
@@ -8343,7 +8343,7 @@ figcaption {
   .profile {
     aspect-ratio: 1;
     filter: brightness(135%) contrast(99%) saturate(0%);
-    background-image: url('/images/Budepst-Pic-2_1.avif');
+    background-image: url('/assets/images/Budepst-Pic-2_1.avif');
     background-position: 50%;
     background-size: cover;
     border-radius: 300px;
@@ -8353,7 +8353,7 @@ figcaption {
 
   .letstalk-arrow {
     aspect-ratio: 1;
-    background-image: url('/images/Arrow-Right--Streamline-Tabler.svg');
+    background-image: url('/assets/icons/Arrow-Right--Streamline-Tabler.svg');
     background-position: 50%;
     background-size: cover;
     width: 8vw;
@@ -8428,7 +8428,7 @@ figcaption {
 
   .div-block-202 {
     aspect-ratio: 1;
-    background-image: url('/images/Instgram-Logo-White.svg');
+    background-image: url('/assets/icons/Instgram-Logo-White.svg');
     background-position: 50%;
     background-size: cover;
     height: 10vw;
@@ -8437,7 +8437,7 @@ figcaption {
   }
 
   .div-block-202.linkedin {
-    background-image: url('/images/Linkedin-Logo-Round-White.svg');
+    background-image: url('/assets/icons/Linkedin-Logo-Round-White.svg');
   }
 
   .tablet-footer {
@@ -8562,7 +8562,7 @@ figcaption {
 
 
   .div-block-216 {
-    background-image: url('/images/TOD-Isometric-mid_res_1.avif');
+    background-image: url('/assets/images/TOD-Isometric-mid_res_1.avif');
     background-position: 50%;
     background-size: cover;
     width: 380vw;
@@ -8618,12 +8618,12 @@ figcaption {
   }
 
   .csj-desktop._3 {
-    background-image: url('/images/CSJ-Hero-Desktop_1.avif');
+    background-image: url('/assets/images/CSJ-Hero-Desktop_1.avif');
     display: block;
   }
 
   .csj-desktop._3.mk {
-    background-image: url('/images/Mikhail_Riches-Hero-Desktop_1.avif');
+    background-image: url('/assets/images/Mikhail_Riches-Hero-Desktop_1.avif');
     display: block;
   }
 
@@ -8821,7 +8821,7 @@ figcaption {
   }
 
   .div-block-226 {
-    background-image: url('/images/Logo-σ-white-σ-SVG.svg');
+    background-image: url('/assets/logos/Logo-σ-white-σ-SVG.svg');
     background-position: 50%;
     background-size: cover;
     width: 32px;
@@ -8996,7 +8996,7 @@ figcaption {
     aspect-ratio: 1;
     border: .3px solid var(--light-grey);
     background-color: var(--clear);
-    background-image: url('/images/Arrow-Drop-Down-Fill--Streamline-Sharp-Fill-Material-Symbols.svg');
+    background-image: url('/assets/icons/Arrow-Drop-Down-Fill--Streamline-Sharp-Fill-Material-Symbols.svg');
     background-position: 50%;
     background-size: cover;
     border-radius: 20px;
