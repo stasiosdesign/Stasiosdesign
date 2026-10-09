@@ -13,8 +13,9 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# The Studio's public settings are committed (no secrets in them)
-!studio/.env.development
-!studio/.env.production
-*.tsbuildinfo
-studio/.sanity/
+# Asset intake (see assets/README.md): contents stay on this computer, never in Git.
+# Client originals and references may be confidential, and the repositories are public.
+assets/inbox/*
+assets/originals/*
+assets/references/*
+!assets/*/.gitkeep
