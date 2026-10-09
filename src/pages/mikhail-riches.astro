@@ -1,6 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { getDocument, pageDoc, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+// The page's words are its case study's (studio/schemaTypes/documents/case-study.ts), and the next
+// project's name that one's title, each element falling back to its own (src/cms/defaults.ts)
+const c = reader(await getDocument(D.mikhailRiches._id), D.mikhailRiches);
+const next = reader(await getDocument(D.architecturalWorks._id), D.architecturalWorks);
 
 // The same page is also published at /mikhail-riches-copy, under another Webflow page id.
 const { pageId = '67f443f41da89e176a75b306' } = Astro.props;
@@ -11,6 +18,7 @@ const { pageId = '67f443f41da89e176a75b306' } = Astro.props;
   pageId={pageId}
   bodyClass="body-2"
   containerClass="body-container"
+  doc={{ id: D.mikhailRiches._id, type: 'caseStudy' }}
   viewLabel="[View Next Project]"
 >
   <section class="w1-section-hero">
@@ -26,15 +34,15 @@ const { pageId = '67f443f41da89e176a75b306' } = Astro.props;
       </div>
       <div class="casestudy_hero_text_container">
         <div class="w1-title-wrapper">
-          <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudsy_hero_heading">Mikhail Riches</div>
+          <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudsy_hero_heading" data-page-field="title">{c.t('title')}</div>
         </div>
         <div class="w1-sub_heading-wrapper">
           <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudy_subheading_container">
-            <div class="casestudy_hero_subheading">Website Design</div>
+            <div class="casestudy_hero_subheading" data-page-field="service">{c.t('service')}</div>
             <div class="spacer_vertical"></div>
-            <div class="casestudy_hero_subheading">Architecture Firm</div>
+            <div class="casestudy_hero_subheading" data-page-field="sector">{c.t('sector')}</div>
             <div class="spacer_vertical"></div>
-            <div class="casestudy_hero_subheading">2025</div>
+            <div class="casestudy_hero_subheading" data-page-field="year">{c.t('year')}</div>
           </div>
         </div>
       </div>
@@ -51,21 +59,21 @@ const { pageId = '67f443f41da89e176a75b306' } = Astro.props;
     <div class="container-project-summary">
       <div class="problem-container befor">
         <div class="title problem">Problem<br></div>
-        <div class="list problem">&#x27;Template Site&#x27;<br></div>
-        <div class="list problem">Unfocused<br></div>
-        <div class="list problem">Unbranded<br></div>
-        <div class="list problem">Poor UX<br></div>
+        <div class="list problem" data-page-field="problems.0">{c.t('problems.0')}<br></div>
+        <div class="list problem" data-page-field="problems.1">{c.t('problems.1')}<br></div>
+        <div class="list problem" data-page-field="problems.2">{c.t('problems.2')}<br></div>
+        <div class="list problem" data-page-field="problems.3">{c.t('problems.3')}<br></div>
       </div>
       <div class="problem-container after">
-        <div class="title">Key Outcomes<br></div>
-        <div class="list solution">Clarity<br></div>
-        <div class="list solution">Brand Alignment<br></div>
-        <div class="list solution">User Journey<br></div>
-        <div class="list solution">Heirachy<br></div>
+        <div class="title" data-page-field="outcomesLabel">{c.t('outcomesLabel')}<br></div>
+        <div class="list solution" data-page-field="outcomes.0">{c.t('outcomes.0')}<br></div>
+        <div class="list solution" data-page-field="outcomes.1">{c.t('outcomes.1')}<br></div>
+        <div class="list solution" data-page-field="outcomes.2">{c.t('outcomes.2')}<br></div>
+        <div class="list solution" data-page-field="outcomes.3">{c.t('outcomes.3')}<br></div>
       </div>
     </div>
     <div class="container-project-intro">
-      <div text-split="" scrub-each-word-slower="" class="into-project-subheading">Refining a digital presence to reflect sustainability and environmental design</div>
+      <div text-split="" scrub-each-word-slower="" class="into-project-subheading" data-page-field="headline">{c.t('headline')}</div>
     </div>
   </section>
   <section class="csj-2x-desktop mk">
@@ -89,7 +97,7 @@ const { pageId = '67f443f41da89e176a75b306' } = Astro.props;
       <div data-w-id="53ea9d6c-5228-9044-6fef-ce6b7e691214" class="container-next_project">
         <div class="div-block-218">
           <div class="nex_ip-next-up">Next</div>
-          <div data-w-id="53ea9d6c-5228-9044-6fef-ce6b7e691218" class="next_up-prohect_name">Architectural Works</div>
+          <div data-w-id="53ea9d6c-5228-9044-6fef-ce6b7e691218" class="next_up-prohect_name" {...pageDoc(D.architecturalWorks._id, 'caseStudy')} data-page-field="title">{next.t('title')}</div>
         </div>
         <div class="div-block-217">
           <a cursor-viewproject="" data-w-id="53ea9d6c-5228-9044-6fef-ce6b7e69121b" href="/work-architectural-works" class="next_project-case_image w-inline-block"><img src="/assets/images/TOD-Isometric-next-project-1_1.avif" loading="lazy" alt="" srcset="/assets/images/TOD-Isometric-next-project-1_1TOD-Isometric-next-project-1.avif 500w, /assets/images/TOD-Isometric-next-project-1_1.avif 892w" sizes="(max-width: 892px) 100vw, 892px" class="image-3"></a>

@@ -7,7 +7,7 @@ This repository is also **the development environment for the shared CMS**: its 
 
 ## Commands
 
-`npm run dev` (4321), `npm run build`, `npm run preview`. Needs Node 22.12+. There is no type-check script for the site; the Studio has `npm run check` in `studio/`.
+`npm run dev` (4321), `npm run build`, `npm run preview`, `npm run check` (types for `src/cms/` and `api/`; the Webflow markup isn't type-checked). Needs Node 22.12+. The Studio has its own `npm run check` and `npm test` in `studio/`.
 
 ## Layout
 
@@ -72,7 +72,13 @@ Shared code never names a site or its types; if it needs to know something new a
 ### Rules
 
 - The Studio is not part of the Vercel deployment (`.vercelignore`).
-- The site doesn't read Sanity yet: its pages hold their own words. Wiring a page to Sanity changes the live site: plan it with the user first. Publishing is `publishing: false` until the site has a publishing route (see `../shared-sanity-cms/README.md`, "What a website must provide").
+- The site reads Sanity (README, "How the site reads it"):
+  - `src/cms/content.ts` reads `production` at build time.
+  - Every bound element falls back to its own words in `src/cms/defaults.ts`. Keep those exactly as the page text, typos included. They are also what `npm run seed` writes.
+  - `src/cms/live-preview.ts` drives the Visual editor.
+  - `api/publish.ts` publishes and triggers the rebuild.
+- Binding a new element: give it `data-page-field` (plus `data-page-format` when it holds markup) inside a `data-page-doc` container. Add the field to the schema and its current text to `defaults.ts`. Then rebuild and confirm the page is unchanged.
+- The publish route needs `SANITY_API_WRITE_TOKEN` and `VERCEL_DEPLOY_HOOK_URL` in Vercel. Its allowed origins are the hosted Studio and `localhost:3334`. Its publish-log keys (`src/cms/content-key.ts`) must match the package's.
 - Never commit tokens. The package is private; `studio/.npmrc` names its registry only. Access: `../shared-sanity-cms/README.md`, "Access".
-- Sanity project `9k36yeeg`: `staging` (the Studio edits it), `production` (for the site, once it reads Sanity). `npm run seed` in `studio/` adds the site's current words to `staging` (it never overwrites). The user's Sanity login is GitHub.
+- Sanity project `9k36yeeg`: `staging` (the Studio edits it), `production` (what the site builds from; only publishing writes it). `npm run seed` in `studio/` writes the site's current words to `staging`, never over a document edited in the Studio. The user's Sanity login is GitHub.
 - Sanity upgrades are deliberate and start here: `autoUpdates` is off.

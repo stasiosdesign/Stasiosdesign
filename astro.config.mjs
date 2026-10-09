@@ -2,6 +2,21 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
+// A build stamp, dist/build.json, saying when the site was built. The Studio's
+// publishing progress reads it (vercel.json lets it, across origins) to tell
+// when a live publish has reached the site: the rebuild api/publish.ts asks for.
+/** @returns {import('astro').AstroIntegration} */
+const buildStamp = () => ({
+  name: 'stasiosdesign:build-stamp',
+  hooks: {
+    'astro:build:done': async ({ dir }) => {
+      const { writeFile } = await import('node:fs/promises');
+      const stamp = { builtAt: new Date().toISOString(), deployment: process.env.VERCEL_ENV ?? 'local' };
+      await writeFile(new URL('build.json', dir), JSON.stringify(stamp));
+    },
+  },
+});
+
 export default defineConfig({
   site: 'https://www.stasiosdesign.com',
 
@@ -17,6 +32,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({ filter: (page) => !page.endsWith('/404') }),
+    buildStamp(),
   ],
 
   // The Sanity Studio in studio/ is its own app: its rebuilds while it runs

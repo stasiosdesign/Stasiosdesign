@@ -1,6 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { getDocument, pageDoc, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+// The page's words are its case study's (studio/schemaTypes/documents/case-study.ts), and the next
+// project's name that one's title, each element falling back to its own (src/cms/defaults.ts)
+const c = reader(await getDocument(D.architecturalWorks._id), D.architecturalWorks);
+const next = reader(await getDocument(D.csjArchitects._id), D.csjArchitects);
 ---
 
 <Layout
@@ -8,6 +15,7 @@ import Footer from '../components/Footer.astro';
   pageId="6722089cddcacdd88de17abc"
   bodyClass="body-2"
   containerClass="body-container"
+  doc={{ id: D.architecturalWorks._id, type: 'caseStudy' }}
   viewLabel="[View Nomination]"
   startLabel="[View Next Project]"
 >
@@ -24,15 +32,15 @@ import Footer from '../components/Footer.astro';
       </div>
       <div class="casestudy_hero_text_container">
         <div class="w1-title-wrapper">
-          <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudsy_hero_heading">Architectural Works<br></div>
+          <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudsy_hero_heading" data-page-field="title">{c.t('title')}<br></div>
         </div>
         <div class="w1-sub_heading-wrapper">
           <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudy_subheading_container">
-            <div class="casestudy_hero_subheading">London</div>
+            <div class="casestudy_hero_subheading" data-page-field="service">{c.t('service')}</div>
             <div class="spacer_vertical"></div>
-            <div class="casestudy_hero_subheading">Nottingham</div>
+            <div class="casestudy_hero_subheading" data-page-field="sector">{c.t('sector')}</div>
             <div class="spacer_vertical"></div>
-            <div class="casestudy_hero_subheading">2020 -22</div>
+            <div class="casestudy_hero_subheading" data-page-field="year">{c.t('year')}</div>
           </div>
         </div>
       </div>
@@ -49,17 +57,17 @@ import Footer from '../components/Footer.astro';
     <div class="container-project-summary arch">
       <div class="problem-container architecture">
         <div class="title">Problem<br></div>
-        <div class="list problem">Overwhelming<br></div>
-        <div class="list problem">Poor UX<br></div>
-        <div class="list problem">No Cohesion<br></div>
+        <div class="list problem" data-page-field="problems.0">{c.t('problems.0')}<br></div>
+        <div class="list problem" data-page-field="problems.1">{c.t('problems.1')}<br></div>
+        <div class="list problem" data-page-field="problems.2">{c.t('problems.2')}<br></div>
       </div>
       <div class="problem-container after">
-        <div class="title">Summary<br></div>
-        <div class="list solution">Plans<br></div>
-        <div class="list solution">Sections<br></div>
-        <div class="list solution">Dissertation<br></div>
-        <div class="list solution">Thesis<br></div>
-        <div class="list solution">Axonometrics<br></div>
+        <div class="title" data-page-field="outcomesLabel">{c.t('outcomesLabel')}<br></div>
+        <div class="list solution" data-page-field="outcomes.0">{c.t('outcomes.0')}<br></div>
+        <div class="list solution" data-page-field="outcomes.1">{c.t('outcomes.1')}<br></div>
+        <div class="list solution" data-page-field="outcomes.2">{c.t('outcomes.2')}<br></div>
+        <div class="list solution" data-page-field="outcomes.3">{c.t('outcomes.3')}<br></div>
+        <div class="list solution" data-page-field="outcomes.4">{c.t('outcomes.4')}<br></div>
       </div>
       <div class="read-more">
         <div class="one-item-display hover-x">
@@ -76,14 +84,14 @@ import Footer from '../components/Footer.astro';
         <div class="one-item-list">
           <div class="one-item-list-wrap">
             <div class="one-item-list-text">
-              <div class="text-block-89">These architectural projects from both my university studies and professional work demonstrate my approach to design, problem-solving, and visual thinking—all of which carry over into my digital design work</div>
+              <div class="text-block-89" data-page-field="summary">{c.t('summary')}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="container-project-intro arch">
-      <div text-split="" scrub-each-word-slower="" class="into-project-subheading">A selection of architectural projects from university and professional work.</div>
+      <div text-split="" scrub-each-word-slower="" class="into-project-subheading" data-page-field="headline">{c.t('headline')}</div>
     </div>
   </section>
   <section class="w1-section-initial_sketch_1">
@@ -112,53 +120,53 @@ import Footer from '../components/Footer.astro';
       <div data-w-id="11dabb4f-2f78-d130-6c66-6440d875d3fd" style="opacity:0" class="awward-button">
         <div class="div-block-223">
           <div class="button-awward-link">
-            <div class="awward-linktext">Lathams</div>
+            <div class="awward-linktext" data-page-field="awards.0.by">{c.t('awards.0.by')}</div>
           </div>
-          <div class="text-block-87">Award</div>
+          <div class="text-block-87" data-page-field="awards.0.kind">{c.t('awards.0.kind')}</div>
         </div>
-        <div class="text-block-86">Best Drawing</div>
+        <div class="text-block-86" data-page-field="awards.0.title">{c.t('awards.0.title')}</div>
       </div>
       <div data-w-id="24ea91cb-f17d-0a16-900d-da82cce58d37" style="opacity:0" class="awward-button">
         <div class="div-block-223">
           <div class="button-awward-link">
-            <div class="awward-linktext">Peter Rogan &amp; Assoc</div>
+            <div class="awward-linktext" data-page-field="awards.1.by">{c.t('awards.1.by')}</div>
           </div>
-          <div class="text-block-87">Award</div>
+          <div class="text-block-87" data-page-field="awards.1.kind">{c.t('awards.1.kind')}</div>
         </div>
-        <div class="text-block-86">Best Dissertation</div>
+        <div class="text-block-86" data-page-field="awards.1.title">{c.t('awards.1.title')}</div>
       </div>
       <a cursor-viewproject="" data-w-id="e331fbed-e26a-d1a2-a8ab-ff41281d593b" style="opacity:0" href="https://www.presidentsmedals.com/Entry-18140" target="_blank" class="awward-button w-inline-block">
         <div class="div-block-223">
           <div class="button-awward-link">
-            <div class="awward-linktext">RIBA.com</div>
+            <div class="awward-linktext" data-page-field="awards.2.by">{c.t('awards.2.by')}</div>
           </div>
           <div class="link-to-riba">
             <div class="div-block-225"></div>
           </div>
-          <div class="text-block-87">Nomination</div>
+          <div class="text-block-87" data-page-field="awards.2.kind">{c.t('awards.2.kind')}</div>
         </div>
-        <div class="text-block-86">RIBA Dissertation Nominee</div>
+        <div class="text-block-86" data-page-field="awards.2.title">{c.t('awards.2.title')}</div>
       </a>
       <a cursor-viewproject="" data-w-id="6a0a40c2-d799-69fb-7f86-28b10da61d92" style="opacity:0" href="https://www.presidentsmedals.com/Entry-58111" target="_blank" class="awward-button w-inline-block">
         <div class="div-block-223">
           <div class="button-awward-link">
-            <div class="awward-linktext">RIBA..com</div>
+            <div class="awward-linktext" data-page-field="awards.3.by">{c.t('awards.3.by')}</div>
           </div>
           <div class="link-to-riba">
             <div class="div-block-225"></div>
           </div>
-          <div class="text-block-87">Nomination</div>
+          <div class="text-block-87" data-page-field="awards.3.kind">{c.t('awards.3.kind')}</div>
         </div>
-        <div class="text-block-86">RIBA Part 1 Nominee</div>
+        <div class="text-block-86" data-page-field="awards.3.title">{c.t('awards.3.title')}</div>
       </a>
       <div data-w-id="c594a674-1112-d067-7272-52d54ada2e54" style="opacity:0" class="awward-button">
         <div class="div-block-223">
           <div class="button-awward-link">
-            <div class="awward-linktext">NDSA</div>
+            <div class="awward-linktext" data-page-field="awards.4.by">{c.t('awards.4.by')}</div>
           </div>
-          <div class="text-block-87">Nomination</div>
+          <div class="text-block-87" data-page-field="awards.4.kind">{c.t('awards.4.kind')}</div>
         </div>
-        <div class="text-block-86">NDSA Student Award Nominee</div>
+        <div class="text-block-86" data-page-field="awards.4.title">{c.t('awards.4.title')}</div>
       </div>
     </div>
   </div>
@@ -276,7 +284,7 @@ import Footer from '../components/Footer.astro';
       <div data-w-id="a42e2d8b-7a39-1768-6374-65d9579da618" class="container-next_project">
         <div class="div-block-218">
           <div class="nex_ip-next-up">Next</div>
-          <div data-w-id="a42e2d8b-7a39-1768-6374-65d9579da61c" class="next_up-prohect_name">CSJ Architects</div>
+          <div data-w-id="a42e2d8b-7a39-1768-6374-65d9579da61c" class="next_up-prohect_name" {...pageDoc(D.csjArchitects._id, 'caseStudy')} data-page-field="title">{next.t('title')}</div>
         </div>
         <div class="div-block-217">
           <a cursor-startproject="" data-w-id="a42e2d8b-7a39-1768-6374-65d9579da61f" href="/work-csj-architects" class="next_project-case_image w-inline-block"><img src="/assets/images/CSJ-Hero-Desktop_1.avif" loading="lazy" alt="" srcset="/assets/images/CSJ-Hero-Desktop_1CSJ-Hero-Desktop.avif 1600w, /assets/images/CSJ-Hero-Desktop_1.avif 2480w" sizes="100vw" class="image-3"></a>

@@ -1,6 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { getDocument, pageDoc, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+// The page's words are its case study's (studio/schemaTypes/documents/case-study.ts), and the next
+// project's name that one's title, each element falling back to its own (src/cms/defaults.ts)
+const c = reader(await getDocument(D.csjArchitects._id), D.csjArchitects);
+const next = reader(await getDocument(D.mikhailRiches._id), D.mikhailRiches);
 ---
 
 <Layout
@@ -8,6 +15,7 @@ import Footer from '../components/Footer.astro';
   pageId="67c9ed31deaabe2adadebd36"
   bodyClass="body-2"
   containerClass="body-container"
+  doc={{ id: D.csjArchitects._id, type: 'caseStudy' }}
   viewLabel="[View Next Project]"
 >
   <section class="w1-section-hero">
@@ -23,15 +31,15 @@ import Footer from '../components/Footer.astro';
       </div>
       <div class="casestudy_hero_text_container">
         <div class="w1-title-wrapper">
-          <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudsy_hero_heading">CSJ Architects</div>
+          <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudsy_hero_heading" data-page-field="title">{c.t('title')}</div>
         </div>
         <div class="w1-sub_heading-wrapper">
           <div style="-webkit-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 100%, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="casestudy_subheading_container">
-            <div class="casestudy_hero_subheading">Website Design</div>
+            <div class="casestudy_hero_subheading" data-page-field="service">{c.t('service')}</div>
             <div class="spacer_vertical"></div>
-            <div class="casestudy_hero_subheading">Architecture Firm</div>
+            <div class="casestudy_hero_subheading" data-page-field="sector">{c.t('sector')}</div>
             <div class="spacer_vertical"></div>
-            <div class="casestudy_hero_subheading">2025</div>
+            <div class="casestudy_hero_subheading" data-page-field="year">{c.t('year')}</div>
           </div>
         </div>
       </div>
@@ -48,17 +56,17 @@ import Footer from '../components/Footer.astro';
     <div class="container-project-summary">
       <div class="problem-container csj">
         <div class="title">Problem<br></div>
-        <div class="list problem">Overwhelming<br></div>
-        <div class="list problem">Poor UX<br></div>
-        <div class="list problem">No Cohesion<br></div>
+        <div class="list problem" data-page-field="problems.0">{c.t('problems.0')}<br></div>
+        <div class="list problem" data-page-field="problems.1">{c.t('problems.1')}<br></div>
+        <div class="list problem" data-page-field="problems.2">{c.t('problems.2')}<br></div>
       </div>
       <div class="problem-container after">
-        <div class="title">Key Outcomes<br></div>
-        <div class="list solution">Visual Identity<br></div>
-        <div class="list solution">Brand Alignment<br></div>
-        <div class="list solution">UI UX<br></div>
-        <div class="list solution">Structure<br></div>
-        <div class="list solution">Copywritting<br></div>
+        <div class="title" data-page-field="outcomesLabel">{c.t('outcomesLabel')}<br></div>
+        <div class="list solution" data-page-field="outcomes.0">{c.t('outcomes.0')}<br></div>
+        <div class="list solution" data-page-field="outcomes.1">{c.t('outcomes.1')}<br></div>
+        <div class="list solution" data-page-field="outcomes.2">{c.t('outcomes.2')}<br></div>
+        <div class="list solution" data-page-field="outcomes.3">{c.t('outcomes.3')}<br></div>
+        <div class="list solution" data-page-field="outcomes.4">{c.t('outcomes.4')}<br></div>
       </div>
       <div class="read-more">
         <div class="one-item-display hover-x">
@@ -75,14 +83,14 @@ import Footer from '../components/Footer.astro';
         <div class="one-item-list">
           <div class="one-item-list-wrap">
             <div class="one-item-list-text">
-              <div class="text-block-89">Caruso St John Architects blend modern design with historical context. This concept redesign introduces a bold visual style that mirrors the studio’s ethos, integrating brand and layout into a cohesive, authentic digital presence.</div>
+              <div class="text-block-89" data-page-field="summary">{c.t('summary')}</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div class="container-project-intro">
-      <div text-split="" scrub-each-word-slower="" class="into-project-subheading">Redesigning a website to embody architectural vision and brand identity</div>
+      <div text-split="" scrub-each-word-slower="" class="into-project-subheading" data-page-field="headline">{c.t('headline')}</div>
     </div>
   </section>
   <section class="csj-2x-desktop">
@@ -106,7 +114,7 @@ import Footer from '../components/Footer.astro';
       <div data-w-id="7abf51e5-abfe-bdd8-d639-2fa291d6a608" class="container-next_project">
         <div class="div-block-218">
           <div class="nex_ip-next-up">Next</div>
-          <div data-w-id="3b843e66-f54e-2022-d339-69bc1d19f3d6" class="next_up-prohect_name">Mikhail Riches</div>
+          <div data-w-id="3b843e66-f54e-2022-d339-69bc1d19f3d6" class="next_up-prohect_name" {...pageDoc(D.mikhailRiches._id, 'caseStudy')} data-page-field="title">{next.t('title')}</div>
         </div>
         <div class="div-block-217">
           <a cursor-viewproject="" data-w-id="c2bcab0a-16b8-6289-8384-56e952b68774" href="/mikhail-riches" class="next_project-case_image w-inline-block"><img src="/assets/images/Mikhail_Riches-Hero-Desktop_1.avif" loading="lazy" sizes="(max-width: 2480px) 100vw, 2480px" srcset="/assets/images/Mikhail_Riches-Hero-Desktop_1Mikhail_Riches-Hero-Desktop.avif 1600w, /assets/images/Mikhail_Riches-Hero-Desktop_1.avif 2480w" alt="" class="image-3"></a>

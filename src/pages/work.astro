@@ -1,6 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { getDocument, pageDoc, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+// The heading is the Work page document's; each row in the list is its case study's (List name,
+// List year), each element falling back to its own words (src/cms/defaults.ts)
+const { t } = reader(await getDocument('workPage'), D.workPage);
+const mk = reader(await getDocument(D.mikhailRiches._id), D.mikhailRiches);
+const csj = reader(await getDocument(D.csjArchitects._id), D.csjArchitects);
+const arch = reader(await getDocument(D.architecturalWorks._id), D.architecturalWorks);
 ---
 
 <Layout
@@ -11,6 +20,7 @@ import Footer from '../components/Footer.astro';
   viewLabel="[View Project]"
   viewLabelClass="paragraph"
   startLabel="[Start Your Project]"
+  doc={{ id: 'workPage' }}
 >
   <section class="work-section">
     <div class="nav-black">
@@ -23,8 +33,8 @@ import Footer from '../components/Footer.astro';
       </div>
     </div>
     <div class="heading-work">
-      <div class="work-my">my</div>
-      <div class="work-worktesxt">work</div>
+      <div class="work-my" data-page-field="hero.line1">{t('hero.line1')}</div>
+      <div class="work-worktesxt" data-page-field="hero.line2">{t('hero.line2')}</div>
     </div>
     <div id="w-node-_6e2d9d3e-830c-36f2-5ffa-9ee109a22e74-c5d50403" class="w-layout-layout quick-stack-12 wf-layout-layout">
       <div class="w-layout-cell cell">
@@ -60,24 +70,24 @@ import Footer from '../components/Footer.astro';
     </div>
     <div class="work-full-container">
       <section class="case-study-container">
-        <div class="work-case-study _1">
+        <div class="work-case-study _1" {...pageDoc(D.mikhailRiches._id, 'caseStudy')}>
           <div class="work-case-study-text-container">
-            <div class="text-block-76">MK Architects</div>
-            <div class="text-block-76">2025</div>
+            <div class="text-block-76" data-page-field="listTitle">{mk.t('listTitle')}</div>
+            <div class="text-block-76" data-page-field="listYear">{mk.t('listYear')}</div>
           </div>
         </div>
-        <div class="work-case-study _2">
+        <div class="work-case-study _2" {...pageDoc(D.csjArchitects._id, 'caseStudy')}>
           <div class="work-case-study-text-container">
-            <div class="text-block-76">Architect</div>
-            <div class="text-block-76">2025</div>
+            <div class="text-block-76" data-page-field="listTitle">{csj.t('listTitle')}</div>
+            <div class="text-block-76" data-page-field="listYear">{csj.t('listYear')}</div>
           </div>
         </div>
       </section>
       <section class="case-study-container">
-        <a href="/work-architectural-works" class="work-case-study _3 w-inline-block">
+        <a href="/work-architectural-works" class="work-case-study _3 w-inline-block" {...pageDoc(D.architecturalWorks._id, 'caseStudy')}>
           <div class="work-case-study-text-container">
-            <div class="text-block-76">Architectural Work</div>
-            <div class="text-block-76">2021-23</div>
+            <div class="text-block-76" data-page-field="listTitle">{arch.t('listTitle')}</div>
+            <div class="text-block-76" data-page-field="listYear">{arch.t('listYear')}</div>
           </div>
         </a>
         <div class="work-case-study _4"></div>

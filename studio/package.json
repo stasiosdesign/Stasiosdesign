@@ -8,7 +8,8 @@
     "dev:released": "sanity dev --port 3334",
     "build": "sanity build",
     "deploy": "sanity deploy",
-    "check": "tsc --noEmit && eslint .",
+    "check": "tsc --noEmit && eslint . && npm test",
+    "test": "node --experimental-strip-types --disable-warning=MODULE_TYPELESS_PACKAGE_JSON --disable-warning=ExperimentalWarning --test \"test/**/*.test.ts\"",
     "seed": "sanity exec scripts/seed.ts --with-user-token"
   },
   "dependencies": {

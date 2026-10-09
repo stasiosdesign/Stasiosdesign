@@ -1,6 +1,12 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { getDocument, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+// The home page's words come from its Sanity document (studio/schemaTypes/pages/home.ts), each
+// element falling back to its own (src/cms/defaults.ts): see src/cms/content.ts
+const { t, h } = reader(await getDocument('homePage'), D.homePage);
 ---
 
 <Layout
@@ -10,6 +16,7 @@ import Footer from '../components/Footer.astro';
   bodyClass="body-8"
   containerClass="body-container"
   lottieId="6f0d15af-d9e8-8dea-5d73-1c5835207b76"
+  doc={{ id: 'homePage' }}
 >
   <div class="section-vh hero">
     <div class="desktop-hero">
@@ -25,33 +32,33 @@ import Footer from '../components/Footer.astro';
       <div class="hero-top-spacer"></div>
       <div class="desktop-hero-container">
         <div class="hero-title-top">
-          <h1 data-w-id="19708db8-4451-f93a-9eb2-742f65a5dd0b" style="border-color:rgb(0,0,0)" class="hero-main-text">creative</h1>
+          <h1 data-w-id="19708db8-4451-f93a-9eb2-742f65a5dd0b" style="border-color:rgb(0,0,0)" class="hero-main-text" data-page-field="hero.line1">{t('hero.line1')}</h1>
           <div data-w-id="9b2fd54a-5a18-a0c9-bacf-da80486d5b94" class="divblockforspin">
             <div data-w-id="14d86f16-627d-a059-f0ae-3569fe3c3f5c" class="logomove"></div>
           </div>
         </div>
         <div data-w-id="dcb472fd-08a1-12a7-e0c9-d30438883de0" class="hero-title-middle">
-          <h1 data-w-id="2aceb655-0b2a-b0a7-e45c-34d56f4390cc" class="website-hero-titile">website</h1>
+          <h1 data-w-id="2aceb655-0b2a-b0a7-e45c-34d56f4390cc" class="website-hero-titile" data-page-field="hero.line2">{t('hero.line2')}</h1>
         </div>
         <div class="hero-title-bottom">
           <div data-w-id="6cdf1b84-26bb-73bd-1a73-404e635c3d69" class="divblockforspin _2"></div>
           <div class="div-block-197"></div>
-          <h1 data-w-id="93be9a55-cfb2-a7a8-22ed-38b32893c202" class="hero-main-text">designer</h1>
+          <h1 data-w-id="93be9a55-cfb2-a7a8-22ed-38b32893c202" class="hero-main-text" data-page-field="hero.line3">{t('hero.line3')}</h1>
         </div>
       </div>
       <div class="hero-bottom-spacer">
         <div data-w-id="f0af4ed4-ee5f-c985-8700-1a90b0e8007a" class="div-block-190">
-          <a id="fade-on-scroll-cta" data-w-id="e7692838-3acb-39b7-7f92-01fba56e60bd" href="/work" class="cta-hero-text-start"><span data-w-id="9d8cd5b6-14b2-18f4-fc09-c2cbce102234" style="-webkit-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform-style:preserve-3d">[</span>VIEW WORK<span data-w-id="e2176aa7-598e-962a-8a62-a0a8465c632f" style="-webkit-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform-style:preserve-3d">]</span></a>
+          <a id="fade-on-scroll-cta" data-w-id="e7692838-3acb-39b7-7f92-01fba56e60bd" href="/work" class="cta-hero-text-start"><span data-w-id="9d8cd5b6-14b2-18f4-fc09-c2cbce102234" style="-webkit-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform-style:preserve-3d">[</span><span data-page-field="hero.viewWork">{t('hero.viewWork')}</span><span data-w-id="e2176aa7-598e-962a-8a62-a0a8465c632f" style="-webkit-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0px) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform-style:preserve-3d">]</span></a>
           <div class="div-block-233">
-            <div class="text-block-91">Get a Free Quote</div>
+            <div class="text-block-91" data-page-field="hero.quoteButton">{t('hero.quoteButton')}</div>
           </div>
           <div class="hero-cta-desktop-2">
-            <div class="hero-cta-desktop-text-2">Read More</div>
+            <div class="hero-cta-desktop-text-2" data-page-field="hero.readMoreButton">{t('hero.readMoreButton')}</div>
           </div>
         </div>
       </div>
       <div id="fade-on-scroll" class="bottom">
-        <div data-w-id="976a85f1-184d-a490-3d73-81fa652774bb" class="bottom-text-middle">Standout <span class="text-span-65">websites</span> that turn <span class="text-span-67">visitors</span> into <span class="text-span-66">clients.</span></div>
+        <div data-w-id="976a85f1-184d-a490-3d73-81fa652774bb" class="bottom-text-middle" data-page-field="hero.statement" data-page-format="styled" data-page-classes="text-span-65 text-span-67 text-span-66" set:html={h('hero.statement', 'styled', ['text-span-65', 'text-span-67', 'text-span-66'])}></div>
       </div>
       <div id="fade-on-scroll" class="bottom-2">
         <div class="left-slider">
@@ -66,23 +73,23 @@ import Footer from '../components/Footer.astro';
     </div>
     <div class="tablet-hero">
       <div class="tablet-hero-text">
-        <div data-w-id="07262ca2-5c37-40e0-f937-2192e816e9e7" class="tablet-hero-text_block">For</div>
-        <div data-w-id="e9886f30-37a7-be72-e133-7d6563eda3fa" class="tablet-hero-text_block _1">websites</div>
-        <div data-w-id="87d214ed-a825-126d-9e42-fe1fd4233a89" class="tablet-hero-text_block">Poeple </div>
-        <div data-w-id="f7316707-d5ea-ad2e-fe28-084b6ce22f5a" class="tablet-hero-text_block">Remember.</div>
+        <div data-w-id="07262ca2-5c37-40e0-f937-2192e816e9e7" class="tablet-hero-text_block" data-page-field="hero.tabletLines.0">{t('hero.tabletLines.0')}</div>
+        <div data-w-id="e9886f30-37a7-be72-e133-7d6563eda3fa" class="tablet-hero-text_block _1" data-page-field="hero.tabletLines.1">{t('hero.tabletLines.1')}</div>
+        <div data-w-id="87d214ed-a825-126d-9e42-fe1fd4233a89" class="tablet-hero-text_block" data-page-field="hero.tabletLines.2">{t('hero.tabletLines.2')}</div>
+        <div data-w-id="f7316707-d5ea-ad2e-fe28-084b6ce22f5a" class="tablet-hero-text_block" data-page-field="hero.tabletLines.3">{t('hero.tabletLines.3')}</div>
       </div>
       <div class="div-block-232">
         <div class="div-block-236">
-          <div data-w-id="ef6ced15-4370-c6ac-f06d-ab5a82f3ab0f" class="text-block-90">I design and develop standout websites that turn visitors into clients.</div>
+          <div data-w-id="ef6ced15-4370-c6ac-f06d-ab5a82f3ab0f" class="text-block-90" data-page-field="hero.tabletLead">{t('hero.tabletLead')}</div>
         </div>
       </div>
       <div class="div-block-230">
         <a data-w-id="2c6ace10-18c0-5e7d-99bf-bc83e8baafc7" href="/lets-talk" class="tablet-cta-1 w-inline-block">
-          <div class="tablet-cta-1-text">Get a Free Quote</div>
+          <div class="tablet-cta-1-text" data-page-field="hero.quoteButton">{t('hero.quoteButton')}</div>
         </a>
         <a data-w-id="95985434-2bf3-8de8-e8c0-1cea17f1e9e6" href="#section-text" class="tablet-cta-2 w-inline-block">
           <div class="div-block-231"></div>
-          <div class="tablet-cta-2-text">Read More</div>
+          <div class="tablet-cta-2-text" data-page-field="hero.readMoreButton">{t('hero.readMoreButton')}</div>
         </a>
       </div>
       <div data-w-id="3dae758f-8704-0ac2-ed53-f20104804869" class="tablet-hero-image-container"><img src="/assets/images/Work-Showcase--Frame_1.avif" loading="eager" fetchpriority="high" alt="" srcset="/assets/images/Work-Showcase--Frame_1Work-Showcase--Frame.avif 800w, /assets/images/Work-Showcase--Frame_1.avif 1381w" sizes="(max-width: 1381px) 100vw, 1381px" class="image-4"></div>
@@ -90,9 +97,9 @@ import Footer from '../components/Footer.astro';
   </div>
   <section id="section-text" class="section-text lets-discuss tablet">
     <div class="intro_text-container-tablet">
-      <div text-split="" scrub-each-word-slower="" class="span-text"><span>High-end websites</span> <span>for future driven</span> <span>companies</span> <span>amplify your</span> <span>brand, stand out,</span> <span>and attract more</span> <span>clients.</span></div>
+      <div text-split="" scrub-each-word-slower="" class="span-text" data-page-field="intro.lines" data-page-format="spans" set:html={h('intro.lines', 'spans')}></div>
       <a data-w-id="9ef1d8e9-a997-9eda-6944-b832cfc4ff9e" href="#" class="button-1 circular w-inline-block">
-        <div class="button-1-text circular">Get a <br>Free quote</div>
+        <div class="button-1-text circular" data-page-field="intro.button" data-page-format="lines" set:html={h('intro.button', 'lines')}></div>
         <div data-w-id="9ef1d8e9-a997-9eda-6944-b832cfc4ffa1" class="button-1-hover-block"></div>
       </a>
     </div>
@@ -100,23 +107,23 @@ import Footer from '../components/Footer.astro';
   <section class="section-text after-hero">
     <div class="div-block-237">
       <div class="after_hero-left">
-        <div data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f70" class="text-block-92">I build websites that combine strong design with business strategy - to make your brand the one clients want and competitors envy.</div>
+        <div data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f70" class="text-block-92" data-page-field="offer.text">{t('offer.text')}</div>
       </div>
       <div class="after_hero-right">
         <a data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f73" style="-webkit-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="div-block-244 w-inline-block">
           <div class="div-block-246"></div>
-          <div data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f75" style="opacity:0" class="after_hero_right-cta">schedule a call </div>
+          <div data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f75" style="opacity:0" class="after_hero_right-cta" data-page-field="offer.button">{t('offer.button')}</div>
         </a>
-        <div data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f77" style="opacity:0" class="after_hero_right-text">to see if we’re a good fit, no pressure no sales pitch.</div>
+        <div data-w-id="b03bb8ba-627b-9b59-0560-d4caa9cd5f77" style="opacity:0" class="after_hero_right-text" data-page-field="offer.note">{t('offer.note')}</div>
       </div>
     </div>
     <div class="div-block-242">
       <div class="div-block-243"></div>
-      <div class="text-block-93">Recent Works</div>
+      <div class="text-block-93" data-page-field="recentWorks.heading">{t('recentWorks.heading')}</div>
     </div>
     <div class="first-section-text _1">
-      <h2 class="heading">Recent Works<br></h2>
-      <div class="heading sub">website design &amp; development</div>
+      <h2 class="heading" data-page-field="recentWorks.heading">{t('recentWorks.heading')}<br></h2>
+      <div class="heading sub" data-page-field="recentWorks.subheading">{t('recentWorks.subheading')}</div>
     </div>
   </section>
   <section class="section-first">
@@ -150,23 +157,23 @@ import Footer from '../components/Footer.astro';
   </section>
   <section data-w-id="8c9de3b1-122b-fb15-04e7-9a15bcece241" class="section-white _2">
     <div class="container-title what-to-epect">
-      <div class="heading _2">What to Expect</div>
-      <div class="heading sub _2">working with me</div>
+      <div class="heading _2" data-page-field="expectations.heading">{t('expectations.heading')}</div>
+      <div class="heading sub _2" data-page-field="expectations.subheading">{t('expectations.subheading')}</div>
     </div>
     <div id="w-node-_688ae28a-01cc-7c87-d3a4-b5ac1b89b2cc-c5d503f7" class="w-layout-layout quick-stack-10 wf-layout-layout">
       <div class="w-layout-cell">
         <div class="container black">
           <div class="bent-text-wrap">
-            <div class="text-block-66">Fast</div>
-            <div class="wte-subheading">turnaround time</div>
+            <div class="text-block-66" data-page-field="expectations.points.0.value">{t('expectations.points.0.value')}</div>
+            <div class="wte-subheading" data-page-field="expectations.points.0.label">{t('expectations.points.0.label')}</div>
           </div>
         </div>
       </div>
       <div class="w-layout-cell">
         <div class="container">
           <div class="bent-text-wrap">
-            <div class="text-block-66">High</div>
-            <div class="wte-subheading">quality designs</div>
+            <div class="text-block-66" data-page-field="expectations.points.1.value">{t('expectations.points.1.value')}</div>
+            <div class="wte-subheading" data-page-field="expectations.points.1.label">{t('expectations.points.1.label')}</div>
           </div>
         </div>
       </div>
@@ -176,46 +183,46 @@ import Footer from '../components/Footer.astro';
             <div class="profile-fcae"></div>
             <div class="div-block-172"></div>
           </div>
-          <div class="text-block-71"><span class="text-span-68">I’m Anastasios – but you can call me Stas.</span> I started in architecture, now I create bespoke websites that sharpen brand positioning and drive growth, using AI to move faster without losing the human touch.</div>
+          <div class="text-block-71"><span class="text-span-68" data-page-field="expectations.aboutIntro">{t('expectations.aboutIntro')}</span> <span data-page-field="expectations.aboutText">{t('expectations.aboutText')}</span></div>
         </div>
       </div>
       <div class="w-layout-cell">
         <div class="container">
           <div class="bent-text-wrap">
-            <div class="text-block-66">100%</div>
-            <div class="wte-subheading">custom</div>
+            <div class="text-block-66" data-page-field="expectations.points.2.value">{t('expectations.points.2.value')}</div>
+            <div class="wte-subheading" data-page-field="expectations.points.2.label">{t('expectations.points.2.label')}</div>
           </div>
         </div>
       </div>
       <div class="w-layout-cell">
         <div class="container">
           <div class="bent-text-wrap">
-            <div class="text-block-66 _1">SEO</div>
-            <div class="wte-subheading">optimised</div>
+            <div class="text-block-66 _1" data-page-field="expectations.points.3.value">{t('expectations.points.3.value')}</div>
+            <div class="wte-subheading" data-page-field="expectations.points.3.label">{t('expectations.points.3.label')}</div>
           </div>
         </div>
       </div>
       <div id="w-node-_28f61c27-ff39-b9fc-19b7-4e31321bec3d-c5d503f7" class="w-layout-cell">
         <div class="container with-button">
           <div class="div-block-176">
-            <div class="text-block-66">Clean Code</div>
+            <div class="text-block-66" data-page-field="expectations.cleanCode">{t('expectations.cleanCode')}</div>
             <div class="div-block-175"></div>
           </div>
           <div class="after_hero-right clean-code">
             <a data-w-id="3cdbf74c-2f6e-8d3d-6274-4ef9c5484c73" style="-webkit-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="div-block-244 w-inline-block">
               <div class="div-block-246"></div>
-              <div data-w-id="3cdbf74c-2f6e-8d3d-6274-4ef9c5484c75" style="opacity:0" class="after_hero_right-cta">schedule a call </div>
+              <div data-w-id="3cdbf74c-2f6e-8d3d-6274-4ef9c5484c75" style="opacity:0" class="after_hero_right-cta" data-page-field="expectations.cleanCodeButton">{t('expectations.cleanCodeButton')}</div>
             </a>
           </div>
         </div>
       </div>
       <div id="w-node-_7bddcafc-4d2a-daa6-d3dd-a12bba555a9b-c5d503f7" class="w-layout-cell">
         <div data-w-id="b24da91d-f505-ab54-71c6-8a267f6315e5" class="container pm">
-          <div style="opacity:0" class="inside-circle-text-2">I uncover what makes your business unique, crafting a website that not only sets you apart from competitors but also earns trust and turns visitors into loyal clients</div>
+          <div style="opacity:0" class="inside-circle-text-2" data-page-field="design.text">{t('design.text')}</div>
           <div style="-webkit-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="circle-3">
             <div class="div-block-181">
-              <div style="opacity:1" class="inside-circle-text">Distinct</div>
-              <div style="opacity:1" class="wte-subheading">Design</div>
+              <div style="opacity:1" class="inside-circle-text" data-page-field="design.title">{t('design.title')}</div>
+              <div style="opacity:1" class="wte-subheading" data-page-field="design.subtitle">{t('design.subtitle')}</div>
             </div>
           </div>
           <div class="circle-1">
@@ -223,22 +230,22 @@ import Footer from '../components/Footer.astro';
           </div>
           <div class="circle-top">
             <div data-w-id="5c6765c8-03d2-31da-d67b-3f05d4b21743" style="-webkit-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="the--circle">
-              <div class="circle-subheding">Competitors?</div>
+              <div class="circle-subheding" data-page-field="design.questions.0">{t('design.questions.0')}</div>
             </div>
           </div>
           <div class="circle-right">
             <div data-w-id="46eb7a06-6a7f-6586-8e6a-3a258e573690" style="-webkit-transform:translate3d(0%, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0%, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0%, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0%, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="the--circle">
-              <div class="circle-subheding">Outdated?</div>
+              <div class="circle-subheding" data-page-field="design.questions.1">{t('design.questions.1')}</div>
             </div>
           </div>
           <div class="circle-bottom">
             <div data-w-id="8d31dcb4-c625-140e-d791-198a67353d68" style="-webkit-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="the--circle">
-              <div class="circle-subheding">Lack of Identity?</div>
+              <div class="circle-subheding" data-page-field="design.questions.2">{t('design.questions.2')}</div>
             </div>
           </div>
           <div class="circle-left">
             <div data-w-id="ee686b61-5c91-1b3b-52b7-fa124b1c51f9" style="-webkit-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0px, 0px, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="the--circle">
-              <div class="circle-subheding">Poor UX?</div>
+              <div class="circle-subheding" data-page-field="design.questions.3">{t('design.questions.3')}</div>
             </div>
           </div>
         </div>
@@ -246,8 +253,8 @@ import Footer from '../components/Footer.astro';
       <div id="w-node-_46973214-49bb-a1ec-b34e-ca9667f26c60-c5d503f7" class="w-layout-cell">
         <div class="container clean-copy">
           <div class="copywrittng-container">
-            <div class="text-block-66 clean-copy">Copy that Converts</div>
-            <div class="wte-subheading-copy"><span class="text-span-33">Good design grabs attention, but great copywriting keeps it.</span> I write sharp, purposeful messaging that speaks to your audience and captures your brand</div>
+            <div class="text-block-66 clean-copy" data-page-field="copy.heading">{t('copy.heading')}</div>
+            <div class="wte-subheading-copy"><span class="text-span-33" data-page-field="copy.lead">{t('copy.lead')}</span> <span data-page-field="copy.text">{t('copy.text')}</span></div>
           </div>
           <div data-w-id="6375dded-66f1-a093-7da0-6525cfc575c6" class="copywriting-graphic">
             <div class="copywriting-text-animation">
@@ -283,28 +290,28 @@ import Footer from '../components/Footer.astro';
           <div class="_4-points-container-inner">
             <div class="container">
               <div class="bent-text-wrap">
-                <div class="text-block-66">Fast</div>
-                <div class="wte-subheading">turnaround time</div>
+                <div class="text-block-66" data-page-field="expectations.points.0.value">{t('expectations.points.0.value')}</div>
+                <div class="wte-subheading" data-page-field="expectations.points.0.label">{t('expectations.points.0.label')}</div>
               </div>
             </div>
             <div class="container">
               <div class="bent-text-wrap">
-                <div class="text-block-66">High</div>
-                <div class="wte-subheading">quality designs</div>
+                <div class="text-block-66" data-page-field="expectations.points.1.value">{t('expectations.points.1.value')}</div>
+                <div class="wte-subheading" data-page-field="expectations.points.1.label">{t('expectations.points.1.label')}</div>
               </div>
             </div>
           </div>
           <div class="_4-points-container-inner">
             <div class="container">
               <div class="bent-text-wrap">
-                <div class="text-block-66">100%</div>
-                <div class="wte-subheading">custom</div>
+                <div class="text-block-66" data-page-field="expectations.points.2.value">{t('expectations.points.2.value')}</div>
+                <div class="wte-subheading" data-page-field="expectations.points.2.label">{t('expectations.points.2.label')}</div>
               </div>
             </div>
             <div class="container">
               <div class="bent-text-wrap">
-                <div class="text-block-66">SEO</div>
-                <div class="wte-subheading">optimised</div>
+                <div class="text-block-66" data-page-field="expectations.points.3.value">{t('expectations.points.3.value')}</div>
+                <div class="wte-subheading" data-page-field="expectations.points.3.label">{t('expectations.points.3.label')}</div>
               </div>
             </div>
           </div>
@@ -316,13 +323,13 @@ import Footer from '../components/Footer.astro';
             <div class="profile-fcae"></div>
             <div class="div-block-172"></div>
           </div>
-          <div class="text-block-71">I’m Anastasios – but you can call me Stas. I started in architecture, now I build websites that combine strong design with clear business strategy. A great website should be both beautiful and built to sell.</div>
+          <div class="text-block-71" data-page-field="expectations.aboutPhone">{t('expectations.aboutPhone')}</div>
         </div>
       </div>
       <div id="w-node-_883fa42f-ff49-f3f9-cc64-42e885d679eb-c5d503f7" class="w-layout-cell">
         <div class="container">
           <div class="div-block-176">
-            <div class="text-block-66">Clean Code</div>
+            <div class="text-block-66" data-page-field="expectations.cleanCode">{t('expectations.cleanCode')}</div>
             <div class="div-block-175"></div>
           </div>
         </div>
@@ -330,8 +337,8 @@ import Footer from '../components/Footer.astro';
       <div id="w-node-efb879f0-7792-1700-9740-690500717dd3-c5d503f7" class="w-layout-cell">
         <div class="container clean-copy">
           <div class="copywrittng-container">
-            <div class="text-block-66 clean-copy">Copy that Converts</div>
-            <div class="wte-subheading-copy"><span class="text-span-33">Good design grabs attention, but great copywriting keeps it.</span> I craft sharp, purposeful messaging that speaks to your audience and captures your brand</div>
+            <div class="text-block-66 clean-copy" data-page-field="copy.heading">{t('copy.heading')}</div>
+            <div class="wte-subheading-copy"><span class="text-span-33" data-page-field="copy.lead">{t('copy.lead')}</span> <span data-page-field="copy.textPhone">{t('copy.textPhone')}</span></div>
           </div>
           <div data-w-id="c0152dba-fb4a-c7b5-5d3f-e0ad0df51019" class="copywriting-graphic">
             <div class="copywriting-text-animation">
@@ -386,9 +393,9 @@ import Footer from '../components/Footer.astro';
                   <div data-w-id="5a741ee3-2f71-9ad6-dbab-f1bcb71eaca9" class="ps-card-title-beautifull">Beautiful</div>
                   <div data-w-id="7b5eb7ce-0d8b-7db0-d705-5b7a276f9c96" class="ps-card-title-site">Site<span data-w-id="49769000-8700-27ca-9e92-c74beee5c2e4">?</span><br></div>
                 </div>
-                <div class="ps-card-subheading">Site feels basic and uninspired.</div>
+                <div class="ps-card-subheading" data-page-field="solutions.cards.0.subheading">{t('solutions.cards.0.subheading')}</div>
                 <div class="ps-separation-line"></div>
-                <div class="ps-card-text">I’ll create a stunning website showcasing your work, boosting your business and attracting the clients you want</div>
+                <div class="ps-card-text" data-page-field="solutions.cards.0.text">{t('solutions.cards.0.text')}</div>
               </div>
               <div class="ps-graphic-container">
                 <div class="ps-graphic _1"></div>
@@ -408,9 +415,9 @@ import Footer from '../components/Footer.astro';
                   <div data-w-id="d0736cd7-d277-bba7-e9b8-675d8e424b03" class="ps-card-title-driving">Driving</div>
                   <div data-w-id="bfc7f4ff-0f0c-cecb-e3ab-9440dae7382f" class="ps-card-title-leads">Leads<span data-w-id="bc2ec5c2-6ec1-a14c-5112-1fb9a98e9e9d">?</span></div>
                 </div>
-                <div class="ps-card-subheading">Visitors scroll past; Not reach out.</div>
+                <div class="ps-card-subheading" data-page-field="solutions.cards.1.subheading">{t('solutions.cards.1.subheading')}</div>
                 <div class="ps-separation-line"></div>
-                <div class="ps-card-text">Conversion based strategies that captivate your audience, showcase your talent, and turn clicks into clients</div>
+                <div class="ps-card-text" data-page-field="solutions.cards.1.text">{t('solutions.cards.1.text')}</div>
               </div>
               <div class="ps-graphic-container">
                 <div data-w-id="2c089f95-12f5-d2b4-f6af-8581739da180" class="ps-graphic _2"></div>
@@ -427,9 +434,9 @@ import Footer from '../components/Footer.astro';
                   </div>
                   <div data-w-id="55a1dd56-bc44-6d09-253b-bffcc56afea1" class="ps-card-akind">a Kind</div>
                 </div>
-                <div class="ps-card-subheading">Not standing out; Your blending in</div>
+                <div class="ps-card-subheading" data-page-field="solutions.cards.2.subheading">{t('solutions.cards.2.subheading')}</div>
                 <div class="ps-separation-line"></div>
-                <div class="ps-card-text">A fully custom website, aligned with your brand, built to stand out and keep you ahead of the competition.</div>
+                <div class="ps-card-text" data-page-field="solutions.cards.2.text">{t('solutions.cards.2.text')}</div>
               </div>
               <div class="ps-graphic-container">
                 <div class="ps-graphic"></div>
@@ -443,7 +450,7 @@ import Footer from '../components/Footer.astro';
     <div class="after_hero-right frustions-solutions">
       <a data-w-id="7bcf2891-bae2-76d3-70bd-1ec72fe09017" style="-webkit-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(-9%, 0, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" href="/lets-talk" class="div-block-244 f-s w-inline-block">
         <div class="div-block-246 f-s"></div>
-        <div data-w-id="7bcf2891-bae2-76d3-70bd-1ec72fe09019" style="opacity:0" class="after_hero_right-cta fs">Get a free quote</div>
+        <div data-w-id="7bcf2891-bae2-76d3-70bd-1ec72fe09019" style="opacity:0" class="after_hero_right-cta fs" data-page-field="solutions.button">{t('solutions.button')}</div>
       </a>
     </div>
   </section>
@@ -451,62 +458,62 @@ import Footer from '../components/Footer.astro';
     <div class="process-cards">
       <div class="slider-wrap">
         <div class="container-title workflow">
-          <div class="heading process">The Process</div>
+          <div class="heading process" data-page-field="process.heading">{t('process.heading')}</div>
         </div>
         <div class="workfow-card design">
           <div class="workflow-title">
             <div class="workflow-titile-left">
-              <div class="time-frame">2 weeks</div>
-              <div class="design">Design</div>
+              <div class="time-frame" data-page-field="process.steps.0.duration">{t('process.steps.0.duration')}</div>
+              <div class="design" data-page-field="process.steps.0.name">{t('process.steps.0.name')}</div>
             </div>
             <div class="workflow-titile-right">
               <div class="card--number">01</div>
             </div>
           </div>
           <div class="workflow-description">
-            <div class="text-block-73">I’ll design a stunning website that prioritizes user experience, functionality, and reflects your brand’s identity</div>
+            <div class="text-block-73" data-page-field="process.steps.0.text">{t('process.steps.0.text')}</div>
           </div>
           <div class="workflow-graphic design"></div>
         </div>
         <div class="workfow-card develop">
           <div class="workflow-title">
             <div class="workflow-titile-left">
-              <div class="time-frame">2 weeks</div>
-              <div class="design">Develop</div>
+              <div class="time-frame" data-page-field="process.steps.1.duration">{t('process.steps.1.duration')}</div>
+              <div class="design" data-page-field="process.steps.1.name">{t('process.steps.1.name')}</div>
             </div>
             <div class="workflow-titile-right">
               <div class="card--number">02</div>
             </div>
           </div>
           <div class="workflow-description">
-            <div class="text-block-73">Once you&#x27;re happy with the design, I’ll build a fast, smooth site optimized for SEO and ready to perform on any device.</div>
+            <div class="text-block-73" data-page-field="process.steps.1.text">{t('process.steps.1.text')}</div>
           </div>
           <div class="workflow-graphic develop"></div>
         </div>
         <div class="workfow-card deploy">
           <div class="workflow-title">
             <div class="workflow-titile-left">
-              <div class="time-frame deploy">∞</div>
-              <div class="design">Deploy</div>
+              <div class="time-frame deploy" data-page-field="process.steps.2.duration">{t('process.steps.2.duration')}</div>
+              <div class="design" data-page-field="process.steps.2.name">{t('process.steps.2.name')}</div>
             </div>
             <div class="workflow-titile-right">
               <div class="card--number">03</div>
             </div>
           </div>
           <div class="workflow-description">
-            <div class="text-block-73">I don’t just launch and leave I’ll stick around, making sure everything keeps running smoothly and stays up to date.</div>
+            <div class="text-block-73" data-page-field="process.steps.2.text">{t('process.steps.2.text')}</div>
           </div>
           <div class="workflow-graphic deploy"></div>
         </div>
       </div>
       <div class="div-block-79">
-        <div words-slide-up="" text-split="" class="ready_set_grow">Ready . Set . Grow</div>
-        <div words-slide-up="" text-split="" class="text-block-27">Lets Talk</div>
+        <div words-slide-up="" text-split="" class="ready_set_grow" data-page-field="closing.tagline">{t('closing.tagline')}</div>
+        <div words-slide-up="" text-split="" class="text-block-27" data-page-field="closing.heading">{t('closing.heading')}</div>
         <div data-w-id="64cc3099-52e4-1475-9a3a-b26ba9f9e41e" style="opacity:0" class="arrow"></div>
       </div>
       <div class="contactt-contrainer">
         <a data-w-id="632628c6-3fdf-2732-8afd-6bc1713517d4" href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="button-1 w-inline-block">
-          <div data-w-id="632628c6-3fdf-2732-8afd-6bc1713517d5" class="button-1-text">Schedule a Call</div>
+          <div data-w-id="632628c6-3fdf-2732-8afd-6bc1713517d5" class="button-1-text" data-page-field="closing.button">{t('closing.button')}</div>
           <div data-w-id="632628c6-3fdf-2732-8afd-6bc1713517d7" class="button-1-hover-block"></div>
         </a>
       </div>

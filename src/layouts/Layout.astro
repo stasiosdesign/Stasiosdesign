@@ -14,6 +14,7 @@ import webfontLoaderUrl from 'webfontloader/webfontloader.js?url';
 import TabletNav from '../components/TabletNav.astro';
 import SideMenu from '../components/SideMenu.astro';
 import GlobalElements from '../components/GlobalElements.astro';
+import { pageDoc } from '../cms/content';
 
 interface Props {
   /** <title> */
@@ -33,6 +34,8 @@ interface Props {
   startLabel?: string;
   viewLabelClass?: string;
   lottieId?: string;
+  /** The Sanity document the page shows (src/cms/content.ts, pageDoc): its ID and, for a case study, its type. Named on the Barba container for the Visual editor. */
+  doc?: { id: string; type?: string };
 }
 
 const {
@@ -46,7 +49,9 @@ const {
   startLabel,
   viewLabelClass,
   lottieId,
+  doc,
 } = Astro.props;
+const docAttrs = doc ? pageDoc(doc.id, doc.type) : {};
 ---
 
 <!DOCTYPE html>
@@ -84,9 +89,15 @@ const {
       <GlobalElements viewLabel={viewLabel} startLabel={startLabel} viewLabelClass={viewLabelClass} lottieId={lottieId} />
     </Fragment>
   )}
-  <div data-transition-wrap class="page-transition"><div data-transition-dark class="page-transition__dark"></div></div><div class={containerClass} data-barba="container">
+  <div data-transition-wrap class="page-transition"><div data-transition-dark class="page-transition__dark"></div></div><div class={containerClass} data-barba="container" {...docAttrs}>
 <slot />
   </div>
   <script src="../scripts/main.js"></script>
+  {/* The Studio's Visual editor frames the site: only then, its click-to-edit
+      layer and live drafts (src/cms/live-preview.ts), loaded on demand so
+      visitors never download it */}
+  <script>
+    if (window.self !== window.top) import('../cms/live-preview');
+  </script>
 </body>
 </html>

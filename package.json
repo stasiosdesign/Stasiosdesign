@@ -8,7 +8,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "tsc -p tsconfig.cms.json"
   },
   "engines": {
     "node": ">=22.12.0"
@@ -16,11 +16,18 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
     "@barba/core": "2.10.3",
+    "@sanity/client": "^8.9.0",
+    "@sanity/core-loader": "^2.2.3",
+    "@sanity/visual-editing-standalone": "^2.0.2",
     "@studio-freight/lenis": "1.0.33",
     "astro": "^7.3.5",
     "gsap": "3.12.2",
     "jquery": "3.5.1",
     "split-type": "0.3.4",
     "webfontloader": "1.6.26"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.1",
+    "typescript": "^5.9.3"
   }
 }

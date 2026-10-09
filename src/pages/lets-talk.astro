@@ -1,5 +1,15 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { getDocument, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+// The page's words come from its Sanity document (studio/schemaTypes/pages/others.ts), each element
+// falling back to its own (src/cms/defaults.ts); the email and phone links follow them
+const { t } = reader(await getDocument('letsTalkPage'), D.letsTalkPage);
+const email = t('contact.email');
+const phone = t('contact.phone');
+const mailto = `mailto:${email}?subject=Hi%20Stas%2C%20I%20need%20a%20website`;
+const tel = `tel:${phone.replace(/\s+/g, '')}`;
 ---
 
 <Layout
@@ -8,6 +18,7 @@ import Layout from '../layouts/Layout.astro';
   pageId="65df193093f48b20c5d503fc"
   bodyClass="body"
   containerClass="body-container-contact"
+  doc={{ id: 'letsTalkPage' }}
 >
   <div class="nav-black">
     <a href="/" class="nav-text-home-black">HOME</a>
@@ -22,8 +33,8 @@ import Layout from '../layouts/Layout.astro';
     <div data-w-id="0fd1091f-6292-d5aa-edf7-4e4c93ed1244" class="contact-l">lETS</div>
     <div data-w-id="0fd1091f-6292-d5aa-edf7-4e4c93ed1246" class="contact-r">TALK</div>
   </div>
-  <a href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20website" class="link-block _2 w-inline-block">
-    <div class="b_card-main-text _2">I&#x27;m Ana<span class="text-span-47">stas</span>ios. I&#x27;m happy to help with your project, get a free quote or send me an email at <span class="text-span-46">stas@stasiosdesign.com</span></div>
+  <a href={mailto} class="link-block _2 w-inline-block">
+    <div class="b_card-main-text _2">I&#x27;m Ana<span class="text-span-47">stas</span>ios. <span data-page-field="intro.message">{t('intro.message')}</span> <span class="text-span-46" data-page-field="contact.email">{email}</span></div>
   </a>
   <section id="contact-section" class="c-section">
     <div class="left-margin"></div>
@@ -33,14 +44,14 @@ import Layout from '../layouts/Layout.astro';
           <div class="profile"></div>
           <div class="letstalk-arrow"></div>
           <a href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="letstalk-bookcall w-inline-block">
-            <div class="text-block-78">book a call</div>
+            <div class="text-block-78" data-page-field="contact.bookButton">{t('contact.bookButton')}</div>
           </a>
         </div>
-        <a href="tel:07468493102" class="_2-container w-inline-block">
-          <div class="text-block-79">07468493102</div>
+        <a href={tel} class="_2-container w-inline-block">
+          <div class="text-block-79" data-page-field="contact.phone">{phone}</div>
         </a>
-        <a href="mailto:stas@stasiosdesign.com" class="_3-container w-inline-block">
-          <div class="text-block-79">stas@stasiosdesign.com</div>
+        <a href={`mailto:${email}`} class="_3-container w-inline-block">
+          <div class="text-block-79" data-page-field="contact.email">{email}</div>
         </a>
         <div class="_4-container">
           <a href="https://www.instagram.com/stasiosdesign/" class="letstalk-social w-inline-block">
@@ -58,22 +69,22 @@ import Layout from '../layouts/Layout.astro';
           <div class="b_card-top-container">
             <div class="b_card-profile"></div>
             <div class="b_card-text">
-              <div class="b_card-hello">Hello,</div>
-              <a href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20website" class="link-block w-inline-block">
-                <div class="b_card-main-text">I&#x27;m Ana<span class="text-span-47">stas</span>ios. I&#x27;m happy to help with your project, send me an email at <span class="text-span-46">stas@stasiosdesign.com</span></div>
+              <div class="b_card-hello" data-page-field="intro.hello">{t('intro.hello')}</div>
+              <a href={mailto} class="link-block w-inline-block">
+                <div class="b_card-main-text">I&#x27;m Ana<span class="text-span-47">stas</span>ios. <span data-page-field="intro.cardMessage">{t('intro.cardMessage')}</span> <span class="text-span-46" data-page-field="contact.email">{email}</span></div>
               </a>
             </div>
           </div>
           <div class="div-block-201">
             <a data-w-id="01474899-b633-8144-2494-dac990b3ce6f" href="https://calendly.com/stas-stasiosdesign/30min" class="button-1 lets_ylakpage w-inline-block">
-              <div class="button-1-text lets-talksection">BOOK A CALL</div>
+              <div class="button-1-text lets-talksection" data-page-field="contact.bookButton">{t('contact.bookButton', 'BOOK A CALL')}</div>
               <div data-w-id="01474899-b633-8144-2494-dac990b3ce72" class="button-1-hover-block"></div>
             </a>
           </div>
           <div class="b_card-bottom-container">
             <div class="b_card-bottom-margin"></div>
             <div class="b_card-container-social">
-              <a href="tel:07468493102" class="b_card-social-button w-inline-block">
+              <a href={tel} class="b_card-social-button w-inline-block">
                 <div class="b_card-icon"></div>
               </a>
               <div data-w-id="0ce50690-0bd4-2b48-e693-c237f5fb3275" class="share-parent-1">
@@ -97,13 +108,13 @@ import Layout from '../layouts/Layout.astro';
             </div>
             <div class="b_card-container-text">
               <div class="b_card-icon-text-row">
-                <div class="b_container-text">07468493102</div>
+                <div class="b_container-text" data-page-field="contact.phone">{phone}</div>
               </div>
               <div class="b_card-icon-text-row">
-                <div class="b_container-text">Social media</div>
+                <div class="b_container-text" data-page-field="contact.socialLabel">{t('contact.socialLabel')}</div>
               </div>
               <div class="b_card-icon-text-row">
-                <div class="b_container-text">Schedule a call</div>
+                <div class="b_container-text" data-page-field="contact.callLabel">{t('contact.callLabel')}</div>
               </div>
             </div>
           </div>
@@ -117,8 +128,8 @@ import Layout from '../layouts/Layout.astro';
               <div class="circle-parent"></div>
             </div>
             <div class="div-block-200"></div>
-            <div class="qr-heading">Get Started</div>
-            <div class="qr-heading sub">Free quote &amp; audit</div>
+            <div class="qr-heading" data-page-field="form.heading">{t('form.heading')}</div>
+            <div class="qr-heading sub" data-page-field="form.subheading">{t('form.subheading')}</div>
           </div>
           <div class="form-block w-form">
             <form id="wf-form-Form" name="wf-form-Form" data-name="Form" method="get" class="form" data-wf-page-id="65df193093f48b20c5d503fc" data-wf-element-id="fcbe7adb-fb1a-f0a0-7aea-3ef8e23f854b">
@@ -165,17 +176,17 @@ import Layout from '../layouts/Layout.astro';
             </form>
             <div class="success-message w-form-done">
               <div class="div-block-208">
-                <div class="form-success-heading">Done!</div>
-                <div class="text-block-83">Thanks for your submission! I’ll get back to you within 24 hours with a quote and an audit of your current site.</div>
+                <div class="form-success-heading" data-page-field="form.successHeading">{t('form.successHeading')}</div>
+                <div class="text-block-83" data-page-field="form.success">{t('form.success')}</div>
               </div>
               <a data-w-id="de39c187-f13d-81ec-8161-193155bb760a" style="border-color:rgb(255,255,255)" href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="button-1 w-inline-block">
-                <div style="color:rgb(255,255,255)" class="button-1-text">Schedule a Call</div>
+                <div style="color:rgb(255,255,255)" class="button-1-text" data-page-field="form.successButton">{t('form.successButton')}</div>
                 <div style="height:0%" class="button-1-hover-block"></div>
               </a>
             </div>
             <div class="error-message w-form-fail">
               <div class="div-block-209">
-                <div class="text-block-84">Hmm... something&#x27;s missing</div>
+                <div class="text-block-84" data-page-field="form.error">{t('form.error')}</div>
               </div>
             </div>
           </div>

@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
+import { getDocument, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
+const { t } = reader(await getDocument('aboutPage'), D.aboutPage);
 ---
 
 <Layout
@@ -8,6 +12,7 @@ import Footer from '../components/Footer.astro';
   pageId="67abba7f95eab0b5c1f1d0f6"
   bodyClass="body-10"
   containerClass="body-container"
+  doc={{ id: 'aboutPage' }}
 >
   <section class="section">
     <div class="nav-black">
@@ -21,7 +26,7 @@ import Footer from '../components/Footer.astro';
     </div>
     <div class="div-block-211">
       <div class="div-block-210"></div>
-      <div class="text-block-85">Page coming soon</div>
+      <div class="text-block-85" data-page-field="hero.heading">{t('hero.heading')}</div>
     </div>
   </section>
   <Footer />

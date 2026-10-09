@@ -9,15 +9,22 @@ import {PAGES, schemaTypes} from './schemaTypes'
    package builds the Studio from this (sanity.config.ts); nothing in the
    package knows about this site otherwise.
 
-   The site doesn't read Sanity yet (its pages still hold their own words), so:
-   the Visual editor shows it as anyone sees it (no draft mode), and
-   publishing is not connected (publishing: false: the actions say so). Both
-   come when the site gets its CMS integration (CLAUDE.md, "The CMS"). */
+   How the site uses it (src/cms/, CLAUDE.md "The CMS"): the static build
+   reads the production dataset, each element falling back to its own words;
+   the Visual editor shows the built site with the drafts written in live
+   (live mode, so no draft-mode route: previewModeEnable false); publishing
+   goes through the site's Vercel Function, api/publish.ts, which also
+   triggers the rebuild. */
 
 // The site the Visual editor shows: your dev server locally (.env.development),
-// the live site from the hosted Studio (.env.production)
+// the Vercel build from the hosted Studio (.env.production)
 const PREVIEW_ORIGIN = process.env.SANITY_STUDIO_PREVIEW_ORIGIN ?? ''
+// The live site, built from the production dataset: its links, and the build
+// stamp (/build.json) the publishing progress watches
 const LIVE_ORIGIN = process.env.SANITY_STUDIO_PRODUCTION_ORIGIN ?? ''
+
+/** The publishing route, on the live site's Vercel deployment, from the hosted and the local Studio alike */
+const PUBLISH_ROUTE = 'https://stasiosdesign.vercel.app/api/publish'
 
 export const project: CmsProjectConfig = {
   projectId: '9k36yeeg',
@@ -78,6 +85,10 @@ export const project: CmsProjectConfig = {
     },
   },
 
-  // No publishing route yet: every action says publishing isn't connected
-  publishing: false,
+  publishing: {
+    // An absolute address: the route is on the deployed site even when the
+    // Visual editor shows your dev server
+    route: PUBLISH_ROUTE,
+    rebuildHelp: 'check VERCEL_DEPLOY_HOOK_URL in the Vercel project’s environment variables',
+  },
 }

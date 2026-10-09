@@ -1,4 +1,7 @@
 ---
+import { getDocument, pageDoc, reader } from '../cms/content';
+import * as D from '../cms/defaults';
+
 /**
  * The "contact me" footer that closes every page except Let's Talk. Three
  * small variants exist on the site, expressed as props rather than copies.
@@ -13,23 +16,31 @@ interface Props {
 }
 
 const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.props;
+
+// The footer's words are the home page document's footer section (studio/schemaTypes/pages/home.ts),
+// each falling back to its own (src/cms/defaults.ts); the email and phone links follow them
+const { t } = reader(await getDocument('homePage'), D.homePage);
+const email = t('footer.email');
+const phone = t('footer.phone');
+const mailto = `mailto:${email}?subject=Hi%20Stas%2C%20I%20need%20a%20Website`;
+const tel = `tel:${phone.replace(/\s+/g, '')}`;
 ---
 
-<section class="section-vh footer">
+<section class="section-vh footer" {...pageDoc('homePage')}>
       <div class="footer-container">
         <div class="w-layout-blockcontainer footer-title-desktop w-container">
           <div class="inner-desktop">
-            <div class="text-block-52">contact me</div>
-            <div class="text-block-52">contact me</div>
+            <div class="text-block-52" data-page-field="footer.heading">{t('footer.heading')}</div>
+            <div class="text-block-52" data-page-field="footer.heading">{t('footer.heading')}</div>
           </div>
         </div>
         <div class="footer-buttons-container">
           <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c77022d" href="/lets-talk" class="footer-button w-inline-block">
-            <div class="footer-button-text">Contact Page</div>
+            <div class="footer-button-text" data-page-field="footer.contactButton">{t('footer.contactButton')}</div>
             <div class="footer-button-hover"></div>
           </a>
           <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770231" href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="footer-button w-inline-block">
-            <div class="footer-button-text">Schedule a Call</div>
+            <div class="footer-button-text" data-page-field="footer.callButton">{t('footer.callButton')}</div>
             <div class="footer-button-hover"></div>
           </a>
         </div>
@@ -39,7 +50,7 @@ const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.p
               <div class="footer-social">
                 <div class="social-text">
                   <div class="social-name">Instagram</div>
-                  <div class="account-name">@stasiosdesign</div>
+                  <div class="account-name" data-page-field="footer.instagram">{t('footer.instagram')}</div>
                 </div>
                 <div class="social-graphic">
                   <div class="social-logo"></div>
@@ -51,7 +62,7 @@ const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.p
               <div class="footer-social">
                 <div class="social-text">
                   <div class="social-name">Linkedin</div>
-                  <div class="account-name">Anastasios</div>
+                  <div class="account-name" data-page-field="footer.linkedin">{t('footer.linkedin')}</div>
                 </div>
                 <div class="social-graphic">
                   <div class="social-logo linkedin"></div>
@@ -61,11 +72,11 @@ const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.p
             </a>
           </div>
           <div class="footer-socials">
-            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c77024c" href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20Website" class="footer-social-button w-inline-block">
+            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c77024c" href={mailto} class="footer-social-button w-inline-block">
               <div class="footer-social">
                 <div class="social-text">
                   <div class="social-name">Email</div>
-                  <div class="account-name">stas@stasiosdesign.com<br></div>
+                  <div class="account-name" data-page-field="footer.email">{email}<br></div>
                 </div>
                 <div class="social-graphic">
                   <div class="social-logo email"></div>
@@ -73,11 +84,11 @@ const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.p
               </div>
               <div class="social-hover"></div>
             </a>
-            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770257" href="tel:07468493102" class="footer-social-button w-inline-block">
+            <a data-w-id="c870a6ee-0326-a77a-59ee-7f921c770257" href={tel} class="footer-social-button w-inline-block">
               <div class="footer-social">
                 <div class="social-text">
                   <div class="social-name">Phone</div>
-                  <div class="account-name phone">07468493102</div>
+                  <div class="account-name phone" data-page-field="footer.phone">{phone}</div>
                 </div>
                 <div class="social-graphic">
                   <div class="social-logo phone"></div>
@@ -91,35 +102,35 @@ const { quoteHref = '/lets-talk', contactFirst = false, socialsClass } = Astro.p
       <div class="tablet-footer">
         {contactFirst && (
         <div class="div-block-203">
-          <div class="text-block-81">Get in contact</div>
+          <div class="text-block-81" data-page-field="footer.getInContact">{t('footer.getInContact')}</div>
         </div>
         )}
         <div class="_1-container">
           <div class="profile"></div>
           <div class="letstalk-arrow"></div>
           <a href="https://calendly.com/stas-stasiosdesign/30min" target="_blank" class="letstalk-bookcall w-inline-block">
-            <div class="text-block-78">Book a call</div>
+            <div class="text-block-78" data-page-field="footer.bookCall">{t('footer.bookCall')}</div>
           </a>
         </div>
         {!contactFirst && (
         <div class="div-block-203">
-          <div class="text-block-81">Get in contact</div>
+          <div class="text-block-81" data-page-field="footer.getInContact">{t('footer.getInContact')}</div>
         </div>
         )}
         <div class="div-block-206">
-          <a href="tel:07468493102" class="_2-container w-inline-block">
+          <a href={tel} class="_2-container w-inline-block">
             <div class="text-block-79">07468493102</div>
           </a>
           <a href={quoteHref} class="free-quote-button-footer-lets-talk w-inline-block">
-            <div class="free-quote-button-footer-text">Get a free quote</div>
+            <div class="free-quote-button-footer-text" data-page-field="footer.quoteButton">{t('footer.quoteButton')}</div>
           </a>
         </div>
         <div class="div-block-187 footer">
-          <div class:list={['text-block-69', socialsClass]}>SOCIALS</div>
+          <div class:list={['text-block-69', socialsClass]} data-page-field="footer.socials">{t('footer.socials')}</div>
           <div class="div-block-186">
             <a href="https://www.instagram.com/stasiosdesign/" target="_blank" class="menu-text">Instagram<br></a>
             <a href="https://www.linkedin.com/in/anastasios-anastasiou-32a1a5195/" target="_blank" class="menu-text">Linkedin<br></a>
-            <a href="mailto:stas@stasiosdesign.com?subject=Hi%20Stas%2C%20I%20need%20a%20Website" class="menu-text">Email<br></a>
+            <a href={mailto} class="menu-text">Email<br></a>
             <a href="https://www.behance.net/anastaianastas" class="menu-text">Behance</a>
             <div class="code-embed-menu w-embed">
 

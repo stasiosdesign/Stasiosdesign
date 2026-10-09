@@ -103,8 +103,26 @@ plays the first-load loader (the Lottie wipe).
 A Sanity Studio for the site's content, hosted at https://stasiosdesign.sanity.studio (project `9k36yeeg`, dataset
 `staging`), built on the shared CMS package `@stasiosdesign/sanity-cms`
 (private, GitHub Packages; the `sanity-cms` repository). It models the
-site's pages (Home, Work, Let's Talk, About) and its case studies; the
-site's pages don't read it yet.
+site's pages (Home, Work, Let's Talk, About) and its case studies.
+
+### How the site reads it (`src/cms/`)
+
+- **Build time.** Each page reads its document from the `production` dataset
+  (`src/cms/content.ts`). Every bound element keeps its own words as a fallback
+  (`src/cms/defaults.ts`, the exact text the pages had), so an empty or missing
+  field changes nothing. The site stays fully static.
+- **Visual editor.** In the Studio's iframe only, `Layout.astro` loads
+  `src/cms/live-preview.ts`. It reads the `staging` drafts through the Studio's
+  own login (live mode, no token in the browser) and writes them into the
+  elements marked `data-page-doc` / `data-page-field`, with click-to-edit
+  overlays.
+- **Publishing.** The Studio's Publish button calls `api/publish.ts`, a Vercel
+  Function on this site. It copies the staging documents to `production` and
+  then calls the Vercel deploy hook to rebuild. The Studio watches
+  `/build.json` (the build stamp) to tell when the rebuild is live. It needs two
+  Production environment variables in Vercel: `SANITY_API_WRITE_TOKEN` (a
+  Sanity token with the Editor role) and `VERCEL_DEPLOY_HOOK_URL`.
+- `npm run check` type-checks `src/cms/` and `api/`.
 
 It is also where the shared CMS is developed: `npm run dev` in `studio/`
 (http://localhost:3334) runs the package's local source from
