@@ -8,6 +8,8 @@ export default defineCliConfig({
     dataset: 'staging',
   },
   deployment: {
+    /** The hosted Studio, https://stasiosdesign.sanity.studio (`npm run deploy`) */
+    appId: 'zqxl2q0uof1iafyen3ycvniq',
     /**
      * Off: a hosted Studio runs exactly the Sanity version package-lock.json
      * pins, not whatever Sanity publishes next (CLAUDE.md, "The CMS").
