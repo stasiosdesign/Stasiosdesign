@@ -38,7 +38,7 @@ The Studio is the shared CMS package `@stasiosdesign/sanity-cms` (private, GitHu
                               navigation, editors, publishing UI, design). Its own CLAUDE.md.
     stasiosdesign-website/    this repository: this site and its Studio (studio/)
     stasiosdesign-dashboard/  a future project, not started
-  tomrowstudios/
+  Tomrowstudios/
     tomrowstudios-website/    Tomrow Studios: a client site and Studio, on a released version
 ```
 
@@ -49,7 +49,7 @@ The Studio is the shared CMS package `@stasiosdesign/sanity-cms` (private, GitHu
 | This site's Studio setup: pages and collections listed, routes, brand, Visual editor locations, publishing | `studio/project.ts` |
 | A bespoke editor only this site needs | `studio/components/`, used from its schema |
 | A reusable editor (a map editor any site could use) | the component in `../shared-sanity-cms/src/` (exported from its `index.ts`); its use and data model here |
-| Tomrow Studios' content or setup | its own repository (`../../tomrowstudios/tomrowstudios-website`, its own CLAUDE.md) |
+| Tomrow Studios' content or setup | its own repository (`../../Tomrowstudios/tomrowstudios-website`, its own CLAUDE.md) |
 
 Shared code never names a site or its types; if it needs to know something new about a site, it gets a typed option in `../shared-sanity-cms/src/config.ts` that this site's `project.ts` sets.
 
