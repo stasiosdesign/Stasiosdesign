@@ -61,7 +61,7 @@ that this site's `project.ts` sets.
   Merging is the user's approval; never merge or deploy one without it.
 - To take a release here by hand: `npm install --save-exact
   @stasiosdesign/sanity-cms@<version>` in `studio/`, `npm run check`, commit.
-- The hosted Studio is deployed by hand (`npm run deploy` in `studio/`),
+- The hosted Studio (https://stasiosdesign.sanity.studio) is deployed by hand (`npm run deploy` in `studio/`),
   only from a commit whose `studio/package.json` pins a release.
 
 ## Rules

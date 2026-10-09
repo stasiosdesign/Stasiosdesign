@@ -100,7 +100,7 @@ plays the first-load loader (the Lottie wipe).
 
 ## The Studio (`studio/`)
 
-A Sanity Studio for the site's content (project `9k36yeeg`, dataset
+A Sanity Studio for the site's content, hosted at https://stasiosdesign.sanity.studio (project `9k36yeeg`, dataset
 `staging`), built on the shared CMS package `@stasiosdesign/sanity-cms`
 (private, GitHub Packages; the `sanity-cms` repository). It models the
 site's pages (Home, Work, Let's Talk, About) and its case studies; the
