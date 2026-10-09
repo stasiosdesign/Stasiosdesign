@@ -73,8 +73,31 @@
    live site may hold other asset IDs. Unpublishing and deleting refuse while
    something else still refers to the document. */
 import { createClient, type SanityClient, type SanityDocument, type Transaction } from '@sanity/client';
-import { projectId } from '../src/cms/client';
-import { contentKey, logId } from '../src/cms/content-key';
+
+/* Self-contained: no imports from the site's own files. Vercel runs this as
+   plain Node ESM, which can't resolve the site's extensionless imports. */
+
+/** The site's Sanity project (as src/cms/client.ts) */
+const projectId = '9k36yeeg';
+
+/* The publish notes' shared vocabulary. What the two sides are compared on:
+   the content, without the system fields that differ by nature, keys sorted.
+   It must be the CMS package's contentKey (@stasiosdesign/sanity-cms/protocol),
+   which the Studio uses to say whether the live site has the version in the
+   editor; the Studio's tests check that (studio/test/protocol.test.ts). */
+type KeyedDoc = { _id?: string; _rev?: string; _updatedAt?: string; _createdAt?: string; _system?: unknown; [key: string]: unknown };
+
+export function contentKey(doc: KeyedDoc): string {
+  const { _id: _i, _rev: _r, _updatedAt: _u, _createdAt: _c, _system: _s, ...content } = doc;
+  return JSON.stringify(content, (_key, value) =>
+    value && typeof value === 'object' && !Array.isArray(value)
+      ? Object.fromEntries(Object.entries(value as Record<string, unknown>).sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)))
+      : value,
+  );
+}
+
+/** The note kept beside each live document; a dotted ID, so it is private to the Studio */
+export const logId = (id: string) => `publish-log.${id}`;
 
 /* Secrets, from the Vercel project's environment variables (Production);
    never in the repository, never sent to a browser:
@@ -127,13 +150,15 @@ const BUILD_MARKER_ID = 'publish-log.site-build';
 class PublishError extends Error {
   /** The document a refusal concerns, when it is one of several (forDocument) */
   id?: string;
+  status: number;
+  details?: unknown;
 
-  constructor(
-    public status: number,
-    message: string,
-    public details?: unknown,
-  ) {
+  // Plain fields rather than parameter properties: Node's type stripping
+  // (the Studio's protocol test loads this file) can't run those
+  constructor(status: number, message: string, details?: unknown) {
     super(message);
+    this.status = status;
+    this.details = details;
   }
 }
 

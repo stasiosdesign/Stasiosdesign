@@ -78,7 +78,7 @@ Shared code never names a site or its types; if it needs to know something new a
   - `src/cms/live-preview.ts` drives the Visual editor.
   - `api/publish.ts` publishes and triggers the rebuild.
 - Binding a new element: give it `data-page-field` (plus `data-page-format` when it holds markup) inside a `data-page-doc` container. Add the field to the schema and its current text to `defaults.ts`. Then rebuild and confirm the page is unchanged.
-- The publish route needs `SANITY_API_WRITE_TOKEN` and `VERCEL_DEPLOY_HOOK_URL` in Vercel. Its allowed origins are the hosted Studio and `localhost:3334`. Its publish-log keys (`src/cms/content-key.ts`) must match the package's.
+- The publish route needs `SANITY_API_WRITE_TOKEN` and `VERCEL_DEPLOY_HOOK_URL` in Vercel. Its allowed origins are the hosted Studio and `localhost:3334`. The route is self-contained (Vercel runs it as plain Node ESM, so no imports from `src/`). Its publish-log keys (`contentKey`, `logId`) must match the package's; `npm test` in `studio/` checks that.
 - Never commit tokens. The package is private; `studio/.npmrc` names its registry only. Access: `../shared-sanity-cms/README.md`, "Access".
 - Sanity project `9k36yeeg`: `staging` (the Studio edits it), `production` (what the site builds from; only publishing writes it). `npm run seed` in `studio/` writes the site's current words to `staging`, never over a document edited in the Studio. The user's Sanity login is GitHub.
 - Sanity upgrades are deliberate and start here: `autoUpdates` is off.

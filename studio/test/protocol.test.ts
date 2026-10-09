@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import {describe, it} from 'node:test'
 import {contentKey as packageKey, logId as packageLogId} from '@stasiosdesign/sanity-cms/protocol'
-import {contentKey as routeKey, logId as routeLogId} from '../../src/cms/content-key.ts'
+import {contentKey as routeKey, logId as routeLogId} from '../../api/publish.ts'
 
-/* The site's publishing route (api/publish.ts, src/cms/content-key.ts) and the CMS package
+/* The site's publishing route (api/publish.ts) and the CMS package
    must describe content the same way: the route writes a contentKey into
    each publish note, and the Studio compares it with its own to say whether
    the live site has the version in the editor. If these drift apart, every
