@@ -1,7 +1,7 @@
 # Stasios Design Website: instructions for Claude
 
 stasiosdesign.com, the user's own company site. Astro 7, migrated from a Webflow export. Universal rules (naming, assets, git, safety): the workspace `CLAUDE.md`.
-GitHub: `stasiosdesign/Stasiosdesign`. Two branches: `main` is **production** (every push deploys https://stasiosdesign.vercel.app) and `staging` is the permanent **staging** branch (every push deploys https://stasiosdesign-git-staging-stasiosdesign.vercel.app, built from the staging dataset, never indexed). Work locally, push to `staging` for an online preview, and merge `staging` into `main` only when the user approves a production deployment; never delete `staging`, never force-push. The README documents the architecture (Barba page lifecycle, Webflow runtime, features): read it before touching scripts.
+GitHub: `stasiosdesign/Stasiosdesign`. Two branches: `main` is **production** (every push deploys https://stasiosdesign.vercel.app) and `staging` is the permanent **staging** branch (every push deploys https://stasiosdesign-staging.vercel.app, built from the staging dataset, never indexed). Work locally, push to `staging` for an online preview, and merge `staging` into `main` only when the user approves a production deployment; never delete `staging`, never force-push. The README documents the architecture (Barba page lifecycle, Webflow runtime, features): read it before touching scripts.
 
 This repository is also **the development environment for the shared CMS**: its Studio (`studio/`) runs the shared package's local source, so CMS changes are made and previewed from here (see "The CMS" below).
 
@@ -25,7 +25,7 @@ This repository is also **the development environment for the shared CMS**: its 
 
 ## Deployment and environment
 
-`vercel.json` provides clean URLs and the `/index` redirects. `PUBLIC_FORM_ENDPOINT` (contact form) lives in Vercel env vars and a git-ignored `.env`; it is not set yet. Fonts come from an Adobe Fonts kit tied to the production domain. The public domain is still served by Webflow (DNS at Porkbun); the Vercel build is https://stasiosdesign.vercel.app. Moving the domain is on hold until the form has an endpoint.
+`vercel.ts` provides clean URLs, the `/index` redirects and staging’s `X-Robots-Tag: noindex` header. `PUBLIC_FORM_ENDPOINT` (contact form) lives in Vercel env vars and a git-ignored `.env`; it is not set yet. Fonts come from an Adobe Fonts kit tied to the production domain. The public domain is still served by Webflow (DNS at Porkbun); the Vercel build is https://stasiosdesign.vercel.app. Moving the domain is on hold until the form has an endpoint.
 
 ## The CMS
 

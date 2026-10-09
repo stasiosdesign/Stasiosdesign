@@ -18,7 +18,7 @@ public/
   assets/ documents/    assets/{images,logos,icons,graphics}, served as-is at /assets/...; documents/ holds the loader animation
   robots.txt
 astro.config.mjs    file-based output (/work -> work.html), no trailing slashes, sitemap
-vercel.json         clean URLs and the two /index redirects
+vercel.ts           clean URLs, the two /index redirects, staging’s noindex header
 ```
 
 ## Working on it
@@ -33,13 +33,13 @@ npm run preview    # serve dist/ locally
 ```
 
 Push to GitHub and Vercel builds it. Vercel detects Astro from `package.json` (build command
-`astro build`, output `dist`), and `vercel.json` keeps the clean URLs the site has always used.
+`astro build`, output `dist`), and `vercel.ts` keeps the clean URLs the site has always used (and sends `X-Robots-Tag: noindex` on staging).
 Two branches, two deployments, both fully static:
 
 |            | URL                                                          | From      | Built from the dataset |
 | ---------- | ------------------------------------------------------------ | --------- | ---------------------- |
 | Production | https://stasiosdesign.vercel.app                             | `main`    | `production`           |
-| Staging    | https://stasiosdesign-git-staging-stasiosdesign.vercel.app   | `staging` | `staging`              |
+| Staging    | https://stasiosdesign-staging.vercel.app   | `staging` | `staging`              |
 
 Which is which comes from Vercel itself (`VERCEL_ENV`, read in `astro.config.mjs`), never
 from a hostname. Staging is never indexed (`noindex` on every page) and sits behind Vercel
