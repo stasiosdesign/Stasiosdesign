@@ -34,8 +34,6 @@ export const project: CmsProjectConfig = {
   brand: {
     title: 'Stasios Design',
     icon: StudioIcon,
-    // Montserrat, the site's text face (Google Fonts, as the site loads it)
-    font: {family: '"Montserrat", sans-serif', stylesheet: 'https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap'},
     // The site's green, with dark text on it
     accent: {base: '#04f8a4', hover: '#22f9af', pressed: '#04da90', text: '#08090a'},
   },
