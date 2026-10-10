@@ -65,9 +65,9 @@ Shared code never names a site or its types; if it needs to know something new a
 ### Releasing and updating
 
 - Release only when the user asks: `npm run release -- patch|minor|major` in `../shared-sanity-cms` (its README.md, "Versions"). It tags; GitHub Actions publishes to GitHub Packages.
-- A release updates this Studio by itself: `.github/workflows/studio-update.yml` (started by the package's release) installs the version, runs the checks, deploys https://stasiosdesign.sanity.studio and commits the version to `main`, then merges `main` into `staging`. It needs the `SANITY_AUTH_TOKEN` secret (a Sanity deploy token, the user's to create). Dependabot stays as a fallback.
+- A release updates this Studio by itself: `.github/workflows/studio-update.yml` (started by the package's release, or by hand from the Actions tab) installs the version on `main`, runs the checks, merges `main` into `staging`, deploys https://stasiosdesign.sanity.studio from `staging`, then pushes both. It needs the `SANITY_AUTH_TOKEN` secret (a Sanity deploy token, the user's to create). Dependabot stays as a fallback.
 - To take a release here by hand: `npm install --save-exact @stasiosdesign/sanity-cms@<version>` in `studio/`, `npm run check`, commit.
-- The hosted Studio (https://stasiosdesign.sanity.studio) is deployed by hand (`npm run deploy` in `studio/`), only from a commit whose `studio/package.json` pins a release.
+- The hosted Studio (https://stasiosdesign.sanity.studio) is always the `staging` branch's Studio, as pushed to GitHub, on the latest release (workspace `CLAUDE.md`, "How changes reach the hosted Studios"). After a change to this site's schema or setup: commit, push `staging`, then `npm run deploy` in `studio/`. Its check (`studio/scripts/check-deploy.mjs`) refuses another branch, an out-of-date folder, uncommitted Studio changes or an old CMS. Never run `npx sanity deploy`. The local source is never deployed.
 
 ### Rules
 
