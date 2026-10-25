@@ -135,8 +135,12 @@ site's pages (Home, Work, Let's Talk, About) and its case studies.
   **Publish Site** on the static pages) publishes the document in `staging`,
   copies it to `production` and calls both deploy hooks, so both sites are
   rebuilt; **Publish to Staging** (in the button's menu) publishes it in
-  `staging` only and calls the `staging` branch's deploy hook. The Studio watches `/build.json` (the build stamp) to tell when the
-  live rebuild is done. The route needs three Production environment
+  `staging` only and calls the `staging` branch's deploy hook. The Studio watches `/build.json` (the build stamp, whose `contentFrom`
+  says when the build read its content) to tell when the live rebuild is
+  done, and shows one that doesn't come as failed, with Try again. Those
+  rebuilds are of a commit that hasn't changed, so no build is ever skipped
+  (`vercel.ts`; from 10 to 25 Oct 2026 an ignore rule skipped them, and
+  publishes never reached either site). The route needs three Production environment
   variables in Vercel: `SANITY_API_WRITE_TOKEN` (a Sanity token with the
   Editor role), `VERCEL_DEPLOY_HOOK_URL` (the `main` hook) and
   `VERCEL_STAGING_DEPLOY_HOOK_URL` (the `staging` hook).

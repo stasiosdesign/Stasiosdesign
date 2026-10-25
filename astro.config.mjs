@@ -19,20 +19,35 @@ const deployment =
   : VERCEL_ENV === 'development' || NODE_ENV === 'development' ? 'development'
   : 'production';
 
-// A build stamp, dist/build.json, saying when the site was built. The Studio's
-// publishing progress reads it (vercel.json lets it, across origins) to tell
-// when a live publish has reached the site: the rebuild api/publish.ts asks for.
+// A build stamp, dist/build.json, saying when the site was built and when its
+// content was read: Sanity's own time as the build starts (contentFrom), so
+// everything published before it is in this build. The Studio's publishing
+// progress reads it (vercel.json lets it, across origins) to tell when a live
+// publish has reached the site, the rebuild api/publish.ts asks for,
+// comparing it with the publish's own time in Sanity. Without Sanity's
+// answer, the stamp has builtAt alone.
 /** @returns {import('astro').AstroIntegration} */
-const buildStamp = () => ({
-  name: 'stasiosdesign:build-stamp',
-  hooks: {
-    'astro:build:done': async ({ dir }) => {
-      const { writeFile } = await import('node:fs/promises');
-      const stamp = { builtAt: new Date().toISOString(), deployment };
-      await writeFile(new URL('build.json', dir), JSON.stringify(stamp));
+const buildStamp = () => {
+  /** @type {string | undefined} */
+  let contentFrom;
+  return {
+    name: 'stasiosdesign:build-stamp',
+    hooks: {
+      'astro:build:start': async () => {
+        const dataset = process.env.PUBLIC_SANITY_DATASET || (deployment === 'production' ? 'production' : 'staging');
+        try {
+          const response = await fetch(`https://9k36yeeg.api.sanity.io/v2025-02-19/data/query/${dataset}?query=now()`);
+          if (response.ok) contentFrom = (await response.json()).result;
+        } catch {}
+      },
+      'astro:build:done': async ({ dir }) => {
+        const { writeFile } = await import('node:fs/promises');
+        const stamp = { builtAt: new Date().toISOString(), ...(contentFrom ? { contentFrom } : {}), deployment };
+        await writeFile(new URL('build.json', dir), JSON.stringify(stamp));
+      },
     },
-  },
-});
+  };
+};
 
 export default defineConfig({
   site: 'https://www.stasiosdesign.com',

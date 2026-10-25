@@ -14,13 +14,11 @@ export const config: VercelConfig = {
   framework: 'astro',
   buildCommand: 'npm run build',
   outputDirectory: 'dist',
-  // Commits that change nothing the site is built from (only the Studio,
-  // GitHub's workflows or these notes; a CMS release records its version on
-  // both branches) don't rebuild it: the Hobby plan allows few deployments a
-  // day. Exit 0 skips the build; anything else builds, including when the
-  // last deployed commit can't be compared.
-  ignoreCommand:
-    'git diff --quiet "${VERCEL_GIT_PREVIOUS_SHA:-HEAD^}" HEAD -- . ":(exclude)studio" ":(exclude).github" ":(exclude).claude" ":(exclude)CLAUDE.md" ":(exclude)README.md"',
+  // No build is skipped: both sites are static, so a publish reaches either
+  // only through the rebuild its deploy hook asks for, a build of a commit
+  // that hasn't changed. (From 10 to 25 Oct 2026 a rule here skipped builds
+  // of commits that changed nothing the site is built from; it skipped those
+  // rebuilds too, and publishes never reached the sites.)
   cleanUrls: true,
   trailingSlash: false,
   redirects: [
