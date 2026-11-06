@@ -32,14 +32,13 @@ This repository is also **the development environment for the shared CMS**: its 
 The Studio is the shared CMS package `@stasiosdesign/sanity-cms` (private, GitHub Packages) set up for this site.
 
 ```
-3 - Claude/
-  1 - HQ/
-    shared-sanity-cms/        @stasiosdesign/sanity-cms: the shared CMS (every Studio's layout,
+1 - HQ/
+  shared-sanity-cms/          @stasiosdesign/sanity-cms: the shared CMS (every Studio's layout,
                               navigation, editors, publishing UI, design). Its own CLAUDE.md.
-    stasiosdesign-website/    this repository: this site and its Studio (studio/)
-    stasiosdesign-dashboard/  a future project, not started
-  Tomrowstudios/
-    tomrowstudios-website/    Tomrow Studios: a client site and Studio, on a released version
+  stasiosdesign-website/      this repository: this site and its Studio (studio/)
+  stasiosdesign-dashboard/    a future project, not started
+<Client>/<client>-website/    each client's site and Studio, on released versions
+                              (beside 1 - HQ; the workspace CLAUDE.md lists them, under "Projects")
 ```
 
 | Kind of change | Where |
@@ -49,7 +48,7 @@ The Studio is the shared CMS package `@stasiosdesign/sanity-cms` (private, GitHu
 | This site's Studio setup: pages and collections listed, routes, brand, Visual editor locations, publishing | `studio/project.ts` |
 | A bespoke editor only this site needs | `studio/components/`, used from its schema |
 | A reusable editor (a map editor any site could use) | the component in `../shared-sanity-cms/src/` (exported from its `index.ts`); its use and data model here |
-| Tomrow Studios' content or setup | its own repository (`../../Tomrowstudios/tomrowstudios-website`, its own CLAUDE.md) |
+| A client site's content or setup | that client's own repository (`../../<Client>/<client>-website`, its own CLAUDE.md) |
 
 Shared code never names a site or its types; if it needs to know something new about a site, it gets a typed option in `../shared-sanity-cms/src/config.ts` that this site's `project.ts` sets.
 
@@ -57,8 +56,8 @@ Shared code never names a site or its types; if it needs to know something new a
 
 - `npm run dev` in `studio/` (port 3334) runs this Studio on `../shared-sanity-cms/src/` directly (`linkLocalCms` in `studio/sanity.cli.ts`): edits there show at once. The terminal says `@stasiosdesign/sanity-cms: LOCAL source`. Without that folder it falls back to the installed release, with a warning.
 - `npm run dev:released` runs the installed release instead, to compare.
-- On this machine Node isn't on PATH: in a Terminal tab, `$env:Path = '<Codex node bin>;C:\Windows\System32;C:\Windows;C:\Program Files\Git\cmd'; npm.cmd run dev`.
-- Nothing reaches other Studios until a release. Tomrow and future clients stay on their pinned versions; this Studio's hosted copy too (builds and deploys never use the local source).
+- Node on this computer: the workspace `CLAUDE.md`, "This computer". Start the dev servers from a Terminal tab.
+- Nothing reaches any hosted Studio until a release, this one's included: builds and deploys never use the local source. A release then updates every Studio by itself ("Releasing and updating" below).
 - Check shared changes in `../shared-sanity-cms`: `npm run check` and `npm run build`. Commit and push them there (its `main`), with a line under `## Unreleased` in its CHANGELOG.md. A change to this site's own Studio is committed here.
 - A change that needs both (a new shared option this site uses): make the shared part in `../shared-sanity-cms`, use it here while developing; commit this repository's part only once a release with it exists and `studio/` depends on it, or `npm run check` here fails against the installed version.
 
