@@ -88,7 +88,10 @@ export const project: CmsProjectConfig = {
     // An absolute address: the route is on the deployed site even when the
     // Visual editor shows your dev server
     route: PUBLISH_ROUTE,
-    rebuildHelp: 'check VERCEL_DEPLOY_HOOK_URL in the Vercel project’s environment variables',
+    rebuildHelp: 'check VERCEL_DEPLOY_HOOK_URL and VERCEL_STAGING_DEPLOY_HOOK_URL in the Vercel project’s environment variables',
+    // The staging site is static too (rebuilt by its own deploy hook after
+    // every staging write): a publish waits for it, through its build stamp
+    stagingBuilds: true,
   },
 
   plugins: [
