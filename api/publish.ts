@@ -133,7 +133,12 @@ const PRODUCTION = 'production';
 const PUBLISHING_ROLES = new Set(['administrator', 'editor', 'developer']);
 
 /** The Studios that may call this route */
-const ALLOWED_ORIGINS = new Set(['https://stasiosdesign.sanity.studio', 'http://localhost:3334']);
+const ALLOWED_ORIGINS = new Set([
+  'https://stasiosdesign.sanity.studio',
+  // The preview of the next CMS release, before it reaches every Studio (removed once it has)
+  'https://stasiosdesign-preview.sanity.studio',
+  'http://localhost:3334',
+]);
 
 /** The most documents one request may take: a collection's Select mode, at most */
 const MAX_IDS = 200;
@@ -389,18 +394,25 @@ async function writeAll(staging: SanityClient, production: SanityClient, prepare
         transaction.patch(page.draft._id, { unset: ['_revision_lock_pseudo_field_'], ifRevisionID: page.draft._rev }).delete(page.draft._id);
       }
     }
-    return transaction.commit({ returnDocuments: false });
+    // The staging marker too: the Studio waits for the staging site to be
+    // built from content at least this new before it says staging has it
+    return markBuild(transaction, ids, by).commit({ returnDocuments: false });
   };
   await toStaging(true).catch((error: unknown) => {
     if ((error as { statusCode?: number }).statusCode === 409) return toStaging(false);
     throw error;
   });
-  // Staging is static too: it is rebuilt from the staging dataset after every
-  // staging write (the Visual editor shows drafts live without it)
-  await rebuildStaging();
   timings.staging = Math.round(performance.now() - stagingStarted);
   send({ phase: 'staging' });
-  if (!live) return { done: ids };
+  // Staging is static too: it is rebuilt from the staging dataset after every
+  // staging write (the Visual editor shows drafts live without it). Vercel
+  // builds one deployment at a time, so when production changes as well its
+  // rebuild is asked for first, below, and staging's after it: production,
+  // the site people see, is never queued behind staging.
+  if (!live) {
+    await rebuildStaging();
+    return { done: ids };
+  }
 
   const liveStarted = performance.now();
   const renamed = await assets;
@@ -418,9 +430,11 @@ async function writeAll(staging: SanityClient, production: SanityClient, prepare
     });
   }
   await markBuild(transaction, ids, by).commit({ returnDocuments: false });
-  await rebuild();
   timings.live = Math.round(performance.now() - liveStarted);
   send({ phase: 'live' });
+  // Production's rebuild first, then staging's (above)
+  await rebuild();
+  await rebuildStaging();
   return { done: ids };
 }
 
@@ -526,7 +540,8 @@ async function takeDownAll(staging: SanityClient, production: SanityClient, item
       offStaging.create({ ...content, _id: `drafts.${item.id}` } as SanityDocument);
     }
   }
-  const { transactionId } = await offStaging.commit({ returnDocuments: false });
+  // The staging marker, for the Studio to wait on the staging site's rebuild (writeAll)
+  const { transactionId } = await markBuild(offStaging, ids, by).commit({ returnDocuments: false });
 
   // The note names the draft revision left behind (a draft this transaction
   // made carries its ID as its revision): the site's queries hide the item
