@@ -133,12 +133,7 @@ const PRODUCTION = 'production';
 const PUBLISHING_ROLES = new Set(['administrator', 'editor', 'developer']);
 
 /** The Studios that may call this route */
-const ALLOWED_ORIGINS = new Set([
-  'https://stasiosdesign.sanity.studio',
-  // The preview of the next CMS release, before it reaches every Studio (removed once it has)
-  'https://stasiosdesign-preview.sanity.studio',
-  'http://localhost:3334',
-]);
+const ALLOWED_ORIGINS = new Set(['https://stasiosdesign.sanity.studio', 'http://localhost:3334']);
 
 /** The most documents one request may take: a collection's Select mode, at most */
 const MAX_IDS = 200;
