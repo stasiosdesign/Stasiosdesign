@@ -56,7 +56,12 @@ export default defineConfig({
   // `work.html` and never a trailing slash keeps them identical on Vercel, whose
   // `cleanUrls` setting in vercel.json maps /work to work.html.
   trailingSlash: 'never',
-  build: { format: 'file' },
+  build: {
+    format: 'file',
+    // Pages are built 8 at a time, not one by one: each waits mostly on
+    // Sanity, and a live publish waits for this build (17 Nov 2026).
+    concurrency: 8,
+  },
 
   // The markup is rendered verbatim; whitespace between inline elements is part
   // of the layout, so it is not collapsed.
